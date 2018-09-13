@@ -2,7 +2,14 @@
 const DAO = require('../model/DAO')
 
 class ART{
-    //获取全部论坛文章表方法
+    //获取精华论坛表方法
+    getforumArt(){
+        return DAO('select * from forumArt',[]);
+    }
+    //获取宠物日记论坛表方法
+    getforumArt(){
+        return DAO('select * from forumArt',[]);
+    }
     getforumArt(){
         return DAO('select * from forumArt',[]);
     }
