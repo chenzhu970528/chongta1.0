@@ -7,5 +7,6 @@ class DB{
         return DAO('select * from adoptions',[]);
     }
 
+
 }
 module.exports = new DB();
