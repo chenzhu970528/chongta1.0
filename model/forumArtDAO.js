@@ -8,11 +8,11 @@ class ART{
     }
     //获取宠物日记方法
     getDiary(){
-        return DAO('select * from forumArt where faType like "a%',[]);
+        return DAO('select * from forumArt where faType like "a%"',[]);
     }
     //获取日常交流的方法
     getGossip(){
-        return DAO('select * from forumArt where faType like "b%',[]);
+        return DAO('select * from forumArt where faType like "b%"',[]);
     }
     //添加宠物日记，日常交流的方法  外部传参进去！！！
     addPost(faTitle,faText,userId,time,faType){

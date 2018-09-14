@@ -2,9 +2,9 @@
 const DAO = require('../model/DAO')
 
 class REP{
-    //获取所有评论回复方法
-    getReply(){
-        return DAO('select * from fReplays,forumCom where fReplays.fcId=forumCom.fcId',[]);
+    //获取所有评论回复方法  传入评论的id
+    getReply(fcId){
+        return DAO('select * from fReplays where fcId=?',[fcId]);
     }
     //添加一条回复  外部传参进去
     addReply(fcId,frman,frText,time){

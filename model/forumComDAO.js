@@ -2,9 +2,9 @@
 const DAO = require('../model/DAO');
 
 class COM{
-    //获取论坛所有评论方法
-    getComment(){
-        return DAO('select * from forumCom,forumArt where forumCom.faId=forumArt.faId',[]);
+    //获取帖子所有评论方法
+    getComment(faId){
+        return DAO('select * from forumCom where faId= ?',[faId]);
     }
     //添加一条评论  外部传参进去
     addComment(faText,faId,userId,time){

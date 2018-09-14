@@ -2,9 +2,9 @@
 const DAO = require('../model/DAO')
 
 class LIKE{
-    //获取论坛所有赞方法
-    getLike(){
-        return DAO('select count(1) from forumLike group by faId',[]);
+    //获取论坛所有赞方法 传入文章id
+    getLike(faId){
+        return DAO('select count(1) from forumLike where faId=?',[faId]);
     }
     //点赞加一行,外部传参进去
     addLike(faId,userId,time){
