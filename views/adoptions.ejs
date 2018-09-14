@@ -9,7 +9,12 @@
 <p>Welcome to <%= title %></p>
 <ul>
     <%for(var i = 0; i < data.length ; i++){%>
-    <li><%=data[i].adoTitle%></li>
+    <li>
+        <div>姓名：<%=data[i].userName%></div>
+        <div>电话：<%=data[i].userPhone%></div>
+        <div>领养信息：<%=data[i].adoTitle%></div>
+        <div>领养详情：<%=data[i].detail%></div>
+    </li>
     <%}%>
 </ul>
 

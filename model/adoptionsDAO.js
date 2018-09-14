@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class DB{
     //获取全部收养发布表方法
     getAdoptions(){
-        return DAO('select * from adoptions',[]);
+        return DAO('select * from adoptions,user where adoptions.userId = user.userId',[]);
     }
 
 
