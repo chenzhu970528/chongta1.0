@@ -4,20 +4,20 @@ const DAO = require('../model/DAO')
 class ART{
     //获取精品推荐方法
     getEssence(){
-        return DAO('select * from forumArt where name like "%l"',[]);
+        return DAO('select * from forumArt where faType like "%l"',[]);
     }
     //获取宠物日记方法
     getDiary(){
-        return DAO('select * from forumArt where faType="a"',[]);
+        return DAO('select * from forumArt where faType like "a%',[]);
     }
     //获取日常交流的方法
     getGossip(){
-        return DAO('select * from forumArt where faType="b"',[]);
+        return DAO('select * from forumArt where faType like "b%',[]);
     }
-    //添加宠物日记，日常交流的方法  标题，正文  类型  没写完
-    addPost(){
-        return DAO('insert into forumArt (faTitle,faText)values(?,?,?)',
-            [,])
+    //添加宠物日记，日常交流的方法  外部传参进去！！！
+    addPost(faTitle,faText,userId,time,faType){
+        return DAO('insert into forumArt (faTitle,faText,userId,time,faType)values(?,?,?,?,?)',
+            [faTitle,faText,userId,time,faType])
     }
 
     //添加精品推荐的方法

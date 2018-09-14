@@ -6,9 +6,10 @@ class COM{
     getComment(){
         return DAO('select * from forumCom,forumArt where forumCom.faId=forumArt.faId',[]);
     }
-    //添加一条评论  没写完
-    addComment(){
-        return DAO('insert into forumCom (faText,faId,userId,time) ')
+    //添加一条评论  外部传参进去
+    addComment(faText,faId,userId,time){
+        return DAO('insert into forumCom (faText,faId,userId,time) values(?,?,?,?)',
+            [faText,faId,userId,time] )
     }
 
     //删除一条评论
