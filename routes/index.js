@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const adoptionsDAO = require('../model/adoptionsDAO')
+const homelessDAO = require('../model/homelessDAO')
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
     title: '宠它!'
