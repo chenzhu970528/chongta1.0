@@ -11,9 +11,9 @@ const users = require('./routes/users')
 const adoptions = require('./routes/adoptions')
 const homeless= require('./routes/homeless')
 
+const forumSee = require('./routes/forumSee')
 // error handler
 onerror(app)
-
 // middlewares
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
@@ -38,7 +38,12 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(adoptions.routes(), adoptions.allowedMethods())
+
 app.use(homeless.routes(), homeless.allowedMethods())
+
+app.use(forumSee.routes(), forumSee.allowedMethods())
+
+
 
 // error-handling
 app.on('error', (err, ctx) => {
