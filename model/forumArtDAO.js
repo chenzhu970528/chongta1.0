@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class ART{
     //获取精品推荐方法
     getEssence(){
-        return DAO('select * from forumArt where faType like "%l"',[]);
+        return DAO('select * from forumArt where (faType like "%l" or select faId from forumLike  GROUP BY faId having count(*)>100)',[]);
     }
     //获取宠物日记方法
     getDiary(){
@@ -22,8 +22,8 @@ class ART{
 
     //添加精品推荐的方法
     addEssence(){
-        //赞的数量大于100
-        return DAO('select * from forumArt where faId in (select faId from forumLike where count(1)>100)')
+        //赞的数量大于100的文章id
+        return DAO('select * from forumLike GROUP BY faId having count(*)>100')
     }
 
     //管理员添加精品推荐
