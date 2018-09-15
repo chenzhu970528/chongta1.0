@@ -2,6 +2,10 @@
 const DAO = require('../model/DAO')
 
 class ART{
+    //查看单个帖子
+    seeAll(faId){
+       return DAO('select * from forumArt where faId=?',[faId])
+    }
     //获取精品推荐方法
     getEssence(){
         return DAO('select * from forumArt where (faType like "%l" or select faId from forumLike  GROUP BY faId having count(*)>100)',[]);
@@ -15,9 +19,9 @@ class ART{
         return DAO('select * from forumArt where faType like "b%"',[]);
     }
     //添加宠物日记，日常交流的方法  外部传参进去！！！
-    addPost(faTitle,faText,userId,time,faType){
+    addPost(post){
         return DAO('insert into forumArt (faTitle,faText,userId,time,faType)values(?,?,?,?,?)',
-            [faTitle,faText,userId,time,faType])
+            [post.faTitle,post.faText,post.userId,post.time,post.faType])
     }
 
     //添加精品推荐的方法
@@ -28,15 +32,11 @@ class ART{
 
     //管理员添加精品推荐
     addEssDiary(){
-        return DAO('update forumArt set faType = ' +
-            'case when faType="a" then "al"' +
-            'case when  faType="b" then "bl"'+
-            'else faType'+
-            'end')
+        return DAO('update forumArt set faType =case when faType="a" then "al" when faType="b" then "bl"else faType end')
     }
     //删除
-    delPost(){
-        return DAO('delete from forumArt where faId=?',[])
+    delPost(faId){
+        return DAO('delete from forumArt where faId=?',[faId])
     }
 
 
