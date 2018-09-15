@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<ul>
+    <%for(var i = 0; i < data.length ; i++){%>
+    <li>
+        <div>id<%=data[i].homeId%></div>
+        <div>用户id：<%=data[i].userId%></div>
+        <div>照片：<%=data[i].homepic%></div>
+        <div>拾到时间：<%=data[i].homeTime%></div>
+        <div>详情：<%=data[i].detail%></div>
+        <div>地址：<%=data[i].address%></div>
+
+    </li>
+    <%}%>
+</ul>
+<a href="homeless/Add">增加</a>
+
+</body>
+</html>
