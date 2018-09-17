@@ -10,17 +10,19 @@
 <ul>
     <%for(var i = 0; i < data.length ; i++){%>
     <li>
-        <div>id<%=data[i].homeId%></div>
-        <div>用户id：<%=data[i].userId%></div>
-        <div>照片：<%=data[i].homepic%></div>
-        <div>拾到时间：<%=data[i].homeTime%></div>
+        <div>发现信息：<%=data[i].getmes%></div>
+        <div>宠物照片：<%=data[i].homePic%></div>
+        <div>发现日期：<%=data[i].homeTime%></div>
+        <div>发现地址：<%=data[i].address%></div>
+        <div>联系人：<%=data[i].userName%></div>
+        <div>联系电话：<%=data[i].userPhone%></div>
         <div>详情：<%=data[i].detail%></div>
-        <div>地址：<%=data[i].address%></div>
-
     </li>
+    <br/>
     <%}%>
 </ul>
-<a href="homeless/Add">增加</a>
+
+<a href="homeless/Add">增加</a> <a href="homeless/lostPets">寻宠启示详情</a>
 
 </body>
 </html>

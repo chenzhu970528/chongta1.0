@@ -11,5 +11,6 @@ class DB{
     [homeless.homeId,homeless.ueseId,homeless.homePic,homeless.homeTime,homeless.detail,homeless.address]
 )
 }
+
 }
 module.exports = new DB();

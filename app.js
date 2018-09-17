@@ -10,7 +10,6 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const adoptions = require('./routes/adoptions')
 const homeless= require('./routes/homeless')
-
 const forumSee = require('./routes/forumSee')
 // error handler
 onerror(app)
