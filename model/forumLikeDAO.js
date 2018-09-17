@@ -8,8 +8,8 @@ class LIKE{
     }
     //点赞加一行,外部传参进去
     addLike(like){
-        return DAO('insert into forumLike (faId,userId,time) values(?,?,?) ',
-            [like.faId,like.userId,like.time])
+        return DAO('insert into forumLike (faId,userId) values(?,?) ',
+            [like.faId,like.userId])
     }
     delOneLike(flileId){
         return DAO('delete  from forumLike where flileId=?',[flileId])

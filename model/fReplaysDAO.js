@@ -8,8 +8,8 @@ class REP{
     }
     //添加一条回复  外部传参进去
     addReply(reply){
-        return DAO('insert into fReplays(fcId,frman,frText,time) values (?,?,?,?)',
-            [reply.fcId,reply.frman,reply.frText,reply.time])
+        return DAO('insert into fReplays(fcId,frman,frText) values (?,?,?)',
+            [reply.fcId,reply.frman,reply.frText])
     }
     // 删除一条评论回复的方法
     delReply(frId){

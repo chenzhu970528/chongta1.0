@@ -8,7 +8,7 @@ router.get('/comment',async (ctx,next)=>{
     console.log(jsondata)
 });
 //删除评论
-router.get('/post',async (ctx,next)=>{
+router.get('/art',async (ctx,next)=>{
     let jsondata = await forum.delPost(ctx,next);
     console.log(jsondata)
 });
@@ -21,6 +21,11 @@ router.get('/reply',async (ctx,next)=>{
 router.get('/like',async (ctx,next)=>{
     let jsondata = await forum.delOneLike(ctx,next);
     console.log(jsondata)
-})
+});
+//管理员删除推荐
+router.post('/diary',async (ctx,next)=>{
+    let jsondata = await forum.delEssDiary(ctx,next);
+    console.log(jsondata)
+});
 
 module.exports = router;

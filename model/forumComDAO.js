@@ -8,8 +8,8 @@ class COM{
     }
     //添加一条评论  外部传参进去
     addComment(comment){
-        return DAO('insert into forumCom (faId,faText,userId,time) values(?,?,?,?)',
-            [comment.faId,comment.faText,comment.userId,comment.time] )
+        return DAO('insert into forumCom (faId,faText,userId) values(?,?,?)',
+            [comment.faId,comment.faText,comment.userId] )
     }
 
     //删除一条评论
@@ -18,7 +18,6 @@ class COM{
     }
     //论坛文章删除，评论随之删除
     delArtNull(faId){
-            // return DAO('delete forumCom from forumCom join forumArt on forumCom.faId=forumArt.faId where forumArt.faId is NULL')
             return DAO('delete  from forumCom  where faId =?',[faId])
         }
 
