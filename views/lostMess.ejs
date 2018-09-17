@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<ul>
+    <%for(var i = 0; i < data.length ; i++){%>
+    <li>
+        <div>id：<%=data[i].lmId%></div>
+        <div>好心人：<%=data[i].userName%></div>
+        <div>提供消息：<%=data[i].lmessage%></div>
+        <div>时间：<%=data[i].lpTime%></div>
+    </li>
+    <br/>
+    <%}%>
+</ul>
+
+</body>
+</html>
