@@ -228,8 +228,7 @@ module.exports = {
     //关键字查询帖子
     seeQuery:async (ctx,next) => {
         //1.收集数据
-        let Keyword =ctx.query.Keyword;
-        console.log(Keyword)
+        let Keyword =ctx.request.body.Keyword;
         let data=await forumArtDAO.seeQuery(Keyword)
         try{
             ctx.body = {"code":200,"message":"ok",data:data}

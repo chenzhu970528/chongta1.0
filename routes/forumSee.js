@@ -45,7 +45,7 @@ router.get('/all',async (ctx,next)=>{
     console.log(jsondata)
 });
 //关键字查找帖子
-router.get('/query',async (ctx,next)=>{
+router.post('/query',async (ctx,next)=>{
     let jsondata = await forum.seeQuery(ctx,next);
     console.log(jsondata)
 });

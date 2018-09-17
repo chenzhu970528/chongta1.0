@@ -4,9 +4,11 @@ const DAO = require('../model/DAO')
 class ART{
     //关键字查找帖子
     seeQuery(Keyword){
-        console.log(Keyword)
+        console.log(Keyword);
         return DAO('select * from forumArt where faTitle like "%?%" or faText like "%?%" ',
-            [Keyword,Keyword])
+            [Keyword,Keyword]);
+        console.log('不会往下执行')
+
     }
     //查看单个帖子
     seeAll(faId){
