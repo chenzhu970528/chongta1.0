@@ -11,5 +11,7 @@ class DB{
         return DAO('insert into adoptions (userId,adoAddress,adoTitle,detail) values(?,?,?,?)',
             [adoptions.userId ,adoptions.adoAddress,adoptions.adoTitle,adoptions.detail])
     }
+
+
 }
 module.exports = new DB();
