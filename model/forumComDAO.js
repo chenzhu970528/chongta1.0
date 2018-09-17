@@ -16,10 +16,7 @@ class COM{
     delComment(fcId){
         return DAO('delete from forumCom where fcId=?',[fcId])
     }
-    //论坛文章删除，评论随之删除
-    delArtNull(faId){
-            return DAO('delete  from forumCom  where faId =?',[faId])
-        }
+
 
 }
 module.exports = new COM();

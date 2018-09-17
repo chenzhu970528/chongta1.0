@@ -52,7 +52,7 @@ class ART{
             [faId,faId])
     }
     //删除帖子
-    delPost(faId){
+    delArt(faId){
         return DAO('delete from forumArt where faId=?',[faId])
     }
 

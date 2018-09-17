@@ -1,4 +1,3 @@
-
 const fReplaysDAO = require('../model/fReplaysDAO');
 const forumArtDAO= require('../model/forumArtDAO');
 const forumComDAO= require('../model/forumComDAO');
@@ -93,15 +92,12 @@ module.exports = {
     },
 
     //删除帖子
-    delPost:async (ctx,next) => {
+    delArt:async (ctx,next) => {
         //1.收集数据
-        let faId =1;
+        let faId = ctx.request.body.faId;
         try{
-            await forumComDAO.delArtNull(faId);
-            await forumLikeDAO.delLike(faId);
-            await fReplaysDAO.delComNull(faId);
-            await forumArtDAO.delPost(faId);
-            ctx.body = {"code":200,"message":"ok",data:[]}
+            await forumArtDAO.delArt(faId);
+            ctx.body = {"code":200,"message":"ok",data:'成功删除帖子以及相关评论回复、点赞数量'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
@@ -109,10 +105,10 @@ module.exports = {
     //删除评论
     delComment:async (ctx,next) => {
         //1.收集数据
-        let fcId =1;
+        let fcId = ctx.request.body.fcId;
         try{
             await forumComDAO.delComment(fcId);
-            ctx.body = {"code":200,"message":"ok",data:[]}
+            ctx.body = {"code":200,"message":"ok",data:'成功删除评论以及相关回复'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
@@ -120,10 +116,10 @@ module.exports = {
     //删除回复
     delReply:async (ctx,next) => {
         //1.收集数据
-        let frId =8;
+        let frId = ctx.request.body.frId;
         try{
             await fReplaysDAO.delReply(frId);
-            ctx.body = {"code":200,"message":"ok",data:[]}
+            ctx.body = {"code":200,"message":"ok",data:'删除回复成功'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
@@ -131,10 +127,11 @@ module.exports = {
     //删除点赞
     delOneLike:async (ctx,next) => {
         //1.收集数据
-        let flileId =4;
+        let flileId =ctx.request.body.flileId;
+        await forumLikeDAO.delOneLike(flileId);
+
         try{
-            await forumLikeDAO.delOneLike(flileId);
-            ctx.body = {"code":200,"message":"ok",data:[]}
+            ctx.body = {"code":200,"message":"ok",data:'赞删除成功'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }

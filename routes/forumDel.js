@@ -3,22 +3,22 @@ const forum=require('../controllers/forum')
 //删除~
 router.prefix('/forumDel');
 //删除帖子
-router.get('/comment',async (ctx,next)=>{
-    let jsondata = await forum.delComment(ctx,next);
+router.post('/art',async (ctx,next)=>{
+    let jsondata = await forum.delArt(ctx,next);
     console.log(jsondata)
 });
 //删除评论
-router.get('/art',async (ctx,next)=>{
-    let jsondata = await forum.delPost(ctx,next);
+router.post('/comment',async (ctx,next)=>{
+    let jsondata = await forum.delComment(ctx,next);
     console.log(jsondata)
 });
 //删除回复
-router.get('/reply',async (ctx,next)=>{
+router.post('/reply',async (ctx,next)=>{
     let jsondata = await forum.delReply(ctx,next);
     console.log(jsondata)
 })
 //删除点赞
-router.get('/like',async (ctx,next)=>{
+router.post('/like',async (ctx,next)=>{
     let jsondata = await forum.delOneLike(ctx,next);
     console.log(jsondata)
 });
