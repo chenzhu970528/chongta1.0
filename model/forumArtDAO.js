@@ -9,12 +9,10 @@ class ART{
     //查看单个帖子评论回复总人数
     comSum(faId){
         return DAO('call newsum(?);',[faId])
-
     };
     //查看单个帖子
     seeAll(faId){
        return DAO('select * from forumArt where faId=?',[faId])
-
     };
     //按时间排序
     seeTime(){

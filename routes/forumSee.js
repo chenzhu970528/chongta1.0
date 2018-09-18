@@ -1,8 +1,5 @@
 const router = require('koa-router')();
-const forumArtDAO= require('../model/forumArtDAO');
-const forumComDAO= require('../model/forumComDAO');
-const forumLikeDAO= require('../model/forumLikeDAO');
-const fReplaysDAO= require('../model/fReplaysDAO');
+
 const forum=require('../controllers/forum')
 //查看~
 //adoptions根路由
