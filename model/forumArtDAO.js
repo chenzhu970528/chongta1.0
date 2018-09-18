@@ -4,8 +4,7 @@ const DAO = require('../model/DAO')
 class ART{
     //关键字查找帖子
     seeQuery(Keyword){
-        console.log(Keyword)
-        return DAO('call seequery("?");',[Keyword]);
+        return DAO('call seequery(?);',[Keyword]);
     }
     //查看单个帖子评论回复总人数
     comSum(faId){
