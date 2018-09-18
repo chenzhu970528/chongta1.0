@@ -23,7 +23,7 @@ module.exports = {
     },
     //添加评论
     addComment:async (ctx,next) => {
-        console.log(ctx.request.body)
+        console.log(ctx.request.body);
         //1.收集数据
         let comment = {};
         comment.faId = ctx.request.body.faId;
@@ -213,9 +213,11 @@ module.exports = {
         let art = {};
         let faId=ctx.query.faId;
         art.art=await forumArtDAO.seeAll(faId);
+        art.sum=await forumArtDAO.comSum(faId);
         art.comment= await forumComDAO.getComment(faId);
         art.reply=await fReplaysDAO.getReply(art.comment[0].fcId);
         art.like=await forumLikeDAO.getLike(faId);
+
 
         try{
             ctx.body = {"code":200,"message":"ok",data:art}
@@ -228,7 +230,7 @@ module.exports = {
     //关键字查询帖子
     seeQuery:async (ctx,next) => {
         //1.收集数据
-        let Keyword =ctx.request.body.Keyword;
+        let Keyword =ctx.query.Keyword;
         let data=await forumArtDAO.seeQuery(Keyword)
         try{
             ctx.body = {"code":200,"message":"ok",data:data}
