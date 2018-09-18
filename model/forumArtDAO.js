@@ -9,14 +9,12 @@ class ART{
     //查看单个帖子评论回复总人数
     comSum(faId){
         return DAO('call newsum(?);',[faId])
-
     };
-    //查看单个帖子
+    //查看单个帖子及评论回复点赞，评论总数
     seeAll(faId){
        return DAO('select * from forumArt where faId=?',[faId])
-
     };
-    //按时间排序
+    //按时间排序，最新发布
     seeTime(){
        return DAO('select * from forumArt order by time desc',[])
     }
@@ -32,7 +30,7 @@ class ART{
     getGossip(){
         return DAO('select * from forumArt where faType like "b%"',[]);
     }
-    //添加宠物日记，日常交流的方法  外部传参进去！！！
+    //添加宠物日记，日常交流的方法
     addPost(art){
         return DAO('insert into forumArt (faTitle,faText,userId,faType)values(?,?,?,?)',
             [art.faTitle,art.faText,art.userId,art.faType])
