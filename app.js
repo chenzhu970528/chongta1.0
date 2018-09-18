@@ -9,13 +9,17 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const adoptions = require('./routes/adoptions')
-const homeless = require('./routes/homeless')
+
+const matchmaking = require('./routes/matchmaking')
+
+const homeless= require('./routes/homeless')
 
 const forumSee = require('./routes/forumSee')
 const forumAdd = require('./routes/forumAdd')
 const forumDel = require('./routes/forumDel')
 
 const userReg = require('./routes/userReg')
+
 
 
 // error handler
@@ -52,6 +56,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(adoptions.routes(), adoptions.allowedMethods())
+app.use(matchmaking.routes(), matchmaking.allowedMethods())
 
 app.use(homeless.routes(), homeless.allowedMethods())
 

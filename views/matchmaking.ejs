@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+    <h1>列表</h1>
+    <ul>
+        <%for(var i=0;i<data.length;i++){%>
+        <li>
+            <span><a href="matchmaking/matchdetail/<%=data[i].relId%>">宠物照片：<%=data[i].petPic%></a></span>
+            <span>宠物年龄：<%=data[i].age%></span>
+            <span>宠物性别：<%=data[i].sex%></span>
+            <span>宠物类别：<%=data[i].type%></span>
+            <p><%=data[i].sandword%></p>
+        </li>
+        <%}%>
+    </ul>
+</body>
+</html>
