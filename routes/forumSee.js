@@ -1,8 +1,5 @@
 const router = require('koa-router')();
-const forumArtDAO= require('../model/forumArtDAO');
-const forumComDAO= require('../model/forumComDAO');
-const forumLikeDAO= require('../model/forumLikeDAO');
-const fReplaysDAO= require('../model/fReplaysDAO');
+
 const forum=require('../controllers/forum')
 //查看~
 //adoptions根路由
@@ -45,11 +42,11 @@ router.get('/all',async (ctx,next)=>{
     console.log(jsondata)
 });
 //关键字查找帖子
-router.post('/query',async (ctx,next)=>{
+router.get('/query',async (ctx,next)=>{
     let jsondata = await forum.seeQuery(ctx,next);
     console.log(jsondata)
 });
-//关键字查找帖子
+//最新发布
 router.get('/time',async (ctx,next)=>{
     let jsondata = await forum.seeTime(ctx,next);
     console.log(jsondata)

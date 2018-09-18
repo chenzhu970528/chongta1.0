@@ -4,18 +4,17 @@ const DAO = require('../model/DAO')
 class ART{
     //关键字查找帖子
     seeQuery(Keyword){
-        console.log(Keyword);
-        return DAO('select * from forumArt where faTitle like "%?%" or faText like "%?%" ',
-            [Keyword,Keyword]);
-        console.log('不会往下执行')
-
+        return DAO('call seequery(?);',[Keyword]);
     }
-    //查看单个帖子
+    //查看单个帖子评论回复总人数
+    comSum(faId){
+        return DAO('call newsum(?);',[faId])
+    };
+    //查看单个帖子及评论回复点赞，评论总数
     seeAll(faId){
        return DAO('select * from forumArt where faId=?',[faId])
-
     };
-    //按时间排序
+    //按时间排序，最新发布
     seeTime(){
        return DAO('select * from forumArt order by time desc',[])
     }
@@ -31,17 +30,11 @@ class ART{
     getGossip(){
         return DAO('select * from forumArt where faType like "b%"',[]);
     }
-    //添加宠物日记，日常交流的方法  外部传参进去！！！
+    //添加宠物日记，日常交流的方法
     addPost(art){
         return DAO('insert into forumArt (faTitle,faText,userId,faType)values(?,?,?,?)',
             [art.faTitle,art.faText,art.userId,art.faType])
     }
-
-    // //添加精品推荐的方法
-    // addEssence(){
-    //     //赞的数量大于100的文章id
-    //     return DAO('select * from forumLike GROUP BY faId having count(*)>100')
-    // }
 
     //管理员添加精品推荐
     addEssDiary(faId){
