@@ -16,6 +16,8 @@ const forumSee = require('./routes/forumSee')
 const forumAdd = require('./routes/forumAdd')
 const forumDel = require('./routes/forumDel')
 
+const userReg = require('./routes/userReg')
+
 
 // error handler
 onerror(app)
@@ -55,6 +57,8 @@ app.use(homeless.routes(), homeless.allowedMethods())
 app.use(forumSee.routes(), forumSee.allowedMethods())
 app.use(forumAdd.routes(), forumAdd.allowedMethods())
 app.use(forumDel.routes(), forumDel.allowedMethods())
+
+app.use(userReg.routes(), userReg.allowedMethods())
 
 
 // error-handling
