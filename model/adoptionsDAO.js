@@ -17,14 +17,22 @@ class DB{
     delAdoptions(adoId){
         return DAO('DELETE FROM adoptions WHERE adoptions.adoId = ?',[adoId])
     }
-    //从表删除
+            //从表删除
     delAdoMan(adoId){
         return DAO('DELETE FROM adodetails WHERE adodetails.adoId =  ?',[adoId])
     }
-
     //删除领养申请
     delAdoApply(addId){
         return DAO('DELETE FROM adodetails WHERE adodetails.addId =  ?',[addId])
+    }
+    // 添加申请领养,默认为未领养，agree值位0
+    addAdoApply(apply){
+        return DAO('insert into adodetails (userId,addTime,agree,adoId)values(?,now(),0,?)',
+            [apply.userId,apply.adoId])
+    }
+    //同意领养，更新agree值位1
+    adoAgree(addId){
+        return DAO('update adodetails set agree = 1 where adodetails.addId = ?',[addId])
     }
 }
 module.exports = new DB();

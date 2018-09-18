@@ -75,6 +75,19 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+    //添加领养申请
+    addAdoApply:async (ctx,next)=>{
+        let apply = {}
+        apply.userId = ctx.request.body.userId;
+        apply.adoId = ctx.request.body.adoId;
+        try{
+            await adoptionsDAO.addAdoApply(apply)
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:apply}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
     //删除领养申请
     delAdoApply:async (ctx,next)=>{
         //1.收集数据
@@ -82,6 +95,16 @@ module.exports = {
         try{
             await adoptionsDAO.delAdoApply(addId)
             ctx.body = {"code":200,"message":"ok",data:'成功删除领养申请'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    // 同意领养
+    adoAgree:async (ctx,next)=>{
+        let addId = ctx.request.body.addId;
+        try{
+            await adoptionsDAO.adoAgree(addId)
+            ctx.body = {"code":200,"message":"ok",data:'领养已达成'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
