@@ -17,6 +17,7 @@ module.exports = {
         //1.收集数据
         let art = {};
         art.userId = ctx.request.body.userId;
+        art.adoAddress = ctx.request.body.adoAddress;
         art.adoTitle = ctx.request.body.adoTitle;
         art.detail = ctx.request.body.detail;
         art.adoType = ctx.request.body.adoType;
@@ -59,6 +60,29 @@ module.exports = {
             return data[0];
         }
         catch (err) {
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //删除领养信息,对应的有意领养者信息表也删除
+    delAdoptions:async (ctx,next)=>{
+        //1.收集数据
+        let adoId = ctx.request.body.adoId;
+        try{
+            await adoptionsDAO.delAdoMan(adoId)
+            await adoptionsDAO.delAdoptions(adoId);
+            ctx.body = {"code":200,"message":"ok",data:'成功删除宠物领养信息'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //删除领养申请
+    delAdoApply:async (ctx,next)=>{
+        //1.收集数据
+        let addId = ctx.request.body.addId;
+        try{
+            await adoptionsDAO.delAdoApply(addId)
+            ctx.body = {"code":200,"message":"ok",data:'成功删除领养申请'}
+        }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     }
