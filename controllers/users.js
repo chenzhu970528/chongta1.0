@@ -36,6 +36,33 @@ module.exports = {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
+    //修改用户信息
+    modUsers: async (ctx, next) => {
+        let user = {};
+        user.userName = ctx.request.body.userName;
+        user.headPic = ctx.request.body.headPic;
+        user.signature = ctx.request.body.signature;
+        user.userPwd = ctx.request.body.userPwd;
+        if (/^[0-9A-Za-z][\.-_0-9A-Za-z]*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(ctx.request.body.userEmail)) {
+            user.userEmail = ctx.request.body.userEmail;
+        } else {
+            console.log('邮箱格式错误')
+        }
+        if (/^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/.test(ctx.request.body.userPhone)) {
+            user.userPhone = ctx.request.body.userPhone;
+        } else {
+            console.log('手机号格式错误')
+        }
+        user.sex = ctx.request.body.sex;
+        user.wechat = ctx.request.body.wechat;
+        user.userId = ctx.request.body.userId;
+        try {
+            let data=await userReg.modUsers(user)
+            ctx.body = {"code": 200, "message": "ok", data: user}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
     //用户登录
     login: async (ctx, next) => {
         let user = {};
