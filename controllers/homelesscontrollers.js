@@ -1,21 +1,84 @@
 var homelessDAO = require('../model/homelessDAO')
+var DetailDAO=require('../model/DetailDAO')
+var lostMessDAO=require('../model/lostMessDAO')
+var lostPetsDAO=require('../model/lostPetsDAO')
 module.exports = {
+    //获取流浪信息
+    getHomeless:async (ctx,next) => {
+        let data=await  homelessDAO.getHomeless();
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data};
+            return data;
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+
+    // 发布领养信息,找主人
     addhomeless:async (ctx,next) => {
         //1.收集数据
-        let homeless = {};
-        homeless.homeId='4'
-        homeless.userId= '4'
-        homeless.homePic= '8.png'
-        homeless.homeTime= '2018-09-13 14:44:16'
-        homeless.detail= '返回的数据返回的时间'
-        homeless.address= '苏州高博'
-
-
+        let art = {};
+        art.getmes = ctx.request.body.getmes;
+        art.userId = ctx.request.body.userId;
+        art.homePic = ctx.request.body.homePic;
+        art.detail = ctx.request.body.detail;
+        art.address = ctx.request.body.address;
         try{
             //2.调用用户数据访问对象的添加方法
-            await homelessDAO.addhomeless(homeless)
+            await homelessDAO.addhomeless(art)
             //3.反馈结果
-            ctx.body = {"code":200,"message":"ok",data:[]}
+            ctx.body = {"code":200,"message":"ok",data:art}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    // 发布丢失信息，找宠物
+    addlostPets:async (ctx,next) => {
+        //1.收集数据
+        let art = {};
+        art.lpmes = ctx.request.body.lpmes;
+        art.lpPic = ctx.request.body.lpPic;
+        art.lpTime = ctx.request.body.lpTime;
+        art.address = ctx.request.body.address;
+        art.username = ctx.request.body.username;
+        art.userPhone = ctx.request.body.userPhone;
+        art.detail = ctx.request.body.detail;
+        art.reward = ctx.request.body.reward;
+        try{
+            //2.调用用户数据访问对象的添加方法
+            await homelessDAO.addlostPets(art)
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:art}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //寻宠启示
+    getlostPets:async (ctx,next)=>{
+    let data=await lostPetsDAO.getlostPets(ctx.params.userId);
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data[0]};
+            return data[0];
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //寻宠启示详情表
+    detailIf:async (ctx,next)=>{
+    let data=await  DetailDAO.detailIf(ctx.params.userId);
+    try{
+        ctx.body = {"code":200,"message":"ok",data:data};
+        return data;
+    }catch(err){
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+},
+    //寻宠消息表
+    getlostMess:async (ctx,next)=>{
+        let data=await  lostMessDAO.getlostMess();
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data};
+            return data;
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }

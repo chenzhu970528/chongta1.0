@@ -10,7 +10,7 @@ class DB {
             "\telse '男'\n" +
             "\t\n" +
             "end as sex\n" +
-            "from lostpets,user where user.userId=lostpets.userId and user.userId=1", [userId]);
+            "from lostpets,user where user.userId=lostpets.userId and user.userId=?", [userId]);
     }
 
 }
