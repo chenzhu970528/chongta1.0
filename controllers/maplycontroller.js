@@ -1,42 +1,49 @@
 var maplyDAO = require('../model/maplyDAO')
-var matchmakingDAO = require('../model/matchmakingDAO')
+var matchmakingDAO = require('../model/matchmakingDAO');
+var maplyDelDAO = require('../model/maplyDelDAO');
 module.exports = {
     addaply:async (ctx,next) => {
         //1.收集数据
         let apldata= { };
-        apldata.address='北京'
-        apldata.medReport='1.jpg'
-        apldata.age=1
-        apldata.type='猫'
-        apldata.PetName='哈尼'
-        apldata.maHistory=1
-        apldata.detail= '最最活泼可爱'
-        apldata.petPic='2.jpg'
-        apldata.sex=1
+        apldata.aplyId=ctx.request.body.aplyId;
+        apldata.matId=ctx.request.body.matId;
+        apldata.detail= ctx.request.body.detail;
+        apldata.petPic=ctx.request.body.petPic;
+        apldata.address=ctx.request.body.address;
+        apldata.medReport=ctx.request.body.medReport;
+        apldata.age=ctx.request.body.age;
+        apldata.birth=ctx.request.body.birth;
+        apldata.type=ctx.request.body.type;
+        apldata.sex=ctx.request.body.sex;
+        apldata.PetName=ctx.request.body.PetName;
+        apldata.maHistory=ctx.request.body.maHistory;
         try{
             await maplyDAO.addaply(apldata)
+            await  maplyDelDAO.addaplyDel(apldata.aplyId,apldata.matId)
+            // console.log(apldata)
             //3.反馈结果
             ctx.body = {"code":200,"message":"ok",data:apldata}
+
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
     addMatch:async (ctx,next) => {
         let users= { };
-        users.relId=5  //ctx.params.relId
-        users.title='求一只健康的狗狗'
-        users.sandword='要好相处'
-        users.request='健康,博美'
-        users.detail='这是一条详情描述'
-        users.address='青岛'
-        users.medReport='2.jpg'
-        users.birth='2016-09-20'
-        users.type='博美'
-        users.sex=1
-        users.petPic='22.jpg'
-        users.age=3
-        users.PetName='小可爱'
-        users.maHistory=0
+        users.relId=ctx.request.body.relId;
+        users.title=ctx.request.body.title;
+        users.sandword=ctx.request.body.sandword;
+        users.request=ctx.request.body.request;
+        users.detail=ctx.request.body.detail;
+        users.address=ctx.request.body.address;
+        users.medReport=ctx.request.body.medReport;
+        users.birth=ctx.request.body.birth;
+        users.type=ctx.request.body.type;
+        users.sex=ctx.request.body.sex;
+        users.petPic=ctx.request.body.petPic;
+        users.age=ctx.request.body.age;
+        users.PetName=ctx.request.body.PetName;
+        users.maHistory=ctx.request.body.maHistory;
         try{
             await matchmakingDAO.addMatch(users)
             //3.反馈结果
@@ -45,23 +52,60 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
-    changeaply:async (ctx,next) => {
-        let changeaplydata= { };
-        changeaplydata.detail=5  //ctx.params.relId
-        changeaplydata.petPic='求一只健康的狗狗'
-        changeaplydata.address='要好相处'
-        changeaplydata.medReport='健康,博美'
-        changeaplydata.age='这是一条详情描述'
-        changeaplydata.type='青岛'
-        changeaplydata.sex='2.jpg'
-        changeaplydata.PetName='2016-09-20'
-        changeaplydata.maHistory='博美'
-        changeaplydata.matId=10
-        changeaplydata.aplyId=3
+    delAply:async (ctx,next) => {
+        let mdel={ };
+        mdel.aplyId=ctx.request.body.aplyId;
+        mdel.matId=ctx.request.body.matId;
         try{
-            await matchmakingDAO.changeaply(changeaplydata)
+            await  maplyDAO.delAplDel(mdel)
+            await maplyDAO.delAply(mdel)
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:'删除成功'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    changeaply:async (ctx,next) => {
+        let changeaplydata ={ };
+        changeaplydata.detail=ctx.request.body.detail;
+        changeaplydata.petPic=ctx.request.body.petPic;
+        changeaplydata.address=ctx.request.body.address;
+        changeaplydata.medReport=ctx.request.body.medReport;
+        changeaplydata.age=ctx.request.body.age;
+        changeaplydata.birth=ctx.request.body.birth;
+        changeaplydata.type=ctx.request.body.type;
+        changeaplydata.sex=ctx.request.body.sex;
+        changeaplydata.PetName=ctx.request.body.PetName;
+        changeaplydata.maHistory=ctx.request.body.maHistory;
+        changeaplydata.maplyId=ctx.request.body.maplyId;
+        try{
+            await maplyDAO.changeaply(changeaplydata)
             //3.反馈结果
             ctx.body = {"code":200,"message":"ok",data:changeaplydata}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    delMatch:async (ctx,next) => {
+        let delaplydata=ctx.request.body.matId;
+        try{
+            await  matchmakingDAO.deladel(delaplydata)
+            await  matchmakingDAO.delapl(delaplydata)
+            await matchmakingDAO.delmatch(delaplydata)
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:'删除成功'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    agreeMatch:async (ctx,next) => {
+        let agree={ };
+        agree.matId=ctx.request.body.matId;
+        agree.aplyId=ctx.request.body.aplyId;
+        try{
+            await  maplyDelDAO.agreeMatch(agree);
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:agree}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }

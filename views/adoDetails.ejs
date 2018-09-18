@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>领养详情</title>
+</head>
+<body>
+<h2><%=data.jsondata.adoTitle%></h2>
+<span>用户名：<%=data.jsondata.userName%></span><br/>
+<span>真实姓名：<%=data.jsondata.realName%></span><br/>
+<span>电话：<%=data.jsondata.userPhone%></span><br/>
+<span>地址：<%=data.jsondata.adoAddress%></span><br/>
+<h4>有意领养者：</h4>
+<span>人数：<%=data.jsondata2.length%></span>
+<ul>
+    <%for(var i = 0; i < data.jsondata2.length ; i++){%>
+        <li><a href="/adoptions/getOneUser/<%=data.jsondata2[i].userId%>"><%=data.jsondata2[i].userName%></a></li>
+    <%}%>
+</ul>
+
+</body>
+</html>

@@ -2,14 +2,17 @@
 const DAO = require('../model/DAO')
 
 class LIKE{
-    //获取论坛所有赞方法
-    getLike(){
-        return DAO('select count(1) from forumLike group by faId',[]);
+    //获取论坛所有赞方法 传入文章id
+    getLike(faId){
+        return DAO('select count(1) from forumLike where faId=?',[faId]);
     }
     //点赞加一行,外部传参进去
-    addLike(faId,userId,time){
-        return DAO('insert into forumLike (faId,userId,time) values(?,?,?) ',
-            [faId,userId,time])
+    addLike(like){
+        return DAO('insert into forumLike (faId,userId) values(?,?) ',
+            [like.faId,like.userId])
+    }
+    delOneLike(flileId){
+        return DAO('delete  from forumLike where flileId=?',[flileId])
     }
 //论坛文章删除，与之对应的点赞表也删除
     delLike(){

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<ul>
+    <%for(var i = 0; i < data.length ; i++){%>
+    <li>
+        <div>发现信息：<%=data[i].getmes%></div>
+        <div>宠物照片：<%=data[i].homePic%></div>
+        <div>发现日期：<%=data[i].homeTime%></div>
+        <div>发现地址：<%=data[i].address%></div>
+        <div>联系人：<%=data[i].userName%></div>
+        <div>联系电话：<%=data[i].userPhone%></div>
+        <div>详情：<%=data[i].detail%></div>
+    </li>
+    <br/>
+    <%}%>
+</ul>
+
+<a href="homeless/Add">增加</a> <a href="homeless/lostPets">寻宠启示详情</a>
+
+</body>
+</html>

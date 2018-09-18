@@ -9,11 +9,19 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const adoptions = require('./routes/adoptions')
+
 const matchmaking = require('./routes/matchmaking')
+
+const homeless= require('./routes/homeless')
+
+const forumSee = require('./routes/forumSee')
+const forumAdd = require('./routes/forumAdd')
+const forumDel = require('./routes/forumDel')
+
+
 
 // error handler
 onerror(app)
-
 // middlewares
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
@@ -39,6 +47,14 @@ app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(adoptions.routes(), adoptions.allowedMethods())
 app.use(matchmaking.routes(), matchmaking.allowedMethods())
+
+app.use(homeless.routes(), homeless.allowedMethods())
+
+app.use(forumSee.routes(), forumSee.allowedMethods())
+app.use(forumAdd.routes(), forumAdd.allowedMethods())
+app.use(forumDel.routes(), forumDel.allowedMethods())
+
+
 
 // error-handling
 app.on('error', (err, ctx) => {

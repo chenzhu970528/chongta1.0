@@ -4,14 +4,28 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
+<style>
+    li{
+        border: 1px solid #00B7FF;
+        margin-top: 10px;
+    }
+</style>
 <body>
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
 <ul>
     <%for(var i = 0; i < data.length ; i++){%>
-    <li><%=data[i].adoTitle%></li>
+    <a href="adoptions/details/<%=data[i].adoId%>">
+    <li>
+        <div>姓名：<%=data[i].userName%></div>
+        <div>电话：<%=data[i].userPhone%></div>
+        <div>领养信息：<%=data[i].adoTitle%></div>
+        <div>领养详情：<%=data[i].detail%></div>
+    </li>
+    </a>
     <%}%>
 </ul>
+<a href="adoptions/Add">新增</a>
 
 </body>
 </html>
