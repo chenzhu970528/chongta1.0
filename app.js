@@ -52,6 +52,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(adoptions.routes(), adoptions.allowedMethods())
+app.use(matchmaking.routes(), matchmaking.allowedMethods())
 
 app.use(homeless.routes(), homeless.allowedMethods())
 app.use(sysmes.routes(), sysmes.allowedMethods())

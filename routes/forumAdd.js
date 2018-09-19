@@ -1,6 +1,8 @@
 const router = require('koa-router')();
 
 const forum=require('../controllers/forum')
+
+
 //添加~
 router.prefix('/forumAdd');
 //添加帖子
@@ -8,6 +10,16 @@ router.post('/art',async (ctx,next)=>{
     let jsondata = await forum.addArt(ctx,next);
     console.log(jsondata)
 })
+
+//上传图片到服务器
+router.post('/upload',async (ctx, next) => {
+    let jsondata = await forum.addImg(ctx,next);
+    console.log(jsondata)
+
+})
+
+
+
 //添加评论
 router.post('/comment',async (ctx,next)=>{
     let jsondata = await forum.addComment(ctx,next);

@@ -1,4 +1,5 @@
 const userReg = require('../model/usersDAO');
+var crypto = require('crypto')
 module.exports = {
 
     //添加用户信息
@@ -7,7 +8,12 @@ module.exports = {
         user.userName = ctx.request.body.userName;
         user.headPic = ctx.request.body.headPic;
         user.signature = ctx.request.body.signature;
-        user.userPwd = ctx.request.body.userPwd;
+        user.userPhone = ctx.request.body.userPhone;
+        let pwd = ctx.request.body.userPwd;
+        const hash = crypto.createHash('md5');
+        hash.update(pwd);
+        let pwdMd5 = hash.digest('hex');
+        user.userPwd =pwdMd5
         if (/^[0-9A-Za-z][\.-_0-9A-Za-z]*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(ctx.request.body.userEmail)) {
             user.userEmail = ctx.request.body.userEmail;
         } else {
@@ -42,7 +48,12 @@ module.exports = {
         user.userName = ctx.request.body.userName;
         user.headPic = ctx.request.body.headPic;
         user.signature = ctx.request.body.signature;
-        user.userPwd = ctx.request.body.userPwd;
+        user.userPhone = ctx.request.body.userPhone;
+        let pwd = ctx.request.body.userPwd;
+        const hash = crypto.createHash('md5');
+        hash.update(pwd);
+        let pwdMd5 = hash.digest('hex');
+        user.userPwd =pwdMd5
         if (/^[0-9A-Za-z][\.-_0-9A-Za-z]*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(ctx.request.body.userEmail)) {
             user.userEmail = ctx.request.body.userEmail;
         } else {
@@ -67,7 +78,11 @@ module.exports = {
     login: async (ctx, next) => {
         let user = {};
         user.userPhone = ctx.request.body.userPhone;
-        user.userPwd = ctx.request.body.userPwd;
+        let pwd = ctx.request.body.userPwd;
+        const hash = crypto.createHash('md5');
+        hash.update(pwd);
+        let pwdMd5 = hash.digest('hex');
+        user.userPwd =pwdMd5
         let data =await userReg.login(user)
         console.log(data)
         try {

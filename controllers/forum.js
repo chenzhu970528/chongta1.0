@@ -2,6 +2,9 @@ const fReplaysDAO = require('../model/fReplaysDAO');
 const forumArtDAO= require('../model/forumArtDAO');
 const forumComDAO= require('../model/forumComDAO');
 const forumLikeDAO= require('../model/forumLikeDAO');
+const router = require('koa-router')();
+const path = require('path')
+const formidable = require("formidable");
 module.exports = {
        //添加帖子
     addArt:async (ctx,next) => {
@@ -21,6 +24,29 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+//图片
+    addImg:async (ctx,next)=>{
+        const form = new formidable.IncomingForm()
+        form.uploadDir = "../public/uploadfile";
+        form.keepExtensions = true;
+        let urlImages= []
+        return new Promise(function(resolve,reject){
+            form.parse(ctx.req,function(err,fields,files){
+                if(err) reject(err.message)
+                console.log('获取数据文件了......')
+                // if(err){console.log(err); return;}
+                for(name in files){
+                    urlImages.push(path.parse(files[name].path).base)
+                }
+                console.log(urlImages)
+                resolve(urlImages)
+            })
+        }).then((data)=>{
+            //按wangeditor格式,输出结果,把上传的文件名返回
+            ctx.body = {errno:0,data:data};
+        });
+    },
+
     //添加评论
     addComment:async (ctx,next) => {
         console.log(ctx.request.body);
