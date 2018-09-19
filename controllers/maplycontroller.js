@@ -110,4 +110,22 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+    updataF:async (ctx,next)=>{
+        let matId=ctx.request.body.matId;
+        try{
+            await matchmakingDAO.updateF(matId);
+            ctx.body = {"code":200,"message":"ok",data:'不通过'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    updataT:async (ctx,next)=>{
+        let matId=ctx.request.body.matId;
+        try{
+            await matchmakingDAO.updateT(matId);
+            ctx.body = {"code":200,"message":"ok",data:'通过'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    }
 }

@@ -13,6 +13,7 @@ router.get('/',async (ctx,next)=>{
     // await ctx.render('matchmaking',{title:'婚介首页列表',data:mjsondata})
     ctx.body = {"code":200,"message":"ok",data:mjsondata }
 })
+
 // 获取宠物相关信息
 router.get('/search',async (ctx,next)=>{
     let msjsondata = await matchmakingDAO.getMatchSearch();
@@ -27,18 +28,46 @@ router.get('/matchdetail/:relId',async (ctx,next)=>{
 router.post('/addMatch',async (ctx,next)=>{
     await maplycontroller.addMatch(ctx,next);
 })
+
 //删除婚介发布
 router.post('/delMatch',async (ctx,next)=>{
     await  maplycontroller.delMatch(ctx,next);
 })
 
+// 通过审核
+router.post('/updataT',async (ctx,next)=>{
+    await maplycontroller.updataT(ctx,next)
+})
 
+// 不通过
+router.post('/updataF',async (ctx,next)=>{
+    await maplycontroller.updataF(ctx,next)
+})
+// 列表排序
+router.get('/sortTimeDESC',async (ctx,next)=>{
+    let sortTimeDESC = await matchmakingDAO.sortTimeDESC();
+    ctx.body = {"code":200,"message":"ok",data:sortTimeDESC}
+})
+router.get('/sortTimeASC',async (ctx,next)=>{
+    let sortTimeASC = await matchmakingDAO.sortTimeASC();
+    ctx.body = {"code":200,"message":"ok",data:sortTimeASC}
+})
+router.get('/sortHotDESC',async (ctx,next)=>{
+    let sortHotDESC = await matchmakingDAO.sortHotDESC();
+    ctx.body = {"code":200,"message":"ok",data:sortHotDESC}
+})
+router.get('/sortHotASC',async (ctx,next)=>{
+    let sortHotASC = await matchmakingDAO.sortHotASC();
+    ctx.body = {"code":200,"message":"ok",data:sortHotASC}
+})
+
+
+// ---------------------------------------------------------
 // 插入婚介申请数据
 router.post('/addaply', async (ctx,next) => {
      await maplycontroller.addaply(ctx, next);
 })
 // 显示给被申请人的信息,接受的申请
-//post
 router.get('/:userId/showaply',async (ctx,next)=>{
     let sajson = await maplyDAO.showaply(ctx.params.userId);
     console.log(sajson);
@@ -72,15 +101,10 @@ router.post('/changeaply',async (ctx,next)=>{
 router.get('/countAply',async (ctx,next)=>{
     let cajson = await maplyDAO.countAply();
     ctx.body = {"code":200,"message":"ok",data:cajson}
-})
-
-
+});
 
 //同意申请
 router.post('/agree',async (ctx,next) => {
     await  maplycontroller.agreeMatch(ctx,next);
-})
-// router.post('/addaplyDel',async (ctx,next)=>{
-//     await
-// })
+});
 module.exports = router
