@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.1.0.js"></script>
+    <script src="js/wangEditor.js"></script>
+    <script>
+        $(function(){
+            var E = window.wangEditor
+            var editor = new E('#editor')
+            editor.customConfig.uploadImgServer = 'http://localhost:3000/upload'
+            editor.customConfig.uploadImgHooks = {
+                //上传成功后执行的插入图片操作
+                customInsert: function (insertImg, result, editor) {
+                    if(result.errno == 0){
+                        console.log('insert ok!')
+                        insertImg('http://localhost:3000/uploadfile/' + result.data[0])
+                    }else{
+                        alert('上传图片失败!')
+                    }
+                }
+            }
+            editor.create()
+            //把图文混排的文章保存到服务器
+            $('button:first').click(function(){
+                var mydata = {"editor1":editor.txt.html()};
+                console.log(mydata)
+                $.ajax({
+                    url:'http://localhost:3000/save',
+                    type:'post',
+                    data:mydata,
+                    success:function(data){
+                        console.log(data)
+                    }
+                })
+            })
+            //读取指定的一篇文章(id=3)
+            $('button:last').click(function(){
+                $.get('http://localhost:3000/loadArticle/5',function(result){
+                    console.log(result)
+                    editor.txt.html(result.data[0].content);
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<div name="editor" id="editor" >
+    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+</div>
+<button>保存文章</button>
+<button>加载文章</button>
+</body>
+</html>
