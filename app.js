@@ -11,6 +11,7 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const adoptions = require('./routes/adoptions')
 const homeless = require('./routes/homeless')
+const sysmes=require('./routes/sysmes')
 
 const forumSee = require('./routes/forumSee')
 const forumAdd = require('./routes/forumAdd')
@@ -53,6 +54,7 @@ app.use(users.routes(), users.allowedMethods())
 app.use(adoptions.routes(), adoptions.allowedMethods())
 
 app.use(homeless.routes(), homeless.allowedMethods())
+app.use(sysmes.routes(), sysmes.allowedMethods())
 
 app.use(forumSee.routes(), forumSee.allowedMethods())
 app.use(forumAdd.routes(), forumAdd.allowedMethods())

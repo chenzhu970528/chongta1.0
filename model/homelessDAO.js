@@ -18,5 +18,8 @@ class DB{
             'values(?,?,?,?,?,?)',
             [art.lpmes,art.lpPic,art.lpTime,art.address,art.detail,art.reward])
     }
+    delhomeless(homeId){
+        return DAO('DELETE FROM homeless WHERE homeless.homeId = ?',[homeId])
+    }
 }
 module.exports = new DB();

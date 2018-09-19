@@ -6,6 +6,8 @@ class DB{
     getlostMess(){
         return DAO('select * from lostMess',[]);
     }
-
+    dellostMess(lmId){
+        return DAO('DELETE FROM lostMess WHERE lostMess.lmId = ?',[lmId])
+    }
 }
 module.exports = new DB();

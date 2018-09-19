@@ -2,6 +2,7 @@ var homelessDAO = require('../model/homelessDAO')
 var DetailDAO=require('../model/DetailDAO')
 var lostMessDAO=require('../model/lostMessDAO')
 var lostPetsDAO=require('../model/lostPetsDAO')
+var sysmesDAO=require('../model/sysmesDAO')
 module.exports = {
     //获取流浪信息
     getHomeless:async (ctx,next) => {
@@ -82,5 +83,48 @@ module.exports = {
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
-    }
+    },
+    //删除流浪信息
+    delhomeless:async (ctx,next)=>{
+        //1.收集数据
+        let homeId = ctx.request.body.homeId;
+        try{
+            await homelessDAO.delhomeless(homeId);
+            ctx.body = {"code":200,"message":"ok",data:'成功删除流浪宠物信息'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //删除寻宠启示表信息
+    dellostPets:async (ctx,next)=>{
+        //1.收集数据
+        let lpId = ctx.request.body.lpId;
+        try{
+            await lostPetsDAO.dellostPets(lpId);
+            ctx.body = {"code":200,"message":"ok",data:'成功删除寻宠启示表信息'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //删除寻宠消息表信息
+    dellostMess:async (ctx,next)=>{
+        //1.收集数据
+        let lmId = ctx.request.body.lmId;
+        try{
+            await lostMessDAO.dellostMess(lmId);
+            ctx.body = {"code":200,"message":"ok",data:'成功删除寻宠消息表信息'}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //系统消息表
+    getsysmes:async (ctx,next) => {
+        let data=await  sysmesDAO.getsysmes();
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data};
+            return data;
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+        },
 }
