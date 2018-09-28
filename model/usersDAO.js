@@ -6,7 +6,7 @@ addUsers(user){
     return DAO('insert into user (userName,headPic,signature,userPwd,userEmail,userPhone,sex,wechat,realName,idPic,idNo)values(?,?,?,?,?,?,?,?,?,?,?)',
         [user.userName,user.headPic,user.signature,user.userPwd,user.userEmail,user.userPhone,user.sex,user.wechat,user.realName,user.idPic,user.idNo,])
 }
-//修改用户信息，注册
+//修改用户信息，
 modUsers(user){
     console.log(user.userName,user.headPic,user.signature,user.userPwd,user.userEmail,user.userPhone,user.sex,user.wechat,user.realName,user.userId)
     return DAO('update user set userName=?,headPic=?,signature=?,userPwd=?,userEmail=?,userPhone=?,sex=?,wechat=?,realName=? where userId=?',

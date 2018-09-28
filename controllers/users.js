@@ -48,7 +48,6 @@ module.exports = {
         user.userName = ctx.request.body.userName;
         user.headPic = ctx.request.body.headPic;
         user.signature = ctx.request.body.signature;
-        user.userPhone = ctx.request.body.userPhone;
         let pwd = ctx.request.body.userPwd;
         const hash = crypto.createHash('md5');
         hash.update(pwd);
