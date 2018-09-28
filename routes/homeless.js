@@ -38,4 +38,16 @@ router.get('/lostMess',async (ctx,next)=>{
     // let jsondata=await lostMessDAO.getlostMess();
     await homelesscontrollers.getlostMess(ctx,next);
 })
-module.exports = router
+//删除流浪信息
+router.post('/adohomeless',async (ctx,next)=>{
+    await homelesscontrollers.delhomeless(ctx,next)
+})
+//删除寻宠启示表信息
+router.post('/adolostpets',async (ctx,next)=>{
+    await homelesscontrollers.dellostPets(ctx,next)
+})
+//删除寻宠消息表信息
+router.post('/adolostMess',async (ctx,next)=>{
+    await homelesscontrollers.dellostMess(ctx,next)
+})
+module.exports = router;

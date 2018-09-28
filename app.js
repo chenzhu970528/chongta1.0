@@ -6,13 +6,12 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
+
 const index = require('./routes/index')
 const users = require('./routes/users')
 const adoptions = require('./routes/adoptions')
-
-const matchmaking = require('./routes/matchmaking')
-
-const homeless= require('./routes/homeless')
+const homeless = require('./routes/homeless')
+const sysmes=require('./routes/sysmes')
 
 const forumSee = require('./routes/forumSee')
 const forumAdd = require('./routes/forumAdd')
@@ -21,15 +20,12 @@ const forumDel = require('./routes/forumDel')
 const userReg = require('./routes/userReg')
 
 
-
 // error handler
 onerror(app)
 // middlewares
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }))
-
-
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
@@ -59,6 +55,7 @@ app.use(adoptions.routes(), adoptions.allowedMethods())
 app.use(matchmaking.routes(), matchmaking.allowedMethods())
 
 app.use(homeless.routes(), homeless.allowedMethods())
+app.use(sysmes.routes(), sysmes.allowedMethods())
 
 app.use(forumSee.routes(), forumSee.allowedMethods())
 app.use(forumAdd.routes(), forumAdd.allowedMethods())
