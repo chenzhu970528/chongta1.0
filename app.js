@@ -18,6 +18,7 @@ const forumAdd = require('./routes/forumAdd')
 const forumDel = require('./routes/forumDel')
 
 const userReg = require('./routes/userReg')
+const matchmaking = require('./routes/matchmaking')
 
 
 // error handler
