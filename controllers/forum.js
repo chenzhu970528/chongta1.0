@@ -17,9 +17,10 @@ module.exports = {
         art.faType = ctx.request.body.faType;
         try{
             //2.调用用户数据访问对象的添加方法
-            await forumArtDAO.addPost(art)
+            let jsondata=await forumArtDAO.addPost(art)
             //3.反馈结果
             ctx.body = {"code":200,"message":"ok",data:art}
+            ctx.render('art1',{data:jsondata})
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }

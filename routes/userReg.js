@@ -13,8 +13,12 @@ router.post('/mod',async (ctx,next)=>{
     console.log(jsondata)
 });
 //登录
+// router.post('/login',async (ctx,next)=>{
+//     let jsondata = await users.login(ctx,next);
+//     console.log(jsondata)
+// })
 router.post('/login',async (ctx,next)=>{
-    let jsondata = await users.login(ctx,next);
-    console.log(jsondata)
+    let jsondata2 = await users.login(ctx,next);
+    console.log(jsondata2)
 })
 module.exports = router;
