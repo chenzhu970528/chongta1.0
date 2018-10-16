@@ -13,9 +13,6 @@ modUsers(user){
         [user.userName,user.headPic,user.signature,user.userPwd,user.userEmail,user.userPhone,user.sex,user.wechat,user.realName,user.userId])
 }
 //用户登录
-// login(user){
-//     return DAO('select * from user where userPhone=? and userPwd =? ',[user.userPhone,user.userPwd])
-// }
 loginPhone(userPhone){
     return DAO('select userPwd from user where userPhone=?',[userPhone])
 }

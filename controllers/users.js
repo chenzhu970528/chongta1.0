@@ -84,35 +84,34 @@ module.exports = {
             else {
                 let data = await userReg.loginPhone(user.userPhone)//用户名正确并返回个密码
 
-                console.log('状态'+data)
+                console.log('状态' + data)
                 console.log(data.length)
 
-                if(data.length==0){
+                if (data.length == 0) {
                     // console.log('用户名不存在')
-                    ctx.body = {"code": 500, "message": '用户名不存在，请重新输入', data:data}
-
+                    ctx.body = {"code": 500, "message": '用户名不存在，请重新输入', data: data}
                 }
-                else{
+                else {
                     let pwd = ctx.request.body.userPwd;
                     const hash = crypto.createHash('md5');
                     hash.update(pwd);
                     let pwdMd5 = hash.digest('hex');
                     user.userPwd = pwdMd5
-                // console.log(user.userPwd)
-                if (user.userPwd === data[0].userPwd) {
-                    let data = await userReg.loginPwd(user.userPwd)
-                    // console.log(data)
-                    ctx.body = {"code": 200, "message": "登陆成功", data: data}
-
-                } else {
                     // console.log(user.userPwd)
-                    ctx.body = {"code": 500, "message": "密码错误，请重新输入", data: []}
+                    if (user.userPwd === data[0].userPwd) {
+                        let data = await userReg.loginPwd(user.userPwd)
+                        // console.log(data)
+                        ctx.body = {"code": 200, "message": "登陆成功", data: data}
+
+                    } else {
+                        // console.log(user.userPwd)
+                        ctx.body = {"code": 500, "message": "密码错误，请重新输入", data: []}
+                    }
                 }
             }
         }
-        }
         catch (err) {
-            ctx.body = {"code": 500, "message": '服务器错误'+err.message, data: []}
+            ctx.body = {"code": 500, "message": '服务器错误' + err.message, data: []}
         }
 
     }
