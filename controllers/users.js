@@ -104,7 +104,7 @@ module.exports = {
                         ctx.body = {"code": 200, "message": "登陆成功", data: data}
 
                     } else {
-                        // console.log(user.userPwd)
+                        // console.log(user.userPwd);
                         ctx.body = {"code": 500, "message": "密码错误，请重新输入", data: []}
                     }
                 }

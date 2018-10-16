@@ -17,7 +17,7 @@ loginPhone(userPhone){
     return DAO('select userPwd from user where userPhone=?',[userPhone])
 }
 loginPwd(userPwd){
-    return DAO('select * from user where userPwd=?',[userPwd])
+    return DAO('select * from user where userPwd=?',[userPwd]);
 }
 }
 module.exports = new USERS();
