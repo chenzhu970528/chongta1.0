@@ -3,6 +3,7 @@ var DetailDAO=require('../model/DetailDAO')
 var lostMessDAO=require('../model/lostMessDAO')
 var lostPetsDAO=require('../model/lostPetsDAO')
 var sysmesDAO=require('../model/sysmesDAO')
+
 module.exports = {
     //获取流浪信息
     getHomeless:async (ctx,next) => {
@@ -50,6 +51,16 @@ module.exports = {
             await homelessDAO.addlostPets(art)
             //3.反馈结果
             ctx.body = {"code":200,"message":"ok",data:art}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //流浪详情表
+    gethomelessdetails:async (ctx,next)=>{
+        let data=await homelessDAO.gethomelessdetails(ctx.params.homeId);
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data[0]};
+            return data[0];
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
