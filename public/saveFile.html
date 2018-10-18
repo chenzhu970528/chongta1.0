@@ -3,8 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="../javascripts/jquery-3.1.0.js"></script>
+    <script>
+        $(function(){
+            $('button').click(function(){
+                let body = new FormData($('#form')[0]);
+                console.log('body:')
+                console.log(body);
+                $.ajax({
+                    url:'/forumAdd/art',
+                    type:'post',
+                    data:body,
+                    processData: false,
+                    contentType: false,
+                    success:function(data){
+                        console.log(data);
+                    }
+                })
+            })
+        })
+    </script>
 </head>
 <body>
-
+<form id="form" name="form" action="/forumAdd/art" method="post" enctype="multipart/form-data">
+    <input id="file1" name="file1" type="file" multiple>
+    <input type="submit" value="upload">
+</form>
+<button>上传文件</button>
 </body>
 </html>

@@ -75,21 +75,58 @@ module.exports = {
     },
     //用户登录
     login: async (ctx, next) => {
-        let user = {};
-        user.userPhone = ctx.request.body.userPhone;
-        let pwd = ctx.request.body.userPwd;
-        const hash = crypto.createHash('md5');
-        hash.update(pwd);
-        let pwdMd5 = hash.digest('hex');
-        user.userPwd =pwdMd5
-        let data =await userReg.login(user)
-        console.log(data)
         try {
-                ctx.body = {"code": 200, "message": "ok", data:data}
+            let user = {};
+            let user1 = {};
+            user.userPhone = ctx.request.body.userPhone;
+            if (user.userPhone === "") {
+                ctx.body = {"code": 500, "message": '用户名为空，请重新输入', data:1}
+            }
+            else {
+                // let data = await userReg.loginPhone(user.userPhone)//用户名正确并返回个密码
+                user1.userPhone = user.userPhone;
+
+                //
+                //
+                // console.log('状态' + data)
+                // console.log(data.length)
+                //
+                // if (data.length == 0) {
+                //     // console.log('用户名不存在')
+                //     ctx.body = {"code": 500, "message": '用户名不存在，请重新输入', data: data}
+                //     console.log('用户名')
+                // }
+                // else {
+                //     console.log('用户名，，，，，')
+
+                    let pwd = ctx.request.body.userPwd;
+                    const hash = crypto.createHash('md5');
+                    hash.update(pwd);
+                    let pwdMd5 = hash.digest('hex');
+                    user1.userPwd = pwdMd5
+                    // console.log(user.userPwd)
+                    // if (user.userPwd === data[0].userPwd) {
+                    //     user1.userPwd=user.userPwd;
+                        let data = await userReg.login(user1)
+                        // console.log(data)
+                if(data.length == 0){
+                    ctx.body = {"code": 500, "message": "用户名或密码错误，请重新输入", data:2}
+                }
+                else {    ctx.body = {"code": 200, "message": "登陆成功", data:data[0]}
+
+
+                    }
+
+                        // console.log(user.userPwd);
+
+                    }
+
+
         }
         catch (err) {
-            ctx.body = {"code": 500, "message": err.toString(), data:[]}
+            ctx.body = {"code": 500, "message": '服务器错误' + err.message, data: 3}
         }
+
     }
 
 }

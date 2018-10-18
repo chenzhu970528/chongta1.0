@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提交帖子</title>
+    <script src="../public/javascripts/jquery-3.3.1.js"></script>
+    <script>
+        $(function(){
+            $.post('http://localhost:3000/forumAdd/art',function(data){
+
+
+            })
+            //按钮单击事件处理
+            $('button').click(function(){
+
+            })
+        })
+    </script>
+</head>
+<body>
+<form action="#" method="post">
+    标题<input type="text" name="faTitle" ><br/>
+    内容<input type="text" name="faText" ><br/>
+    用户的id<input type="text" name="userId" ><br/>
+    文章类型<input type="text" name="faType" ><br/>
+    <input type="submit">
+</form>
+
+</body>
+</html>

@@ -10,11 +10,11 @@ router.post('/add',async (ctx,next)=>{
 //用户修改信息
 router.post('/mod',async (ctx,next)=>{
     let jsondata = await users.modUsers(ctx,next);
-    console.log(jsondata)
+    console.log(jsondata);
 });
 //登录
 router.post('/login',async (ctx,next)=>{
-    let jsondata = await users.login(ctx,next);
-    console.log(jsondata)
+    let jsondata2 = await users.login(ctx,next);
+    console.log(jsondata2);
 })
 module.exports = router;

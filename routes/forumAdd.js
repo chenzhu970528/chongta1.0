@@ -2,7 +2,6 @@ const router = require('koa-router')();
 
 const forum=require('../controllers/forum')
 
-
 //添加~
 router.prefix('/forumAdd');
 //添加帖子
@@ -17,7 +16,6 @@ router.post('/upload',async (ctx, next) => {
     console.log(jsondata)
 
 })
-
 
 
 //添加评论

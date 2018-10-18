@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="js/jquery-3.1.0.js"></script>
-    <script src="js/wangEditor.js"></script>
+    <script src="../public/javascripts/jquery-3.1.0.js"></script>
+    <script src="../public/javascripts/wangEditor.js"></script>
     <script>
         $(function(){
             var E = window.wangEditor
@@ -27,7 +27,7 @@
                 var mydata = {"editor1":editor.txt.html()};
                 console.log(mydata)
                 $.ajax({
-                    url:'http://localhost:3000/save',
+                    url:'http://localhost:3000/forumAdd/art',
                     type:'post',
                     data:mydata,
                     success:function(data){
@@ -37,17 +37,25 @@
             })
             //读取指定的一篇文章(id=3)
             $('button:last').click(function(){
-                $.get('http://localhost:3000/loadArticle/5',function(result){
+                $.get('http://localhost:3000/forumSee/all?faId=1',function(result){
                     console.log(result)
                     editor.txt.html(result.data[0].content);
                 })
             })
         })
     </script>
+    <style>
+        input{
+            width:100%;
+            height: 40px;
+            font-size:25px;
+        }
+
+    </style>
 </head>
 <body>
+<input type="text">
 <div name="editor" id="editor" >
-    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
 </div>
 <button>保存文章</button>
 <button>加载文章</button>
