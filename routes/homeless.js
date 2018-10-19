@@ -36,6 +36,11 @@ router.get('/lostPets/lostDetails/:homeId',async (ctx,next)=>{
     // let ldjson=await DetailDAO.detailIf(ctx.params.userId);
     await homelesscontrollers.detailIf(ctx,next);
 })
+//丢失信息
+router.get('/lostPets',async (ctx,next)=>{
+    // let jsondata=await lostMessDAO.getlostMess();
+    await homelesscontrollers.getlost(ctx,next);
+})
 
 //寻宠消息表信息
 router.get('/lostMess',async (ctx,next)=>{
