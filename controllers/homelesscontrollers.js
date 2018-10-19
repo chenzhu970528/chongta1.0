@@ -85,7 +85,17 @@ module.exports = {
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
 },
-    //寻宠消息表
+    //获取丢失宠物信息（）
+    getlost:async (ctx,next)=>{
+        let data=await  lostPetsDAO.getlost();
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data};
+            return data;
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //获取寻宠消息表里内容
     getlostMess:async (ctx,next)=>{
         let data=await  lostMessDAO.getlostMess();
         try{
