@@ -6,6 +6,9 @@ class DB{
     getHomeless(){
         return DAO('select * from homeless,user where user.userId=homeless.userId',[]);
     }
+    gethomelessdetails(homeId){
+        return DAO('select * from homeless where homeId=?',[homeId])
+    }
     addhomeless(art){
         return DAO('insert into homeless ' +
             '(getmes,userId,homePic,homeTime,detail,address)' +
