@@ -25,6 +25,7 @@ router.get('/details/:homeId',async (ctx,next)=>{
     // let jsondata=await lostPetsDAO.getlostPets();
     await homelesscontrollers.gethomelessdetails(ctx,next);
 })
+
 //寻宠启示表
 router.get('/lostPets/:homeId',async (ctx,next)=>{
     // let jsondata=await lostPetsDAO.getlostPets();
