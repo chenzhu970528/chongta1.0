@@ -20,17 +20,27 @@ router.post('/Add',async (ctx,next)=>{
 router.post('/lost',async (ctx,next)=>{
     await homelesscontrollers.addlostPets(ctx,next)
 })
+//流浪详情表
+router.get('/details/:homeId',async (ctx,next)=>{
+    // let jsondata=await lostPetsDAO.getlostPets();
+    await homelesscontrollers.gethomelessdetails(ctx,next);
+})
 
 //寻宠启示表
-router.get('/lostPets/:userId',async (ctx,next)=>{
+router.get('/lostPets/:homeId',async (ctx,next)=>{
     // let jsondata=await lostPetsDAO.getlostPets();
     await homelesscontrollers.getlostPets(ctx,next);
 })
 
 //寻宠启示详情信息
-router.get('/lostPets/lostDetails/:userId',async (ctx,next)=>{
+router.get('/lostPets/lostDetails/:homeId',async (ctx,next)=>{
     // let ldjson=await DetailDAO.detailIf(ctx.params.userId);
     await homelesscontrollers.detailIf(ctx,next);
+})
+//丢失信息
+router.get('/lostPets',async (ctx,next)=>{
+    // let jsondata=await lostMessDAO.getlostMess();
+    await homelesscontrollers.getlost(ctx,next);
 })
 
 //寻宠消息表信息

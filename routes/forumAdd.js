@@ -18,7 +18,6 @@ router.post('/upload',async (ctx, next) => {
 })
 
 
-
 //添加评论
 router.post('/comment',async (ctx,next)=>{
     let jsondata = await forum.addComment(ctx,next);

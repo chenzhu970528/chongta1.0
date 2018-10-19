@@ -9,5 +9,8 @@ class DB{
     dellostPets(lpId){
         return DAO('DELETE FROM lostPets WHERE lostPets.lpId = ?',[lpId])
     }
+    getlost(){
+        return DAO('select * from lostPets,user where user.userId=lostPets.userId',[]);
+    }
 }
 module.exports = new DB();

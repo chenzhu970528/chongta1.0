@@ -25,7 +25,6 @@ module.exports = {
         art.birth = ctx.request.body.birth;
         art.petType = ctx.request.body.petType;
         art.sex = ctx.request.body.sex;
-        art.adoPic = ctx.request.body.adoPic;
         art.age = ctx.request.body.age;
         try{
             //2.调用用户数据访问对象的添加方法

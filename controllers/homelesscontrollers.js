@@ -3,6 +3,7 @@ var DetailDAO=require('../model/DetailDAO')
 var lostMessDAO=require('../model/lostMessDAO')
 var lostPetsDAO=require('../model/lostPetsDAO')
 var sysmesDAO=require('../model/sysmesDAO')
+
 module.exports = {
     //获取流浪信息
     getHomeless:async (ctx,next) => {
@@ -54,6 +55,16 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+    //流浪详情表
+    gethomelessdetails:async (ctx,next)=>{
+        let data=await homelessDAO.gethomelessdetails(ctx.params.homeId);
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data[0]};
+            return data[0];
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
     //寻宠启示
     getlostPets:async (ctx,next)=>{
     let data=await lostPetsDAO.getlostPets(ctx.params.userId);
@@ -74,7 +85,17 @@ module.exports = {
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
 },
-    //寻宠消息表
+    //获取丢失宠物信息（）
+    getlost:async (ctx,next)=>{
+        let data=await  lostPetsDAO.getlost();
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data};
+            return data;
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //获取寻宠消息表里内容
     getlostMess:async (ctx,next)=>{
         let data=await  lostMessDAO.getlostMess();
         try{

@@ -1,7 +1,6 @@
 const userReg = require('../model/usersDAO');
 var crypto = require('crypto')
 module.exports = {
-
     //添加用户信息
     addUsers: async (ctx, next) => {
         let user = {};
@@ -13,7 +12,7 @@ module.exports = {
         const hash = crypto.createHash('md5');
         hash.update(pwd);
         let pwdMd5 = hash.digest('hex');
-        user.userPwd = pwdMd5
+        user.userPwd =pwdMd5
         if (/^[0-9A-Za-z][\.-_0-9A-Za-z]*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(ctx.request.body.userEmail)) {
             user.userEmail = ctx.request.body.userEmail;
         } else {
@@ -36,7 +35,7 @@ module.exports = {
             console.log('身份证格式错误')
         }
         try {
-            let data = await userReg.addUsers(user)
+            let data=await userReg.addUsers(user)
             ctx.body = {"code": 200, "message": "ok", data: user}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
@@ -52,7 +51,7 @@ module.exports = {
         const hash = crypto.createHash('md5');
         hash.update(pwd);
         let pwdMd5 = hash.digest('hex');
-        user.userPwd = pwdMd5
+        user.userPwd =pwdMd5
         if (/^[0-9A-Za-z][\.-_0-9A-Za-z]*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$/.test(ctx.request.body.userEmail)) {
             user.userEmail = ctx.request.body.userEmail;
         } else {
@@ -67,7 +66,7 @@ module.exports = {
         user.wechat = ctx.request.body.wechat;
         user.userId = ctx.request.body.userId;
         try {
-            let data = await userReg.modUsers(user)
+            let data=await userReg.modUsers(user)
             ctx.body = {"code": 200, "message": "ok", data: user}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
@@ -77,43 +76,66 @@ module.exports = {
     login: async (ctx, next) => {
         try {
             let user = {};
+            let user1 = {};
             user.userPhone = ctx.request.body.userPhone;
             if (user.userPhone === "") {
-                ctx.body = {"code": 500, "message": '用户名为空，请重新输入', data: []}
+                ctx.body = {"code": 500, "message": '用户名为空，请重新输入', data:1}
             }
             else {
-                let data = await userReg.loginPhone(user.userPhone)//用户名正确并返回个密码
+                // let data = await userReg.loginPhone(user.userPhone)//用户名正确并返回个密码
+                user1.userPhone = user.userPhone;
 
-                console.log('状态' + data)
-                console.log(data.length)
+                //
+                //
+                // console.log('状态' + data)
+                // console.log(data.length)
+                //
+                // if (data.length == 0) {
+                //     // console.log('用户名不存在')
+                //     ctx.body = {"code": 500, "message": '用户名不存在，请重新输入', data: data}
+                //     console.log('用户名')
+                // }
+                // else {
+                //     console.log('用户名，，，，，')
 
-                if (data.length == 0) {
-                    // console.log('用户名不存在')
-                    ctx.body = {"code": 500, "message": '用户名不存在，请重新输入', data: data}
-                }
-                else {
                     let pwd = ctx.request.body.userPwd;
                     const hash = crypto.createHash('md5');
                     hash.update(pwd);
                     let pwdMd5 = hash.digest('hex');
-                    user.userPwd = pwdMd5
+                    user1.userPwd = pwdMd5
                     // console.log(user.userPwd)
-                    if (user.userPwd === data[0].userPwd) {
-                        let data = await userReg.loginPwd(user.userPwd)
+                    // if (user.userPwd === data[0].userPwd) {
+                    //     user1.userPwd=user.userPwd;
+                        let data = await userReg.login(user1)
                         // console.log(data)
-                        ctx.body = {"code": 200, "message": "登陆成功", data: data}
-
-                    } else {
-                        // console.log(user.userPwd);
-                        ctx.body = {"code": 500, "message": "密码错误，请重新输入", data: []}
-                    }
+                if(data.length == 0){
+                    ctx.body = {"code": 500, "message": "用户名或密码错误，请重新输入", data:2}
                 }
-            }
+                else {    ctx.body = {"code": 200, "message": "登陆成功", data:data[0]}
+
+
+                    }
+
+                        // console.log(user.userPwd);
+
+                    }
+
+
         }
         catch (err) {
-            ctx.body = {"code": 500, "message": '服务器错误' + err.message, data: []}
+            ctx.body = {"code": 500, "message": '服务器错误' + err.message, data: 3}
         }
 
-    }
-
+    },
+    // 显示个人信息
+    showUser:async (ctx,next) => {
+        let userId=ctx.request.body.userId;
+        try{
+            await  userReg.showUser(userId);
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:[]}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
 }
