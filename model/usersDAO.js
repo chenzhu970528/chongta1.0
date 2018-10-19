@@ -1,6 +1,10 @@
 const DAO = require('../model/DAO')
 
 class USERS{
+    // 显示用户信息
+    showUser(userId){
+        return DAO('select userId,userName,headPic,signature,userEmail,userPhone,sex,wechat,realName from user where userId=?',[userId])
+    }
 //添加用户信息，注册
 addUsers(user){
     return DAO('insert into user (userName,headPic,signature,userPwd,userEmail,userPhone,sex,wechat,realName,idPic,idNo)values(?,?,?,?,?,?,?,?,?,?,?)',

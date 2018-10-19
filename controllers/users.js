@@ -1,7 +1,6 @@
 const userReg = require('../model/usersDAO');
 var crypto = require('crypto')
 module.exports = {
-
     //添加用户信息
     addUsers: async (ctx, next) => {
         let user = {};
@@ -127,6 +126,16 @@ module.exports = {
             ctx.body = {"code": 500, "message": '服务器错误' + err.message, data: 3}
         }
 
-    }
-
+    },
+    // 显示个人信息
+    showUser:async (ctx,next) => {
+        let userId=ctx.request.body.userId;
+        try{
+            await  userReg.showUser(userId);
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:[]}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
 }
