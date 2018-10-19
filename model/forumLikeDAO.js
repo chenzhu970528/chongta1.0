@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class LIKE{
     //获取论坛所有赞方法 传入文章id
     getLike(faId){
-        return DAO('select count(1) from forumLike where faId=?',[faId]);
+        return DAO('select count(1)as like_sum from forumLike where faId=?',[faId]);
     }
     //点赞加一行,外部传参进去
     addLike(like){
