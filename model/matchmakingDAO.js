@@ -10,7 +10,6 @@ class DB{
     getMatchList(){
         return DAO('call getMatchList(@p_getMatchList);',[])
     }
-
     //获取详情
     getMdetail(id){
         return DAO('call getMdetail(?,@p_getMdetail);',[id])
