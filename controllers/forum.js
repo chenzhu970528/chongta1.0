@@ -219,6 +219,29 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+    //帖子赞排行
+    seeLikes:async (ctx,next) => {
+        try{
+            let data=await forumArtDAO.likeSum();
+            ctx.body = {"code":200,"message":"ok",data:data}
+            return data;
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //评论总数
+    Sum:async (ctx,next) => {
+        try{
+            let faId =ctx.request.query.faId;
+            let data=await forumArtDAO.comSum(faId);
+            let data2=await forumArtDAO.likes(faId);
+            let arr=[data[0][0],data2[0]]
+            ctx.body = {"code":200,"message":"ok",data:arr}
+            return data;
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
     // //查看评论所有回复
     // getReply:async (ctx,next) => {
     //     console.log(ctx.request.body)

@@ -25,9 +25,15 @@ router.get('/gossip',async (ctx,next)=>{
 //     console.log(jsondata)
 // });
 
-//查看帖子赞的数量
-router.get('/like',async (ctx,next)=>{
-    let jsondata = await forum.getLike(ctx,next);
+//查看单个帖子赞的数量，和评论数量
+router.get('/sum',async (ctx,next)=>{
+    let jsondata = await forum.Sum(ctx,next);
+    console.log(jsondata)
+});
+
+//查看帖子赞的数量排行
+router.get('/likes',async (ctx,next)=>{
+    let jsondata = await forum.seeLikes(ctx,next);
     console.log(jsondata)
 });
 //查看单个评论的所有回复
