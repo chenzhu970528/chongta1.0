@@ -39,6 +39,17 @@ class ART{
     getGossip(){
         return DAO('select * from forumArt where faType like "b%" order by time desc',[]);
     }
+    //获取用户领养日记的方法
+    diary(userId){
+        return DAO("select * from forumart WHERE userId=? and faType like '%a%'",[userId]);
+    }
+
+    //获取用户日常交流的方法
+    share(userId){
+        return DAO("select * from forumart WHERE userId=? and faType like '%b%'",[userId]);
+    }
+
+
     //添加宠物日记，日常交流的方法
     addPost(art){
         return DAO('insert into forumArt (faTitle,faText,userId,userName,faType)values(?,?,?,?,?)',

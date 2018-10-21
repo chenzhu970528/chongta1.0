@@ -52,6 +52,16 @@ router.get('/query',async (ctx,next)=>{
     let jsondata = await forum.seeQuery(ctx,next);
     // console.log(jsondata)
 });
+//用户日记
+router.get('/user/diary',async (ctx,next)=>{
+    let jsondata = await forum.seeDiary(ctx,next);
+    // console.log(jsondata)
+});
+//用户交流
+router.get('/user/share',async (ctx,next)=>{
+    let jsondata = await forum.seeShare(ctx,next);
+    // console.log(jsondata)
+});
 //最新发布
 router.get('/time',async (ctx,next)=>{
     let jsondata = await forum.seeTime(ctx,next);
