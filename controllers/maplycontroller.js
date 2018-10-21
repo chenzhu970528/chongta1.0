@@ -32,6 +32,7 @@ module.exports = {
         let users= { };
         users.relId=ctx.request.body.relId;
         users.title=ctx.request.body.title;
+        users.relTime=ctx.request.body.relTime;
         users.sandword=ctx.request.body.sandword;
         users.request=ctx.request.body.request;
         users.detail=ctx.request.body.detail;
