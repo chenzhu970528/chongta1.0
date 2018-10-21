@@ -12,7 +12,7 @@ class DB{
     }
     //获取详情
     getMdetail(id){
-        return DAO('call getMdetail(?,@p_getMdetail);',[id])
+        return DAO('call getMdetail1(?,@p_getMdetail);',[id])
     }
     addMatch(users){
         return DAO('insert into matchmaking ' +
