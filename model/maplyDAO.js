@@ -35,6 +35,12 @@ class DB{
         return DAO('select matchmaking.petPic,matchmaking.PetName,count(*) num ,userName,matchmaking.matId from maply,matchmaking,user\n' +
             'where matchmaking.matId=maply.matId and pass=1 and relId=userId group by maply.matId ORDER BY num desc LIMIT 0,10',[])
     }
+    //显示是否被同意
+    showAgree(aplyId){
+        return DAO('select agree,maplydel.matId\n' +
+            'from matchmaking,maply,maplydel\n' +
+            'where maplydel.aplyId=maply.aplyId and maplydel.matId=matchmaking.matId and maplydel.matId GROUP BY maplydel.matId HAVING maplydel.matId in (select matId from maplydel where aplyId=?)',[aplyId])
+    }
 }
 module.exports = new  DB();
 

@@ -76,18 +76,8 @@ router.get('/:userId/showaply',async (ctx,next)=>{
 // 显示本人的发出的申请
 router.get('/:userId/sendaply',async (ctx,next)=>{
     let ssjson1 = await maplyDAO.sendaply1(ctx.params.userId);
-    let ssjson2 = await maplyDAO.sendaply2(ctx.params.userId);
-    var ssjson =[]
     console.log(ssjson1)
-    console.log(ssjson2)
-    for(var i=0;i< ssjson1.length;i++){
-        ssjson.push(ssjson1[i])
-    }
-    for(var j=0;j< ssjson2.length;j++){
-        ssjson.push(ssjson2[j])
-    }
-    // console.log(ssjson)
-    ctx.body = {"code":200,"message":"ok",data:ssjson}
+    ctx.body = {"code":200,"message":"ok",data:ssjson1}
 })
 //删除申请请求
 router.post('/delaply',async (ctx,next)=>{
@@ -106,5 +96,10 @@ router.get('/countAply',async (ctx,next)=>{
 //同意申请
 router.post('/agree',async (ctx,next) => {
     await  maplycontroller.agreeMatch(ctx,next);
+});
+// 显示是否被同意
+router.get('/showAgree/:aplyId',async (ctx,next)=>{
+    let SAdata = await maplyDAO.showAgree(ctx.params.aplyId);
+    ctx.body = {"code":200,"message":"ok",data:SAdata}
 });
 module.exports = router
