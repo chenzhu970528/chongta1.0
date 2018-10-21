@@ -25,6 +25,11 @@ module.exports = {
         art.homePic = ctx.request.body.homePic;
         art.detail = ctx.request.body.detail;
         art.address = ctx.request.body.address;
+        art.type = ctx.request.body.type;
+        art.people = ctx.request.body.people;
+        art.phone = ctx.request.body.phone;
+        art.homeTime = ctx.request.body.homeTime;
+        art.sex = ctx.request.body.sex;
         try{
             //2.调用用户数据访问对象的添加方法
             await homelessDAO.addhomeless(art)
@@ -39,13 +44,16 @@ module.exports = {
         //1.收集数据
         let art = {};
         art.lpmes = ctx.request.body.lpmes;
-        art.lpPic = ctx.request.body.lpPic;
+        art.lppic = ctx.request.body.lppic;
         art.lpTime = ctx.request.body.lpTime;
         art.address = ctx.request.body.address;
-        art.username = ctx.request.body.username;
-        art.userPhone = ctx.request.body.userPhone;
+        art.lostpeople = ctx.request.body.lostpeople;
+        art.lostphone = ctx.request.body.lostphone;
         art.detail = ctx.request.body.detail;
         art.reward = ctx.request.body.reward;
+        art.sex=ctx.request.body.sex;
+        art.type=ctx.request.body.type;
+
         try{
             //2.调用用户数据访问对象的添加方法
             await homelessDAO.addlostPets(art)

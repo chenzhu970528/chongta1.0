@@ -17,7 +17,7 @@ router.post('/Add',async (ctx,next)=>{
     await homelesscontrollers.addhomeless(ctx,next)
 })
 //发布丢失信息，找主人
-router.post('/lost',async (ctx,next)=>{
+router.post('/addlost',async (ctx,next)=>{
     await homelesscontrollers.addlostPets(ctx,next)
 })
 //流浪详情表
