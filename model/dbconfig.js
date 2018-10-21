@@ -4,7 +4,8 @@ module.exports.config={
     port:3306,
     user:'root',
     password:'root',
-    database:'loveit'
+    database:'loveit',
+    timezone:"08:00"
 }
 
 

@@ -10,10 +10,10 @@ class LIKE{
     addLike(like){
         return DAO('insert into forumLike (faId,userId) values(?,?) ',
             [like.faId,like.userId])
-    }
+    };
     delOneLike(flileId){
         return DAO('delete  from forumLike where flileId=?',[flileId])
-    }
+    };
 //论坛文章删除，与之对应的点赞表也删除
     delLike(){
         return DAO('delete forumLike from forumLike join forumArt on forumLike.faId=forumArt.faId where forumArt.faId is NULL',[])
