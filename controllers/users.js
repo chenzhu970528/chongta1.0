@@ -1,7 +1,7 @@
 const userReg = require('../model/usersDAO');
 var crypto = require('crypto')
 module.exports = {
-    //添加用户信息
+    //添加用户信息 注册
     addUsers: async (ctx, next) => {
         let user = {};
         user.userName = ctx.request.body.userName;

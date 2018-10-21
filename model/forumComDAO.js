@@ -8,8 +8,8 @@ class COM{
     }
     //添加一条评论  外部传参进去
     addComment(comment){
-        return DAO('insert into forumCom (faId,faText,userId) values(?,?,?)',
-            [comment.faId,comment.faText,comment.userId] )
+        return DAO('insert into forumCom (faId,faText,userId,userName) values(?,?,?,?)',
+            [comment.faId,comment.faText,comment.userId,comment.userName])
     }
 
     //删除一条评论

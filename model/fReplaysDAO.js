@@ -6,10 +6,11 @@ class REP{
     getReply(fcId){
         return DAO('select * from fReplays where fcId=?',[fcId]);
     }
+
     //添加一条回复  外部传参进去
     addReply(reply){
-        return DAO('insert into fReplays(fcId,frman,frText) values (?,?,?)',
-            [reply.fcId,reply.frman,reply.frText])
+        return DAO('insert into fReplays(fcId,fcName,frman,frName,frText) values (?,?,?,?,?)',
+            [reply.fcId,reply.fcName,reply.frman,reply.frName,reply.frText])
     }
     // 删除一条评论回复的方法
     delReply(frId){

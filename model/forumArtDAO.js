@@ -29,20 +29,20 @@ class ART{
     }
     //获取精品推荐方法
     getEssence(){
-        return DAO('select * from forumArt where faId in(select faId from forumLike  GROUP BY faId having count(*)>100) or faType like "%l" ',[]);
+        return DAO('select * from forumArt where faId in(select faId from forumLike  GROUP BY faId having count(*)>100) or faType like "%l" order by time desc',[]);
     }
     //获取宠物日记方法
     getDiary(){
-        return DAO('select * from forumArt where faType like "a%"',[]);
+        return DAO('select * from forumArt where faType like "a%" order by time desc',[]);
     }
     //获取日常交流的方法
     getGossip(){
-        return DAO('select * from forumArt where faType like "b%"',[]);
+        return DAO('select * from forumArt where faType like "b%" order by time desc',[]);
     }
     //添加宠物日记，日常交流的方法
     addPost(art){
-        return DAO('insert into forumArt (faTitle,faText,userId,faType)values(?,?,?,?)',
-            [art.faTitle,art.faText,art.userId,art.faType])
+        return DAO('insert into forumArt (faTitle,faText,userId,userName,faType)values(?,?,?,?,?)',
+            [art.faTitle,art.faText,art.userId,art.userName,art.faType])
     }
 
     //管理员添加精品推荐
