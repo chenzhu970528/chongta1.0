@@ -38,11 +38,11 @@ class ART{
     //获取日常交流的方法
     getGossip(){
         return DAO('select * from forumArt where faType like "b%" order by time desc',[]);
-    }
+    };
     //获取用户领养日记的方法
     diary(userId){
         return DAO("select * from forumart WHERE userId=? and faType like '%a%'",[userId]);
-    }
+    };
 
     //获取用户日常交流的方法
     share(userId){

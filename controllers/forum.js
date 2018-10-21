@@ -231,7 +231,7 @@ module.exports = {
             return data;
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
-        }
+        };
     },
     //查看用户交流
     seeShare: async (ctx, next) => {

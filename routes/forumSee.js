@@ -62,6 +62,9 @@ router.get('/user/share',async (ctx,next)=>{
     let jsondata = await forum.seeShare(ctx,next);
     // console.log(jsondata)
 });
+
+
+
 //最新发布
 router.get('/time',async (ctx,next)=>{
     let jsondata = await forum.seeTime(ctx,next);
