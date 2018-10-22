@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class DB{
     //获取全部收养发布表方法
     getAdoptions(){
-        return DAO('select * from adoptions order by 1 desc',[]);
+        return DAO('select * from adoptions order by adoTime desc',[]);
     }
     //发布领养信息
     addAdoptions(art){
