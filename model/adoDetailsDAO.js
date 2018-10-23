@@ -14,6 +14,5 @@ class ADD{
     getAdoUser(id){
         return DAO('select * from user ,adodetails where user.userId = adodetails.userId and adodetails.userId = ?',[id]);
     }
-
 }
 module.exports = new ADD();
