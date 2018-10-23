@@ -9,14 +9,11 @@ module.exports = {
         apldata.matId=ctx.request.body.matId;
         apldata.detail= ctx.request.body.detail;
         apldata.petPic=ctx.request.body.petPic;
-        apldata.address=ctx.request.body.address;
-        apldata.medReport=ctx.request.body.medReport;
         apldata.age=ctx.request.body.age;
         apldata.birth=ctx.request.body.birth;
         apldata.type=ctx.request.body.type;
         apldata.sex=ctx.request.body.sex;
         apldata.PetName=ctx.request.body.PetName;
-        apldata.maHistory=ctx.request.body.maHistory;
         try{
             await maplyDAO.addaply(apldata)
             await  maplyDelDAO.addaplyDel(apldata.aplyId,apldata.matId)
@@ -32,19 +29,15 @@ module.exports = {
         let users= { };
         users.relId=ctx.request.body.relId;
         users.title=ctx.request.body.title;
-        users.relTime=ctx.request.body.relTime;
         users.sandword=ctx.request.body.sandword;
         users.request=ctx.request.body.request;
         users.detail=ctx.request.body.detail;
-        users.address=ctx.request.body.address;
-        users.medReport=ctx.request.body.medReport;
         users.birth=ctx.request.body.birth;
         users.type=ctx.request.body.type;
         users.sex=ctx.request.body.sex;
         users.petPic=ctx.request.body.petPic;
         users.age=ctx.request.body.age;
         users.PetName=ctx.request.body.PetName;
-        users.maHistory=ctx.request.body.maHistory;
         try{
             await matchmakingDAO.addMatch(users)
             //3.反馈结果
