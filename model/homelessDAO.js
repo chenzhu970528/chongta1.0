@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class DB{
     //获取全部流浪表方法
     getHomeless(){
-        return DAO('select * from homeless,user where user.userId=homeless.userId',[]);
+        return DAO('select * from homeless,user where user.userId=homeless.userId ',[]);
     }
     gethomelessdetails(homeId){
         return DAO('select * from homeless,user where homeId=? and homeless.userId=user.\n' +
