@@ -102,4 +102,12 @@ router.get('/showAgree/:aplyId',async (ctx,next)=>{
     let SAdata = await maplyDAO.showAgree(ctx.params.aplyId);
     ctx.body = {"code":200,"message":"ok",data:SAdata}
 });
+router.get('/num',async (ctx,next)=>{
+    let match = await matchmakingDAO.countM();
+    let Ado = await matchmakingDAO.countA();
+    let Forum = await matchmakingDAO.countF();
+    let Home = await matchmakingDAO.countH();
+    let all=parseInt(match[0].num)+parseInt(Ado[0].num)+parseInt(Home[0].num)+parseInt(Forum[0].num);
+    ctx.body = {"code":200,"message":"ok",data:all}
+});
 module.exports = router

@@ -26,6 +26,7 @@ modUsers(user){
 login(user1){
     return DAO('select * from user where userPhone=? and userPwd=?',[user1.userPhone,user1.userPwd]);
 }
-
+// 显示用户量
+showNum(){return DAO('select count(*) num from user')}
 }
 module.exports = new USERS();

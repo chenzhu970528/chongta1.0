@@ -44,5 +44,10 @@ class DB{
     sortTimeASC(){return DAO('call sortTimeASC(@p_sortTimeASC);',[])};
     sortHotDESC(){return DAO('call sortHotDESC(@p_sortHotDESC);',[])};
     sortHotASC(){return DAO('call sortHotASC(@p_sortHotASC);',[])};
+
+    countM(){return DAO('select count(*) num from matchmaking',[])};
+    countA(){return DAO('select count(*) num from adoptions',[])};
+    countF(){return DAO('select count(*) num from forumart',[])};
+    countH(){return DAO('select count(*) num from homeless',[])};
 }
 module.exports = new DB();
