@@ -5,7 +5,7 @@ module.exports.config={
     user:'root',
     password:'root',
     database:'loveit',
-    timezone:"08:00"
+    timezone:"08:00",
 }
 
 

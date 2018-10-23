@@ -69,6 +69,13 @@ router.get('/user/like',async (ctx,next)=>{
 });
 
 
+//用户评论
+router.get('/user/com',async (ctx,next)=>{
+    let jsondata = await forum.userCom(ctx,next);
+    console.log(jsondata)
+});
+
+
 
 //最新发布
 router.get('/time',async (ctx,next)=>{

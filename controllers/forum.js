@@ -231,7 +231,8 @@ module.exports = {
             return data;
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
-        };
+        }
+        ;
     },
     //查看用户交流
     seeShare: async (ctx, next) => {
@@ -249,6 +250,56 @@ module.exports = {
             let data = await forumArtDAO.like(ctx.request.query.userId);
             ctx.body = {"code": 200, "message": "ok", data: data}
             return data;
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+
+
+    //查看用户评论回复
+    userCom: async (ctx, next) => {
+        try {
+            let a = []
+            let data = await forumComDAO.com(ctx.request.query.userId);
+            let data2 = await forumComDAO.comArt(ctx.request.query.userId);
+            for (let i = 0; i < data.length; i++) {
+                let arr = {}
+                for (let j = 0; j < data2.length; j++) {
+                    if (data[i].faId === data2[j].faId) {
+                        arr.faId = data2[j].faId
+                        arr.faTitle = data2[j].faTitle
+                        arr.userName = data2[j].userName
+                        arr.faText = data[i].faText
+                        arr.time = data[i].time
+                    }
+
+                }
+                a.push(arr)
+            }
+            let a1 = []
+            let data1 = await fReplaysDAO.queryRep(ctx.request.query.userId);
+            let data21 = await fReplaysDAO.queryArt(ctx.request.query.userId);
+            for (let i = 0; i < data1.length; i++) {
+                let arr1 = {}
+                for (let j = 0; j < data21.length; j++) {
+                    if (data1[i].faId === data21[j].faId) {
+                        arr1.faId = data21[j].faId
+                        arr1.faTitle = data21[j].faTitle
+                        arr1.userName = data21[j].userName
+                        arr1.frText = data1[i].frText
+                        arr1.time = data1[i].time
+                    }
+
+                }
+                a1.push(arr1)
+            }
+            for (let x = 0; x < a1.length; x++) {
+                a.push(a1[x])
+            }
+
+
+            ctx.body = {"code": 200, "message": "ok", data: a}
+            return a;
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
@@ -299,29 +350,27 @@ module.exports = {
         art.art = await forumArtDAO.seeAll(faId);
         art.sum = await forumArtDAO.comSum(faId);
         let com = await forumComDAO.getComment(faId)
-        let replys=[];
+        let replys = [];
         let cc
-        let l=[]
+        let l = []
         let a
-     let b
+        let b
         if (com.length > 0) {
             art.comment = com;
-        for(let i=0;i<com.length;i++){
-            cc=await fReplaysDAO.getReply(com[i].fcId)
-             replys.push(cc)
+            for (let i = 0; i < com.length; i++) {
+                cc = await fReplaysDAO.getReply(com[i].fcId)
+                replys.push(cc)
 
-        }
-        a=replys[0].length
-            for(let i=0;i<replys.length;i++) {
-                if(replys[i].length>0){
-                    b=replys[i]
-                    for(let j=0;j<b.length;j++){
-                        l.push(b[j])
-                }
-                    }
             }
-
-
+            a = replys[0].length
+            for (let i = 0; i < replys.length; i++) {
+                if (replys[i].length > 0) {
+                    b = replys[i]
+                    for (let j = 0; j < b.length; j++) {
+                        l.push(b[j])
+                    }
+                }
+            }
         }
         art.reply = l;
         art.like = await forumLikeDAO.getLike(faId);
