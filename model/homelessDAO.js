@@ -18,9 +18,9 @@ class DB{
     }
     addlostPets(art){
         return DAO('insert into lostPets' +
-            '(lpmes,lppic,lpTime,address,detail,reward,sex,type,lostpeople,lostphone)' +
-            'values(?,?,?,?,?,?,?,?,?,?)',
-            [art.lpmes,art.lppic,art.lpTime,art.address,art.detail,art.reward,art.sex,art.type,art.lostpeople,art.lostphone])
+            '(userId,lpmes,lppic,lpTime,address,detail,reward,sex,type,lostpeople,lostphone)' +
+            'values(?,?,?,?,?,?,?,?,?,?,?)',
+            [art.userId,art.lpmes,art.lppic,art.lpTime,art.address,art.detail,art.reward,art.sex,art.type,art.lostpeople,art.lostphone])
     }
 
     delhomeless(homeId){
