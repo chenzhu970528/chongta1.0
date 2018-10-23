@@ -21,5 +21,11 @@ router.post('/mod',async (ctx,next)=>{
 router.post('/login',async (ctx,next)=>{
     let jsondata2 = await users.login(ctx,next);
     console.log(jsondata2);
-})
+});
+// 显示用户量
+router.get('/num',async (ctx,next)=>{
+    let tol = await userReg.showNum();
+    let tolAll=parseInt(tol[0].num)
+    ctx.body = {"code":200,"message":"ok",data:tolAll}
+});
 module.exports = router;

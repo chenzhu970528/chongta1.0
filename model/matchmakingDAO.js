@@ -12,13 +12,13 @@ class DB{
     }
     //获取详情
     getMdetail(id){
-        return DAO('call getMdetail(?,@p_getMdetail);',[id])
+        return DAO('call getMdetail1(?,@p_getMdetail);',[id])
     }
     addMatch(users){
         return DAO('insert into matchmaking ' +
-            '(relId,title,sandword,request,detail,address,medReport,birth,type,sex,petPic,age,PetName,maHistory,pass) ' +
-            'values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)',
-            [users.relId,users.title,users.sandword,users.request,users.detail,users.address,users.medReport,users.birth,users.type,users.sex,users.petPic,users.age,users.PetName,users.maHistory])
+            '(relId,title,sandword,request,detail,address,medReport,relTime,birth,type,sex,petPic,age,PetName,maHistory,pass) ' +
+            'values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)',
+            [users.relId,users.title,users.sandword,users.request,users.detail,users.address,users.medReport,users.relTime,users.birth,users.type,users.sex,users.petPic,users.age,users.PetName,users.maHistory])
     }
     //删除婚介发布
         //删除相关del
@@ -44,5 +44,10 @@ class DB{
     sortTimeASC(){return DAO('call sortTimeASC(@p_sortTimeASC);',[])};
     sortHotDESC(){return DAO('call sortHotDESC(@p_sortHotDESC);',[])};
     sortHotASC(){return DAO('call sortHotASC(@p_sortHotASC);',[])};
+
+    countM(){return DAO('select count(*) num from matchmaking',[])};
+    countA(){return DAO('select count(*) num from adoptions',[])};
+    countF(){return DAO('select count(*) num from forumart',[])};
+    countH(){return DAO('select count(*) num from homeless',[])};
 }
 module.exports = new DB();

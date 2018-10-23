@@ -4,14 +4,14 @@ const DAO = require('../model/DAO')
 class DB{
     //获取全部收养发布表方法
     getAdoptions(){
-        return DAO('select * from adoptions',[]);
+        return DAO('select * from adoptions order by adoTime desc',[]);
     }
     //发布领养信息
     addAdoptions(art){
         return DAO('insert into adoptions ' +
-            '(userId,adoAddress,adoTitle,detail,adoType,adoTime,limitTime,birth,petType,sex,age)' +
-            'values(?,?,?,?,?,now(),?,?,?,?,?)',
-            [art.userId,art.adoAddress,art.adoTitle,art.detail,art.adoType,art.limitTime,art.birth,art.petType,art.sex,art.age])
+            '(userId,adoAddress,adoTitle,detail,adoType,adoTime,limitTime,birth,petType,sex,age,adoPic)' +
+            'values(?,?,?,?,?,now(),?,?,?,?,?,?)',
+            [art.userId,art.adoAddress,art.adoTitle,art.detail,art.adoType,art.limitTime,art.birth,art.petType,art.sex,art.age,art.adoPic])
     }
     //删除领养信息,对应的有意领养者信息表也删除
     delAdoptions(adoId){
