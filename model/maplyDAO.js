@@ -32,7 +32,7 @@ class DB{
     }
     // 热门
     countAply(){
-        return DAO('select matchmaking.petPic,matchmaking.PetName,count(*) num ,userName,matchmaking.matId from maply,matchmaking,user\n' +
+        return DAO('select relId,matchmaking.petPic,matchmaking.PetName,count(*) num ,userName,matchmaking.matId from maply,matchmaking,user\n' +
             'where matchmaking.matId=maply.matId and relId=userId group by maply.matId ORDER BY num desc LIMIT 0,10',[])
     }
     //显示是否被同意
