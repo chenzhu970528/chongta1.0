@@ -6,6 +6,15 @@ class ADD{
     getAdoDetails(id){
         return DAO('select * from adoptions,user where adoptions.userId = user.userId and adoId = ?',[id]);
     }
+    //通过本人Id查看流浪信息
+    getAdoptionsdetail(userId){
+        return DAO('select *,\n' +
+            'case\n' +
+            '\twhen adoType = 0 then \'领养\'\n' +
+            '\telse \'寄养\'\n' +
+            'end as adoType1\n' +
+            'from adoptions where userId=? order by adoTime desc',[userId]);
+    }
     //获取有意领养者
     getAdoDetailsMan(id){
         return DAO('select * from adodetails,user where adodetails.userId = user.userId and adoId = ?',[id]);

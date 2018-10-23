@@ -27,6 +27,13 @@ router.get('/details/:userId',async (ctx,next)=>{
     ctx.body={"code":200,"message":"ok",data:jsondata}
 })
 
+//丢失详情表,查看本人发布的
+router.get('/getlostdetails/:userId',async (ctx,next)=>{
+    let jsondata=await lostPetsDAO.getlostdetail(ctx.params.userId);
+    console.log(jsondata)
+    ctx.body={"code":200,"message":"ok",data:jsondata}
+})
+
 //寻宠启示表
 router.get('/lostPets/:homeId',async (ctx,next)=>{
     // let jsondata=await lostPetsDAO.getlostPets();
