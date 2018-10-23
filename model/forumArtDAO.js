@@ -41,12 +41,17 @@ class ART{
     };
     //获取用户领养日记的方法
     diary(userId){
-        return DAO("select * from forumart WHERE userId=? and faType like '%a%'",[userId]);
+        return DAO("select * from forumArt WHERE userId=? and faType like '%a%'",[userId]);
     };
 
     //获取用户日常交流的方法
     share(userId){
-        return DAO("select * from forumart WHERE userId=? and faType like '%b%'",[userId]);
+        return DAO("select * from forumArt WHERE userId=? and faType like '%b%'",[userId]);
+    }
+
+  //获取用户点赞文章
+    like(userId){
+        return DAO("select * from forumArt where faId in (select faId from forumLike where userId=?)",[userId]);
     }
 
 

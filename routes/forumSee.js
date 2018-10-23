@@ -62,6 +62,11 @@ router.get('/user/share',async (ctx,next)=>{
     let jsondata = await forum.seeShare(ctx,next);
     // console.log(jsondata)
 });
+//用户收藏
+router.get('/user/like',async (ctx,next)=>{
+    let jsondata = await forum.seeLike(ctx,next);
+    // console.log(jsondata)
+});
 
 
 

@@ -243,6 +243,16 @@ module.exports = {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
+    //查看用户点赞
+    seeLike: async (ctx, next) => {
+        try {
+            let data = await forumArtDAO.like(ctx.request.query.userId);
+            ctx.body = {"code": 200, "message": "ok", data: data}
+            return data;
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
     //帖子赞排行
     seeLikes: async (ctx, next) => {
         try {
