@@ -16,8 +16,8 @@ class DB{
     }
     addMatch(users){
         return DAO('insert into matchmaking ' +
-            '(relId,title,sandword,request,detail,relTime,birth,type,sex,petPic,age,PetName,pass) ' +
-            'values(?,?,?,?,?,now(),?,?,?,?,?,?,0)',
+            '(relId,title,sandword,request,detail,relTime,birth,type,sex,petPic,age,PetName) ' +
+            'values(?,?,?,?,?,now(),?,?,?,?,?,?)',
             [users.relId,users.title,users.sandword,users.request,users.detail,users.birth,users.type,users.sex,users.petPic,users.age,users.PetName])
     }
     //删除婚介发布

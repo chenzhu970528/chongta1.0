@@ -1,6 +1,11 @@
 var maplyDAO = require('../model/maplyDAO')
 var matchmakingDAO = require('../model/matchmakingDAO');
 var maplyDelDAO = require('../model/maplyDelDAO');
+const router = require('koa-router')()
+const path = require('path')
+const fs = require('fs')
+const formidable = require("formidable");
+const moment = require('moment')
 module.exports = {
     addaply:async (ctx,next) => {
         //1.收集数据
@@ -26,25 +31,57 @@ module.exports = {
         }
     },
     addMatch:async (ctx,next) => {
-        let users= { };
-        users.relId=ctx.request.body.relId;
-        users.title=ctx.request.body.title;
-        users.sandword=ctx.request.body.sandword;
-        users.request=ctx.request.body.request;
-        users.detail=ctx.request.body.detail;
-        users.birth=ctx.request.body.birth;
-        users.type=ctx.request.body.type;
-        users.sex=ctx.request.body.sex;
-        users.petPic=ctx.request.body.petPic;
-        users.age=ctx.request.body.age;
-        users.PetName=ctx.request.body.PetName;
-        try{
-            await matchmakingDAO.addMatch(users)
-            //3.反馈结果
-            ctx.body = {"code":200,"message":"ok",data:users}
-        }catch(err){
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
-        }
+        var pics = '';//保存所有图片
+        var now = moment(new Date()).format('YYYYMMDDHHmmss')
+        var form = new formidable.IncomingForm();
+        form.uploadDir = '../public/uploadfile/matchUpload'    //设置文件存放路径
+        form.multiples = true;  //设置上传多文件
+        form.parse(ctx.req, async function (err, fields, files) {
+            //1.收集数据
+            let art = {};
+            // console.log(fields.userId)
+            art.relId = fields.relId;
+            art.title = fields.title;
+            art.sandword = fields.sandword;
+            art.detail = fields.detail;
+            art.request = fields.request;
+            art.age = fields.age;
+            art.birth = fields.birth;
+            art.type = fields.type;
+            art.sex = fields.sex;
+            art.PetName = fields.PetName;
+            // console.log(files)
+            for (var i = 0; i < files.filename.length; i++) {
+                var filename = files.filename[i].name;
+                var src = path.join(__dirname, files.filename[i].path)//获取源文件全路径
+                console.log(src)
+                //获取更名后的文件名(不包含路径)
+                var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
+                pics += "http://localhost:3000/uploadfile/matchUpload/" + fileDes + ",";
+                // 更名同步方式
+                fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
+                console.log(fileDes)
+            }
+            art.petPic=pics
+            console.log(art)
+
+            //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
+
+            //根据fields.mydata获取上传表单元素的数据，执行写入数据库的操作
+            try{
+                //2.调用用户数据访问对象的添加方法
+                await matchmakingDAO.addMatch(art)
+                //3.反馈结果
+                ctx.body = {"code":200,"message":"ok",data:art}
+            }catch(err){
+                ctx.body = {"code":500,"message":err.toString(),data:[]}
+            }
+            if(err){
+                ctx.body='上传失败'
+            }
+        })
+        ctx.body='上传成功'
+
     },
     delAply:async (ctx,next) => {
         let mdel={ };
