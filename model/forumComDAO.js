@@ -6,6 +6,15 @@ class COM{
     getComment(faId){
         return DAO('select * from forumCom where faId= ?',[faId]);
     }
+     //用户的评论和回复文章标题
+    com(userId){
+        return DAO('select faId,time,faText from forumCom where userId=?',[userId]);
+    }
+    //用户的评论和回复文章标题
+    comArt(userId){
+        return DAO('select faId,faTitle,userName from forumArt where faId in (select faId from forumCom where userId=?)',[userId]);
+    }
+
     //添加一条评论  外部传参进去
     addComment(comment){
         return DAO('insert into forumCom (faId,faText,userId,userName) values(?,?,?,?)',

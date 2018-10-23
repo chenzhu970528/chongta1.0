@@ -6,6 +6,14 @@ class REP{
     getReply(fcId){
         return DAO('select * from fReplays where fcId=?',[fcId]);
     }
+    //查询用户的回复以及回复的文章id
+    queryRep(userId){
+        return DAO('select forumCom.faId,fReplays.frText,fReplays.time from forumCom,fReplays where forumCom.fcId in(select fcId from fReplays where frman=?) and fReplays.frman=? and forumCom.fcId=fReplays.fcId',[userId,userId]);
+    }
+    //用户回复的文章标题和发帖人
+    queryArt(userId){
+        return DAO('select faId,faTitle,userName from forumArt where faId in(select faId from forumCom where forumCom.fcId in(select fcId from fReplays where frman=?))',[userId]);
+    }
 
     //添加一条回复  外部传参进去
     addReply(reply){

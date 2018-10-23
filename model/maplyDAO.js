@@ -2,8 +2,8 @@ const DAO =require('../model/DAO')
 class DB{
     // 插入婚介申请数据
     addaply(apldata){
-        return DAO('insert into maply (aplyId,matId,detail,petPic,address,medReport,age,birth,type,sex,PetName,maHistory,maplyTime) values(?,?,?,?,?,?,?,?,?,?,?,?,now())',
-            [apldata.aplyId,apldata.matId,apldata.detail,apldata.petPic,apldata.address,apldata.medReport,apldata.age,apldata.birth,apldata.type,apldata.sex,apldata.PetName,apldata.maHistory])
+        return DAO('insert into maply (aplyId,matId,detail,petPic,age,birth,type,sex,PetName,maplyTime) values(?,?,?,?,?,?,?,?,?,now())',
+            [apldata.aplyId,apldata.matId,apldata.detail,apldata.petPic,apldata.age,apldata.birth,apldata.type,apldata.sex,apldata.PetName])
     }
     // 接受的申请
     showaply(id){
@@ -32,8 +32,8 @@ class DB{
     }
     // 热门
     countAply(){
-        return DAO('select matchmaking.petPic,matchmaking.PetName,count(*) num ,userName,matchmaking.matId from maply,matchmaking,user\n' +
-            'where matchmaking.matId=maply.matId and pass=1 and relId=userId group by maply.matId ORDER BY num desc LIMIT 0,10',[])
+        return DAO('select relId,matchmaking.petPic,matchmaking.PetName,count(*) num ,userName,matchmaking.matId from maply,matchmaking,user\n' +
+            'where matchmaking.matId=maply.matId and relId=userId group by maply.matId ORDER BY num desc LIMIT 0,10',[])
     }
     //显示是否被同意
     showAgree(aplyId){
