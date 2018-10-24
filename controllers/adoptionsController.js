@@ -45,7 +45,7 @@ module.exports = {
                 console.log(src)
                 //获取更名后的文件名(不包含路径)
                 var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
-                pics += "http://localhost:3000/uploadfile/adoUpload/" + fileDes + ",";
+                pics += "/uploadfile/adoUpload/" + fileDes + ",";
                 // 更名同步方式
                 fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
                 console.log(fileDes)
