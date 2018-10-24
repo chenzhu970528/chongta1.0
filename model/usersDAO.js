@@ -7,8 +7,8 @@ class USERS{
     }
 //添加用户信息，注册
 addUsers(user){
-    return DAO('insert into user (userName,headPic,userPwd,userEmail,userPhone,sex,wechat)values(?,?,?,?,?,?,?)',
-        [user.userName,user.headPic,user.userPwd,user.userEmail,user.userPhone,user.sex,user.wechat,])
+    return DAO('insert into user (userName,headPic,userPwd,userEmail,userPhone,sex,address)values(?,?,?,?,?,?,?)',
+        [user.userName,user.headPic,user.userPwd,user.userEmail,user.userPhone,user.sex,user.address,])
 }
 //修改用户信息，
 modUsers(user){

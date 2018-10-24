@@ -25,15 +25,15 @@ module.exports = {
         }
 
         user.sex = ctx.request.body.sex;
-        user.wechat = ctx.request.body.wechat;
-        user.realName = ctx.request.body.realName;
-        user.idPic = ctx.request.body.idPic;
-
-        if (/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|[xX])$/.test(ctx.request.body.idNo)) {
-            user.idNo = ctx.request.body.idNo;
-        } else {
-            console.log('身份证格式错误')
-        }
+        user.address = ctx.request.body.address;
+        // user.realName = ctx.request.body.realName;
+        // user.idPic = ctx.request.body.idPic;
+        //
+        // if (/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|[xX])$/.test(ctx.request.body.idNo)) {
+        //     user.idNo = ctx.request.body.idNo;
+        // } else {
+        //     console.log('身份证格式错误')
+        // }
         try {
             let data=await userReg.addUsers(user)
             ctx.body = {"code": 200, "message": "ok", data: user}
