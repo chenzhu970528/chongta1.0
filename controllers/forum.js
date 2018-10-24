@@ -158,11 +158,27 @@ module.exports = {
     //删除点赞
     delOneLike: async (ctx, next) => {
         //1.收集数据
-        let flileId = ctx.request.body.flileId;
-        await forumLikeDAO.delOneLike(flileId);
+        let like = []
+        like.faId = ctx.request.body.faId;
+        like.userId = ctx.request.body.userId;
+        await forumLikeDAO.delOneLike(like);
 
         try {
             ctx.body = {"code": 200, "message": "ok", data: '赞删除成功'}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+    //查看是否有赞
+    selike: async (ctx, next) => {
+        //1.收集数据
+        let like = []
+        like.faId =ctx.request.query.faId
+        like.userId = ctx.request.query.userId;
+       let data= await forumLikeDAO.slike(like);
+let l =data.length
+        try {
+            ctx.body = {"code": 200, "message": "ok", data:l}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
