@@ -75,6 +75,12 @@ router.get('/user/com',async (ctx,next)=>{
     console.log(jsondata)
 });
 
+//查看点赞了吗
+router.get('/selike',async (ctx,next)=>{
+    let jsondata = await forum.selike(ctx,next);
+    console.log(jsondata)
+});
+
 
 
 //最新发布

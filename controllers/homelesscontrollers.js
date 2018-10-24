@@ -83,7 +83,7 @@ module.exports = {
         form.parse(ctx.req, async function (err, fields, files) {
             //1.收集数据
             let art = {};
-            art.lpmes = fields.getmes;
+            art.lpmes = fields.lpmes;
             art.lpTime = fields.lpTime;
             art.lostpeople = fields.lostpeople;
             art.address = fields.address;

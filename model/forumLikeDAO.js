@@ -11,8 +11,13 @@ class LIKE{
         return DAO('insert into forumLike (faId,userId) values(?,?) ',
             [like.faId,like.userId])
     };
-    delOneLike(flileId){
-        return DAO('delete  from forumLike where flileId=?',[flileId])
+    //删除赞
+    delOneLike(like){
+        return DAO('delete  from forumLike where faId=? and userId=?',[like.faId,like.userId])
+    };
+    //查看是否有赞
+    slike(like){
+        return DAO('select * from forumLike where faId=? and userId=?',[like.faId,like.userId])
     };
 //论坛文章删除，与之对应的点赞表也删除
     delLike(){
