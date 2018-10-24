@@ -19,6 +19,13 @@ router.get('/details/:adoId', async (ctx,next)=>{
     await adoptionsCtroller.getAdoDetails(ctx,next)
 })
 
+//查看领养详情，查看本人发布的
+router.get('/adodetails/:userId',async (ctx,next)=>{
+    let jsondata=await adoDetailsDAO.getAdoptionsdetail(ctx.params.userId);
+    console.log(jsondata)
+    ctx.body={"code":200,"message":"ok",data:jsondata}
+})
+
 // 查看领养者详情
 router.get('/getOneUser/:userId',async (ctx,next)=>{
     await adoptionsCtroller.getAdoUser(ctx,next)

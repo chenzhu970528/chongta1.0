@@ -12,15 +12,15 @@ class DB{
     }
     addhomeless(art){
         return DAO('insert into homeless ' +
-            '(getmes,userId,homePic,homeTime,detail,address,type,people,phone,sex)' +
-            'values(?,?,?,?,?,?,?,?,?,?)',
+            '(getmes,userId,homePic,homeTime,detail,address,type,people,phone,sex,pTime)' +
+            'values(?,?,?,?,?,?,?,?,?,?,now())',
             [art.getmes,art.userId,art.homePic,art.homeTime,art.detail,art.address,art.type,art.people,art.phone,art.sex])
     }
     addlostPets(art){
         return DAO('insert into lostPets' +
-            '(lpmes,lppic,lpTime,address,detail,reward,sex,type,lostpeople,lostphone)' +
-            'values(?,?,?,?,?,?,?,?,?,?)',
-            [art.lpmes,art.lppic,art.lpTime,art.address,art.detail,art.reward,art.sex,art.type,art.lostpeople,art.lostphone])
+            '(userId,lpmes,lppic,lpTime,address,detail,reward,sex,type,lostpeople,lostphone,pbTime)' +
+            'values(?,?,?,?,?,?,?,?,?,?,?,now())',
+            [art.userId,art.lpmes,art.lppic,art.lpTime,art.address,art.detail,art.reward,art.sex,art.type,art.lostpeople,art.lostphone])
     }
 
     delhomeless(homeId){

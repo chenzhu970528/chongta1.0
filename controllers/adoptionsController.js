@@ -69,8 +69,6 @@ module.exports = {
             }
         })
         ctx.body='上传成功'
-
-
     },
     //查看领养宠物详细信息
     getAdoDetails:async (ctx,next)=>{
