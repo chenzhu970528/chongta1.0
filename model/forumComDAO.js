@@ -23,7 +23,7 @@ class COM{
 
     //删除一条评论
     delComment(fcId){
-        return DAO('call delcom1(?)',[fcId])
+        return DAO('call delcom(?)',[fcId])
     }
 
 

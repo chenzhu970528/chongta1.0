@@ -10,17 +10,14 @@ class ART{
     comSum(faId){
         return DAO('call newsum(?);',[faId])
     };
-    // //查看单个帖子收藏点赞总人数
-    // likes(faId){
-    //     return DAO('select count(*)as count from forumLike where faId =?;',[faId])
-    // };
+
     //查看单个帖子联合使用
     seeAll(faId){
        return DAO('select * from forumArt where faId=?',[faId])
     };
     //按点赞排行显示文章名字，还有id
     likeSum(){
-        return DAO('select faId,count(*)as sum from forumLike group by faId order by count(*) desc;',[])
+        return DAO('call likes()',[])
     };
 
     //按时间排序，最新发布
