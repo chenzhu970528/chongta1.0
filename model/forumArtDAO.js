@@ -73,9 +73,8 @@ class ART{
     }
     //删除帖子
     delArt(faId){
-        return DAO('delete from forumArt where faId=?',[faId])
+        return DAO('call del (?)',[faId])
     }
-
 
 
 }

@@ -15,6 +15,10 @@ class LIKE{
     delOneLike(like){
         return DAO('delete  from forumLike where faId=? and userId=?',[like.faId,like.userId])
     };
+    //删除赞
+    delLike(faId){
+        return DAO('delete  from forumLike where faId=?',[faId])
+    };
     //查看是否有赞
     slike(like){
         return DAO('select * from forumLike where faId=? and userId=?',[like.faId,like.userId])

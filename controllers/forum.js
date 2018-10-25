@@ -176,7 +176,7 @@ module.exports = {
         like.faId =ctx.request.query.faId
         like.userId = ctx.request.query.userId;
        let data= await forumLikeDAO.slike(like);
-let l =data.length
+        let l =data.length
         try {
             ctx.body = {"code": 200, "message": "ok", data:l}
         } catch (err) {
