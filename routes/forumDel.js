@@ -3,17 +3,17 @@ const forum=require('../controllers/forum')
 //删除~
 router.prefix('/forumDel');
 //删除帖子
-router.post('/art',async (ctx,next)=>{
+router.get('/art',async (ctx,next)=>{
     let jsondata = await forum.delArt(ctx,next);
     console.log(jsondata)
 });
 //删除评论
-router.post('/comment',async (ctx,next)=>{
+router.get('/comment',async (ctx,next)=>{
     let jsondata = await forum.delComment(ctx,next);
     console.log(jsondata)
 });
 //删除回复
-router.post('/reply',async (ctx,next)=>{
+router.get('/reply',async (ctx,next)=>{
     let jsondata = await forum.delReply(ctx,next);
     console.log(jsondata)
 })

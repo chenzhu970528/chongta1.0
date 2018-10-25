@@ -1,5 +1,10 @@
 const userReg = require('../model/usersDAO');
 var crypto = require('crypto')
+const router = require('koa-router')()
+const path = require('path')
+const fs = require('fs')
+const formidable = require("formidable");
+const moment = require('moment')
 module.exports = {
     //添加用户信息 注册
     addUsers: async (ctx, next) => {
@@ -71,6 +76,39 @@ module.exports = {
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
+    },
+    //上传头像
+    modUserPic: async (ctx,next)=>{
+        var pics = '';//保存所有图片
+        var form = new formidable.IncomingForm();
+        form.uploadDir = '../public/uploadfile/headPic'    //设置文件存放路径
+        var now = moment(new Date()).format('YYYYMMDDHHmmss')
+        form.multiples = true;  //设置上传多文件
+        form.parse(ctx.req,async function (err, fields, files) {
+            //1.收集数据
+            let art = {};
+            art.userId = fields.userId;
+            var filename = files.filename.name;
+            var src = path.join(__dirname, files.filename.path)//获取源文件全路径
+            var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
+            pics = "/uploadfile/headPic/" + fileDes
+            // 更名同步方式
+            fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
+            console.log(fileDes)
+            art.headPic=pics
+            try {
+                await userReg.modUserPic(art)
+                ctx.body = {"code": 200, "message": "ok", data: user}
+            } catch (err) {
+                ctx.body = {"code": 500, "message": err.toString(), data: []}
+            }
+            if(err){
+                ctx.body='上传失败'
+            }
+        })
+        ctx.body='上传成功'
+
+
     },
     //用户登录
     login: async (ctx, next) => {
