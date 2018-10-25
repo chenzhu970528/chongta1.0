@@ -30,10 +30,14 @@ router.post('/addMatch',async (ctx,next)=>{
 })
 
 //删除婚介发布
-router.post('/delMatch',async (ctx,next)=>{
+// router.get('/delMatch',async (ctx,next)=>{
+//     await  maplycontroller.delMatch(ctx,next);
+// })
+
+//删除相关del
+router.get('/delMatchAll/:matId',async (ctx,next)=>{
     await  maplycontroller.delMatch(ctx,next);
 })
-
 // 通过审核
 router.post('/updataT',async (ctx,next)=>{
     await maplycontroller.updataT(ctx,next)

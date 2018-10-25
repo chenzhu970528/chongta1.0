@@ -23,14 +23,14 @@ router.post('/addlost',async (ctx,next)=>{
 //流浪详情表,查看本人发布的
 router.get('/details/:userId',async (ctx,next)=>{
     let jsondata=await lostPetsDAO.getlostPets(ctx.params.userId);
-    console.log(jsondata)
+    // console.log(jsondata)
     ctx.body={"code":200,"message":"ok",data:jsondata}
 })
 
 //丢失详情表,查看本人发布的
 router.get('/getlostdetails/:userId',async (ctx,next)=>{
     let jsondata=await lostPetsDAO.getlostdetail(ctx.params.userId);
-    console.log(jsondata)
+    // console.log(jsondata)
     ctx.body={"code":200,"message":"ok",data:jsondata}
 })
 
@@ -62,12 +62,12 @@ router.get('/lostMess',async (ctx,next)=>{
     // let jsondata=await lostMessDAO.getlostMess();
     await homelesscontrollers.getlostMess(ctx,next);
 })
-//删除流浪信息
-router.post('/adohomeless',async (ctx,next)=>{
+//删除流浪信息,根据homeId
+router.get('/delhomeless/:homeId',async (ctx,next)=>{
     await homelesscontrollers.delhomeless(ctx,next)
 })
-//删除寻宠启示表信息
-router.post('/adolostpets',async (ctx,next)=>{
+//删除寻宠信息，根据lpId
+router.get('/dellostpets/:lpId',async (ctx,next)=>{
     await homelesscontrollers.dellostPets(ctx,next)
 })
 //删除寻宠消息表信息

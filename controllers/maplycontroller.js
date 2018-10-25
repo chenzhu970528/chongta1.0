@@ -118,11 +118,11 @@ module.exports = {
         }
     },
     delMatch:async (ctx,next) => {
-        let delaplydata=ctx.request.body.matId;
+        let matId=ctx.params.matId;
         try{
-            await  matchmakingDAO.deladel(delaplydata)
-            await  matchmakingDAO.delapl(delaplydata)
-            await matchmakingDAO.delmatch(delaplydata)
+            await  matchmakingDAO.deladel(matId);
+            await  matchmakingDAO.delapl(matId);
+            await matchmakingDAO.delmatch(matId);
             //3.反馈结果
             ctx.body = {"code":200,"message":"ok",data:'删除成功'}
         }catch(err){

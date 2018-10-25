@@ -24,7 +24,7 @@ class DB{
     }
 
     delhomeless(homeId){
-        return DAO('DELETE FROM homeless WHERE homeless.homeId = ?',[homeId])
+        return DAO('DELETE FROM homeless WHERE homeId = ?',[homeId])
     }
 }
 module.exports = new DB();

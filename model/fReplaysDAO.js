@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class REP{
     //获取所有评论回复方法  传入评论的id
     getReply(fcId){
-        return DAO('select * from fReplays where fcId=?',[fcId]);
+        return DAO('select * from fReplays where fcId=? order by time desc',[fcId]);
     }
     //查询用户的回复以及回复的文章id
     queryRep(userId){
