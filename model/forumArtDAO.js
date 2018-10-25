@@ -54,8 +54,8 @@ class ART{
 
     //添加宠物日记，日常交流的方法
     addPost(art){
-        return DAO('insert into forumArt (faTitle,faText,userId,userName,faType)values(?,?,?,?,?)',
-            [art.faTitle,art.faText,art.userId,art.userName,art.faType])
+        return DAO('insert into forumArt (faTitle,faText,userId,userName,faType,faImg)values(?,?,?,?,?,?)',
+            [art.faTitle,art.faText,art.userId,art.userName,art.faType,art.faImg])
     }
 
     //管理员添加精品推荐
