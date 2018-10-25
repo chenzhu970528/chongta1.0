@@ -8,7 +8,7 @@ class ART{
     }
     //查看单个帖子评论回复总人数
     comSum(faId){
-        return DAO('call newsum(?);',[faId])
+        return DAO('call newsum(?)',[faId])
     };
 
     //查看单个帖子联合使用

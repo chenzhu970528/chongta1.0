@@ -125,7 +125,7 @@ module.exports = {
     //删除帖子
     delArt: async (ctx, next) => {
         //1.收集数据
-        let faId = ctx.request.body.faId;
+        let faId = ctx.request.query.faId;
         try {
             await forumArtDAO.delArt(faId);
             ctx.body = {"code": 200, "message": "ok", data: '成功删除帖子以及相关评论回复、点赞数量'}
@@ -136,7 +136,7 @@ module.exports = {
     //删除评论
     delComment: async (ctx, next) => {
         //1.收集数据
-        let fcId = ctx.request.body.fcId;
+        let fcId = ctx.request.query.fcId;
         try {
             await forumComDAO.delComment(fcId);
             ctx.body = {"code": 200, "message": "ok", data: '成功删除评论以及相关回复'}
@@ -147,7 +147,7 @@ module.exports = {
     //删除回复
     delReply: async (ctx, next) => {
         //1.收集数据
-        let frId = ctx.request.body.frId;
+        let frId = ctx.request.query.frId;
         try {
             await fReplaysDAO.delReply(frId);
             ctx.body = {"code": 200, "message": "ok", data: '删除回复成功'}
