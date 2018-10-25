@@ -100,7 +100,7 @@ module.exports = {
     //删除领养信息,对应的有意领养者信息表也删除
     delAdoptions:async (ctx,next)=>{
         //1.收集数据
-        let adoId = ctx.request.body.adoId;
+        let adoId = ctx.params.adoId;
         try{
             await adoptionsDAO.delAdoMan(adoId)
             await adoptionsDAO.delAdoptions(adoId);
