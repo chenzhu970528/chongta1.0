@@ -31,10 +31,35 @@ app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 //实现跨域允许
-app.use(async (ctx, next) => {
-    ctx.set("Access-Control-Allow-Origin", "*");
-    await next();
-})
+const cors = require("koa2-cors");
+const session = require("koa-session");
+const CONFIG = {
+    key: 'koa:sess',
+    maxAge: 86400000,
+    autoCommit: true, /** (boolean) automatically commit headers (default true) */
+    overwrite: true, /** (boolean) can overwrite or not (default true) */
+    httpOnly: true, /** (boolean) httpOnly or not (default true) */ //
+    signed: false, /** (boolean) signed or not (default true) */
+    rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */
+    renew: true, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
+};
+app.use(session(CONFIG, app));
+
+app.use(cors({
+    origin: function (ctx) {
+        // return 'http://localhost:8080';
+        return "http://10.40.4.36:8080"
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
+// app.use(async (ctx, next) => {
+//     ctx.set("Access-Control-Allow-Origin", "*");
+//     await next();
+// })
 
 app.use(views(__dirname + '/views', {
     extension: 'ejs'

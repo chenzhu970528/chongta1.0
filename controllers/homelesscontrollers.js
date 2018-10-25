@@ -47,7 +47,7 @@ module.exports = {
                 console.log(src)
                 //获取更名后的文件名(不包含路径)
                 var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
-                pics += "http://localhost:3000/uploadfile/homelessUpload/" + fileDes + ",";
+                pics += "/uploadfile/homelessUpload/" + fileDes + ",";
                 // 更名同步方式
                 fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
                 console.log(fileDes)
@@ -100,7 +100,7 @@ module.exports = {
                 console.log(src)
                 //获取更名后的文件名(不包含路径)
                 var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
-                pics += "http://localhost:3000/uploadfile/lostUpload/" + fileDes + ",";
+                pics += "/uploadfile/lostUpload/" + fileDes + ",";
                 // 更名同步方式
                 fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
                 console.log(fileDes)
@@ -179,19 +179,22 @@ module.exports = {
     //删除流浪信息
     delhomeless:async (ctx,next)=>{
         //1.收集数据
-        let homeId = ctx.request.body.homeId;
+        // console.log(ctx.params.homeId);
+        let homeId = ctx.params.homeId;
         try{
+            console.log("homeId:   " + homeId)
             await homelessDAO.delhomeless(homeId);
             ctx.body = {"code":200,"message":"ok",data:'成功删除流浪宠物信息'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
-    //删除寻宠启示表信息
+    //删除寻宠信息
     dellostPets:async (ctx,next)=>{
         //1.收集数据
-        let lpId = ctx.request.body.lpId;
+        let lpId = ctx.params.lpId;
         try{
+            console.log("lpId:   " + lpId)
             await lostPetsDAO.dellostPets(lpId);
             ctx.body = {"code":200,"message":"ok",data:'成功删除寻宠启示表信息'}
         }catch(err){

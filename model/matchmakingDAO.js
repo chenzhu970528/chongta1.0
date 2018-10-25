@@ -27,11 +27,11 @@ class DB{
         }
         //删除申请
         delapl(delaplydata){
-            return DAO('DELETE from maply where matId=4',[delaplydata])
+            return DAO('DELETE from maply where matId=?',[delaplydata])
         }
         //删除发布
         delmatch(delaplydata){
-            return DAO('DELETE from matchmaking where matId=4',[delaplydata])
+            return DAO('DELETE from matchmaking where matId=?',[delaplydata])
         }
      // 通过审核
     updateT(matId){

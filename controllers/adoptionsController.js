@@ -45,7 +45,7 @@ module.exports = {
                 console.log(src)
                 //获取更名后的文件名(不包含路径)
                 var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
-                pics += "http://localhost:3000/uploadfile/adoUpload/" + fileDes + ",";
+                pics += "/uploadfile/adoUpload/" + fileDes + ",";
                 // 更名同步方式
                 fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
                 console.log(fileDes)
@@ -100,7 +100,7 @@ module.exports = {
     //删除领养信息,对应的有意领养者信息表也删除
     delAdoptions:async (ctx,next)=>{
         //1.收集数据
-        let adoId = ctx.request.body.adoId;
+        let adoId = ctx.params.adoId;
         try{
             await adoptionsDAO.delAdoMan(adoId)
             await adoptionsDAO.delAdoptions(adoId);
