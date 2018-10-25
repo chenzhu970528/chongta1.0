@@ -8,19 +8,16 @@ class ART{
     }
     //查看单个帖子评论回复总人数
     comSum(faId){
-        return DAO('call newsum(?);',[faId])
+        return DAO('call newsum(?)',[faId])
     };
-    // //查看单个帖子收藏点赞总人数
-    // likes(faId){
-    //     return DAO('select count(*)as count from forumLike where faId =?;',[faId])
-    // };
+
     //查看单个帖子联合使用
     seeAll(faId){
        return DAO('select * from forumArt where faId=?',[faId])
     };
     //按点赞排行显示文章名字，还有id
     likeSum(){
-        return DAO('select faId,count(*)as sum from forumLike group by faId order by count(*) desc;',[])
+        return DAO('call likes()',[])
     };
 
     //按时间排序，最新发布
@@ -57,8 +54,8 @@ class ART{
 
     //添加宠物日记，日常交流的方法
     addPost(art){
-        return DAO('insert into forumArt (faTitle,faText,userId,userName,faType)values(?,?,?,?,?)',
-            [art.faTitle,art.faText,art.userId,art.userName,art.faType])
+        return DAO('insert into forumArt (faTitle,faText,userId,userName,faType,faImg)values(?,?,?,?,?,?)',
+            [art.faTitle,art.faText,art.userId,art.userName,art.faType,art.faImg])
     }
 
     //管理员添加精品推荐
@@ -73,9 +70,8 @@ class ART{
     }
     //删除帖子
     delArt(faId){
-        return DAO('delete from forumArt where faId=?',[faId])
+        return DAO('call del (?)',[faId])
     }
-
 
 
 }

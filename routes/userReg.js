@@ -12,6 +12,11 @@ router.get('/showUser/:userId',async (ctx,next)=>{
     let show = await userReg.showUser(ctx.params.userId);
     ctx.body = {"code":200,"message":"ok",data:show}
 });
+//修改用户头像
+router.post('/upheadpic',async (ctx,next)=>{
+    let data = await users.modUserPic(ctx,next);
+    console.log(data);
+});
 //用户修改信息
 router.post('/mod',async (ctx,next)=>{
     let jsondata = await users.modUsers(ctx,next);

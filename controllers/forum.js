@@ -2,29 +2,49 @@ const fReplaysDAO = require('../model/fReplaysDAO');
 const forumArtDAO = require('../model/forumArtDAO');
 const forumComDAO = require('../model/forumComDAO');
 const forumLikeDAO = require('../model/forumLikeDAO');
-const router = require('koa-router')();
+const router = require('koa-router')()
 const path = require('path')
+const fs = require('fs')
 const formidable = require("formidable");
+const moment = require('moment')
 module.exports = {
     //添加帖子
     addArt: async (ctx, next) => {
-        console.log(ctx.request.body);
-        //1.收集数据
-        let art = {};
-        art.faTitle = ctx.request.body.faTitle;
-        art.faText = ctx.request.body.faText;
-        art.userId = ctx.request.body.userId;
-        art.userName = ctx.request.body.userName;
-        art.faType = ctx.request.body.faType;
-        try {
-            //2.调用用户数据访问对象的添加方法
-            let jsondata = await forumArtDAO.addPost(art)
-            //3.反馈结果
-            ctx.body = {"code": 200, "message": "ok", data: art}
-            ctx.render('art1', {data: jsondata})
-        } catch (err) {
-            ctx.body = {"code": 500, "message": err.toString(), data: []}
-        }
+        var pics = '';//保存所有图片
+        var form = new formidable.IncomingForm();
+        form.uploadDir = '../public/uploadfile/formUpload'    //设置文件存放路径
+        var now = moment(new Date()).format('YYYYMMDDHHmmss')
+        form.multiples = true;  //设置上传多文件
+        form.parse(ctx.req,async function (err, fields, files) {
+            //1.收集数据
+            let art = {};
+            art.userId = fields.userId;
+            art.faText = fields.faText;
+            art.faTitle = fields.faTitle;
+            art.userName = fields.userName;
+            art.faType = fields.faType;
+            var filename = files.filename.name;
+            var src = path.join(__dirname, files.filename.path)//获取源文件全路径
+            var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
+            pics = "/uploadfile/formUpload/" + fileDes
+            // 更名同步方式
+            fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
+            console.log(fileDes)
+            art.faImg=pics
+            try {
+                //2.调用用户数据访问对象的添加方法
+                let jsondata = await forumArtDAO.addPost(art)
+                //3.反馈结果
+                ctx.body = {"code": 200, "message": "ok", data: art}
+                ctx.render('art1', {data: jsondata})
+            } catch (err) {
+                ctx.body = {"code": 500, "message": err.toString(), data: []}
+            }
+            if(err){
+                ctx.body='上传失败'
+            }
+        })
+        ctx.body='上传成功'
     },
 //图片
     addImg: async (ctx, next) => {
@@ -125,7 +145,7 @@ module.exports = {
     //删除帖子
     delArt: async (ctx, next) => {
         //1.收集数据
-        let faId = ctx.request.body.faId;
+        let faId = ctx.request.query.faId;
         try {
             await forumArtDAO.delArt(faId);
             ctx.body = {"code": 200, "message": "ok", data: '成功删除帖子以及相关评论回复、点赞数量'}
@@ -136,7 +156,7 @@ module.exports = {
     //删除评论
     delComment: async (ctx, next) => {
         //1.收集数据
-        let fcId = ctx.request.body.fcId;
+        let fcId = ctx.request.query.fcId;
         try {
             await forumComDAO.delComment(fcId);
             ctx.body = {"code": 200, "message": "ok", data: '成功删除评论以及相关回复'}
@@ -147,7 +167,7 @@ module.exports = {
     //删除回复
     delReply: async (ctx, next) => {
         //1.收集数据
-        let frId = ctx.request.body.frId;
+        let frId = ctx.request.query.frId;
         try {
             await fReplaysDAO.delReply(frId);
             ctx.body = {"code": 200, "message": "ok", data: '删除回复成功'}
@@ -176,7 +196,7 @@ module.exports = {
         like.faId =ctx.request.query.faId
         like.userId = ctx.request.query.userId;
        let data= await forumLikeDAO.slike(like);
-let l =data.length
+        let l =data.length
         try {
             ctx.body = {"code": 200, "message": "ok", data:l}
         } catch (err) {
@@ -331,18 +351,18 @@ let l =data.length
         }
     },
     //评论总数
-    Sum: async (ctx, next) => {
-        try {
-            let faId = ctx.request.query.faId;
-            let data = await forumArtDAO.comSum(faId);
-            let data2 = await forumArtDAO.likes(faId);
-            let arr = [data[0][0], data2[0]]
-            ctx.body = {"code": 200, "message": "ok", data: arr}
-            return data;
-        } catch (err) {
-            ctx.body = {"code": 500, "message": err.toString(), data: []}
-        }
-    },
+    // Sum: async (ctx, next) => {
+    //     try {
+    //         let faId = ctx.request.query.faId;
+    //         let data = await forumArtDAO.comSum(faId);
+    //         let data2 = await forumArtDAO.likes(faId);
+    //         let arr = [data[0][0], data2[0]]
+    //         ctx.body = {"code": 200, "message": "ok", data: arr}
+    //         return data;
+    //     } catch (err) {
+    //         ctx.body = {"code": 500, "message": err.toString(), data: []}
+    //     }
+    // },
     // //查看评论所有回复
     // getReply:async (ctx,next) => {
     //     console.log(ctx.request.body)
@@ -364,7 +384,7 @@ let l =data.length
         let art = {};
         let faId = ctx.query.faId;
         art.art = await forumArtDAO.seeAll(faId);
-        art.sum = await forumArtDAO.comSum(faId);
+        art.sum = await forumArtDAO.comSum(faId);//评论数
         let com = await forumComDAO.getComment(faId)
         let replys = [];
         let cc

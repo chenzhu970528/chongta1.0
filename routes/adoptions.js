@@ -31,7 +31,7 @@ router.get('/getOneUser/:userId',async (ctx,next)=>{
     await adoptionsCtroller.getAdoUser(ctx,next)
 })
 // 删除领养信息
-router.post('/adoDel',async (ctx,next)=>{
+router.get('/adoDel/:adoId',async (ctx,next)=>{
     await adoptionsCtroller.delAdoptions(ctx,next)
 })
 // 添加申请领养

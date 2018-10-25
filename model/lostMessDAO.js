@@ -8,7 +8,7 @@ class DB {
     }
 
     dellostMess(lmId) {
-        return DAO('DELETE FROM lostMess WHERE lostMess.lmId = ?', [lmId])
+        return DAO('DELETE FROM lostMess WHERE lostMess.lmId = ?', [lpId])
     }
 }
 

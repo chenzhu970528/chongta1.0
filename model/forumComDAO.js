@@ -4,13 +4,13 @@ const DAO = require('../model/DAO');
 class COM{
     //获取一个帖子所有评论方法
     getComment(faId){
-        return DAO('select * from forumCom where faId= ?',[faId]);
+        return DAO('select * from forumCom where faId= ? order by time desc',[faId]);
     }
      //用户的评论和回复文章标题
     com(userId){
         return DAO('select faId,time,faText from forumCom where userId=?',[userId]);
     }
-    //用户的评论和回复文章标题
+    //
     comArt(userId){
         return DAO('select faId,faTitle,userName from forumArt where faId in (select faId from forumCom where userId=?)',[userId]);
     }
@@ -23,7 +23,7 @@ class COM{
 
     //删除一条评论
     delComment(fcId){
-        return DAO('delete from forumCom where fcId=?',[fcId])
+        return DAO('call delcom(?)',[fcId])
     }
 
 
