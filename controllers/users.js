@@ -6,6 +6,22 @@ const fs = require('fs')
 const formidable = require("formidable");
 const moment = require('moment')
 module.exports = {
+    // 修改密码
+    modUserPwd:async (ctx,next) =>{
+        let user = {};
+        user.userId = ctx.request.body.userId
+        let pwd = ctx.request.body.userPwd;
+        const hash = crypto.createHash('md5');
+        hash.update(pwd);
+        let pwdMd5 = hash.digest('hex');
+        user.userPwd =pwdMd5;
+        try {
+            await userReg.modUserPwd(user)
+            ctx.body = {"code": 200, "message": "ok", data: user}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
     //添加用户信息 注册
     addUsers: async (ctx, next) => {
         let user = {};
@@ -94,7 +110,7 @@ module.exports = {
             pics = "/uploadfile/headPic/" + fileDes
             // 更名同步方式
             fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
-            console.log(fileDes)
+            // console.log(fileDes)
             art.headPic=pics
             try {
                 await userReg.modUserPic(art)

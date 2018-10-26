@@ -51,7 +51,7 @@ module.exports = {
                 console.log(fileDes)
             }
             art.adoPic=pics
-            console.log(art)
+            // console.log(art)
 
             //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
 
