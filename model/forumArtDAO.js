@@ -68,6 +68,10 @@ class ART{
         return DAO('update forumArt set faType = case when faType="al" and faId=? then "a" when faType="bl" and faId=? then "b" else faType end',
             [faId,faId])
     }
+    //查看是否是精品推荐
+    seeEss(faId){
+        return DAO("select * from forumArt where fatype like '%l%' and faId=?", [faId,])
+    }
     //删除帖子
     delArt(faId){
         return DAO('call del (?)',[faId])

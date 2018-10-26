@@ -29,7 +29,7 @@ router.post('/reply',async (ctx,next)=>{
     console.log(jsondata)
 })
 //管理员添加推荐
-router.post('/diary',async (ctx,next)=>{
+router.post('/Recommend',async (ctx,next)=>{
     let jsondata = await forum.addEssDiary(ctx,next);
     console.log(jsondata)
 });

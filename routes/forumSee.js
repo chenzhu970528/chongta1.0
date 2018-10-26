@@ -78,6 +78,12 @@ router.get('/selike',async (ctx,next)=>{
     console.log(jsondata)
 });
 
+//查看是推荐不
+router.get('/seeEss',async (ctx,next)=>{
+    let jsondata = await forum.seeEss(ctx,next);
+    console.log(jsondata)
+});
+
 
 
 //最新发布

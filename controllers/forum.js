@@ -133,7 +133,7 @@ module.exports = {
     delEssDiary: async (ctx, next) => {
         //1.收集数据
 
-        let faId = ctx.request.body.faId;
+        let faId = ctx.request.query.faId;
         await forumArtDAO.delEssDiary(faId);
         try {
             ctx.body = {"code": 200, "message": "ok", data: '帖子id:' + faId + '删除推荐成功'}
@@ -196,6 +196,18 @@ module.exports = {
         like.faId =ctx.request.query.faId
         like.userId = ctx.request.query.userId;
        let data= await forumLikeDAO.slike(like);
+        let l =data.length
+        try {
+            ctx.body = {"code": 200, "message": "ok", data:l}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+    //查看是否是推荐
+    seeEss: async (ctx, next) => {
+        //1.收集数据
+        let faId =ctx.request.query.faId
+       let data= await forumArtDAO.seeEss(faId);
         let l =data.length
         try {
             ctx.body = {"code": 200, "message": "ok", data:l}
