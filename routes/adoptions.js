@@ -46,4 +46,10 @@ router.post('/adoDelApply',async (ctx,next)=>{
 router.post('/adoAgree',async (ctx,next)=>{
     await adoptionsCtroller.adoAgree(ctx,next)
 })
+// 热门
+router.get('/getHot',async (ctx,next)=>{
+    let hot=await adoDetailsDAO.getHot();
+    ctx.body = {"code":200,"message":"ok",data:hot}
+
+})
 module.exports = router

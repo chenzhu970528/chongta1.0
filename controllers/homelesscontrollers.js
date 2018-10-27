@@ -44,16 +44,16 @@ module.exports = {
             for (var i = 0; i < files.filename.length; i++) {
                 var filename = files.filename[i].name;
                 var src = path.join(__dirname, files.filename[i].path)//获取源文件全路径
-                console.log(src)
+                // console.log(src)
                 //获取更名后的文件名(不包含路径)
                 var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
                 pics += "/uploadfile/homelessUpload/" + fileDes + ",";
                 // 更名同步方式
                 fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
-                console.log(fileDes)
+                // console.log(fileDes)
             }
             art.homePic=pics
-            console.log(art)
+            // console.log(art)
 
             //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
 
@@ -97,16 +97,16 @@ module.exports = {
             for (var i = 0; i < files.filename.length; i++) {
                 var filename = files.filename[i].name;
                 var src = path.join(__dirname, files.filename[i].path)//获取源文件全路径
-                console.log(src)
+                // console.log(src)
                 //获取更名后的文件名(不包含路径)
                 var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
                 pics += "/uploadfile/lostUpload/" + fileDes + ",";
                 // 更名同步方式
                 fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
-                console.log(fileDes)
+                // console.log(fileDes)
             }
             art.lppic=pics
-            console.log(art)
+            // console.log(art)
 
             //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
 
@@ -182,7 +182,7 @@ module.exports = {
         // console.log(ctx.params.homeId);
         let homeId = ctx.params.homeId;
         try{
-            console.log("homeId:   " + homeId)
+            // console.log("homeId:   " + homeId)
             await homelessDAO.delhomeless(homeId);
             ctx.body = {"code":200,"message":"ok",data:'成功删除流浪宠物信息'}
         }catch(err){
@@ -194,7 +194,7 @@ module.exports = {
         //1.收集数据
         let lpId = ctx.params.lpId;
         try{
-            console.log("lpId:   " + lpId)
+            // console.log("lpId:   " + lpId)
             await lostPetsDAO.dellostPets(lpId);
             ctx.body = {"code":200,"message":"ok",data:'成功删除寻宠启示表信息'}
         }catch(err){

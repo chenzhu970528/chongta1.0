@@ -10,17 +10,23 @@ addUsers(user){
     return DAO('insert into user (userName,headPic,userPwd,userEmail,userPhone,sex,address)values(?,?,?,?,?,?,?)',
         [user.userName,user.headPic,user.userPwd,user.userEmail,user.userPhone,user.sex,user.address,])
 }
+
 //修改用户信息，
 modUsers(user){
-    // console.log(user.userName,user.headPic,user.signature,user.userPwd,user.userEmail,user.userPhone,user.sex,user.wechat,user.realName,user.userId)
-    return DAO('update user set userName=?,headPic=?,signature=?,userPwd=?,userEmail=?,userPhone=?,sex=?,wechat=?,realName=? where userId=?',
-        [user.userName,user.headPic,user.signature,user.userPwd,user.userEmail,user.userPhone,user.sex,user.wechat,user.realName,user.userId])
+    return DAO('update user set userName=?,userEmail=?,sex=?,wechat=?,address=? where userId=?',
+        [user.userName,user.userEmail,user.sex,user.wechat,user.address,user.userId])
 }
 //上传头像
 modUserPic(user){
     return DAO('update user set headPic=? where userId=?',
         [user.headPic,user.userId])
 }
+
+//修改用户密码
+ modUserPwd(user){
+        return DAO('update user set userPwd=? where userId=?',
+            [user.userPwd,user.userId])
+    }
 
 //用户登录
 // loginPhone(userPhone){
