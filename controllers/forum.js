@@ -15,7 +15,7 @@ module.exports = {
         form.uploadDir = '../public/uploadfile/formUpload'    //设置文件存放路径
         var now = moment(new Date()).format('YYYYMMDDHHmmss')
         form.multiples = true;  //设置上传多文件
-        form.parse(ctx.req,async function (err, fields, files) {
+        form.parse(ctx.req, async function (err, fields, files) {
             //1.收集数据
             let art = {};
             art.userId = fields.userId;
@@ -30,7 +30,7 @@ module.exports = {
             // 更名同步方式
             fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
             console.log(fileDes)
-            art.faImg=pics
+            art.faImg = pics
             try {
                 //2.调用用户数据访问对象的添加方法
                 let jsondata = await forumArtDAO.addPost(art)
@@ -40,11 +40,11 @@ module.exports = {
             } catch (err) {
                 ctx.body = {"code": 500, "message": err.toString(), data: []}
             }
-            if(err){
-                ctx.body='上传失败'
+            if (err) {
+                ctx.body = '上传失败'
             }
         })
-        ctx.body='上传成功'
+        ctx.body = '上传成功'
     },
 //图片
     addImg: async (ctx, next) => {
@@ -133,7 +133,7 @@ module.exports = {
     delEssDiary: async (ctx, next) => {
         //1.收集数据
 
-        let faId = ctx.request.body.faId;
+        let faId = ctx.request.query.faId;
         await forumArtDAO.delEssDiary(faId);
         try {
             ctx.body = {"code": 200, "message": "ok", data: '帖子id:' + faId + '删除推荐成功'}
@@ -193,12 +193,24 @@ module.exports = {
     selike: async (ctx, next) => {
         //1.收集数据
         let like = []
-        like.faId =ctx.request.query.faId
+        like.faId = ctx.request.query.faId
         like.userId = ctx.request.query.userId;
-       let data= await forumLikeDAO.slike(like);
-        let l =data.length
+        let data = await forumLikeDAO.slike(like);
+        let l = data.length
         try {
-            ctx.body = {"code": 200, "message": "ok", data:l}
+            ctx.body = {"code": 200, "message": "ok", data: l}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+    //查看是否是推荐
+    seeEss: async (ctx, next) => {
+        //1.收集数据
+        let faId = ctx.request.query.faId
+        let data = await forumArtDAO.seeEss(faId);
+        let l = data.length
+        try {
+            ctx.body = {"code": 200, "message": "ok", data: l}
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
@@ -344,8 +356,13 @@ module.exports = {
     seeLikes: async (ctx, next) => {
         try {
             let data = await forumArtDAO.likeSum();
-            ctx.body = {"code": 200, "message": "ok", data: data}
-            return data;
+            let val=[]
+            for(let i = 0; i < 10; i++) {
+                let aa=await forumArtDAO.seeAll(data[i].faId)
+                val.push(aa);
+            }
+            ctx.body = {"code": 200, "message": "ok", data: val}
+            return val;
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }

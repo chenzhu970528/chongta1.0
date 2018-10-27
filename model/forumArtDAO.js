@@ -17,7 +17,7 @@ class ART{
     };
     //按点赞排行显示文章名字，还有id
     likeSum(){
-        return DAO('call likes()',[])
+        return DAO('SELECT faId FROM forumlike GROUP BY faId ORDER BY count(faId) desc',[])
     };
 
     //按时间排序，最新发布
@@ -67,6 +67,10 @@ class ART{
     delEssDiary(faId){
         return DAO('update forumArt set faType = case when faType="al" and faId=? then "a" when faType="bl" and faId=? then "b" else faType end',
             [faId,faId])
+    }
+    //查看是否是精品推荐
+    seeEss(faId){
+        return DAO("select * from forumArt where fatype like '%l%' and faId=?", [faId,])
     }
     //删除帖子
     delArt(faId){

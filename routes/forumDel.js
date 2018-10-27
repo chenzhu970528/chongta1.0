@@ -23,7 +23,7 @@ router.post('/like',async (ctx,next)=>{
     console.log(jsondata)
 });
 //管理员删除推荐
-router.post('/diary',async (ctx,next)=>{
+router.get('/ess',async (ctx,next)=>{
     let jsondata = await forum.delEssDiary(ctx,next);
     console.log(jsondata)
 });
