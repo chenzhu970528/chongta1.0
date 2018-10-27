@@ -17,7 +17,7 @@ class ART{
     };
     //按点赞排行显示文章名字，还有id
     likeSum(){
-        return DAO('call likes()',[])
+        return DAO('SELECT faId FROM forumlike GROUP BY faId ORDER BY count(faId) desc',[])
     };
 
     //按时间排序，最新发布
