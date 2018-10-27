@@ -14,6 +14,14 @@ router.get('/',async (ctx,next)=>{
     ctx.body = {"code":200,"message":"ok",data:mjsondata }
 })
 
+// 查看婚介表里信息，根据本人Id
+router.get('/matchdetails/:relId',async (ctx,next)=>{
+    let jsondata=await matchmakingDAO.getmatchdetails(ctx.params.relId);
+    // console.log(jsondata)
+    ctx.body={"code":200,"message":"ok",data:jsondata}
+})
+
+
 // 获取宠物相关信息
 router.get('/search',async (ctx,next)=>{
     let msjsondata = await matchmakingDAO.getMatchSearch();

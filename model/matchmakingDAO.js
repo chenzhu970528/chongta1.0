@@ -6,6 +6,11 @@ class DB{
     getMatchSearch(){
         return DAO('call getMatchSearch(@getMatchSearch);',[])
     }
+
+    //获取婚介表里信息，根据本人Id
+    getmatchdetails(relId){
+        return DAO('select * from matchmaking where relId=? order by matId desc',[relId]);
+    }
     // 获取婚介发布列表数据
     getMatchList(){
         return DAO('call getMatchList(@p_getMatchList);',[])
