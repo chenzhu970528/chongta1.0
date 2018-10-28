@@ -43,7 +43,7 @@ module.exports = {
             // console.log(files)
             for (var i = 0; i < files.filename.length; i++) {
                 var filename = files.filename[i].name;
-                var src = path.join(__dirname, files.filename[i].path)//获取源文件全路径
+                var src = path.join(__dirname, files.filename[i].path); //获取源文件全路径
                 // console.log(src)
                 //获取更名后的文件名(不包含路径)
                 var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)

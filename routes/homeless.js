@@ -73,5 +73,10 @@ router.get('/dellostpets/:lpId',async (ctx,next)=>{
 //删除寻宠消息表信息
 router.post('/adolostMess',async (ctx,next)=>{
     await homelesscontrollers.dellostMess(ctx,next)
+});
+// 最新丢失
+router.get('/getLatest',async (ctx,next)=>{
+    let latest=await lostPetsDAO.getLatest();
+    ctx.body={"code":200,"message":"ok",data:latest}
 })
 module.exports = router;

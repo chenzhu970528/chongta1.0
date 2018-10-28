@@ -16,6 +16,7 @@ class DB{
     getlostdetail(userId){
         return DAO('select * from lostpets where userId=? order by lpTime desc',[userId]);
     }
-
+    // 查找最新丢失
+    getLatest(){return DAO('select * from lostpets ORDER BY lpTime desc LIMIT 0,10',[])}
 }
 module.exports = new DB();
