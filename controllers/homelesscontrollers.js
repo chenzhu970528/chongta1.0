@@ -137,6 +137,17 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+    getlostpetsdetails:async (ctx,next)=>{
+        let data=await lostPetsDAO.getlostpetsdetails(ctx.params.lpId);
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data[0]};
+            return data[0];
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+
+
     //寻宠启示
     getlostPets:async (ctx,next)=>{
     let data=await lostPetsDAO.getlostPets(ctx.params.homeId);

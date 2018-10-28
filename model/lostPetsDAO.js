@@ -12,9 +12,18 @@ class DB{
     getlost(){
         return DAO('select * from lostpets order by lpId desc',[]);
     }
+
     // //根据个人Id查看发布的丢失信息
     getlostdetail(userId){
         return DAO('select * from lostpets where userId=? order by lpTime desc',[userId]);
+    }
+    //根据个人Id查看发布的流浪信息Id
+    getidlostPets(userId){
+        return DAO('select * from homeless where userId=? order by pTime desc',[userId]);
+    }
+    getlostpetsdetails(lpId){
+        return DAO('select * from lostPets,user where lpId=? and lostPets.userId=user.\n' +
+            'userId',[lpId])
     }
     // 查找最新丢失
     getLatest(){return DAO('select * from lostpets ORDER BY lpTime desc LIMIT 0,10',[])}
