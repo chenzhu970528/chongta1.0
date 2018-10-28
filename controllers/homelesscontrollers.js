@@ -126,6 +126,7 @@ module.exports = {
         ctx.body='上传成功'
 
     },
+
     //流浪详情表
     gethomelessdetails:async (ctx,next)=>{
         let data=await homelessDAO.gethomelessdetails(ctx.params.homeId);
@@ -138,7 +139,7 @@ module.exports = {
     },
     //寻宠启示
     getlostPets:async (ctx,next)=>{
-    let data=await lostPetsDAO.getlostPets(ctx.params.userId);
+    let data=await lostPetsDAO.getlostPets(ctx.params.homeId);
         try{
             ctx.body = {"code":200,"message":"ok",data:data[0]};
             return data[0];

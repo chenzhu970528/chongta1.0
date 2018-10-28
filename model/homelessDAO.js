@@ -6,6 +6,7 @@ class DB{
     getHomeless(){
         return DAO('select * from homeless order by homeId desc ',[]);
     }
+    // 信息详情
     gethomelessdetails(homeId){
         return DAO('select * from homeless,user where homeId=? and homeless.userId=user.\n' +
             'userId',[homeId])
