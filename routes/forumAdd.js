@@ -32,6 +32,9 @@ router.post('/reply',async (ctx,next)=>{
 router.post('/Recommend',async (ctx,next)=>{
     let jsondata = await forum.addEssDiary(ctx,next);
     console.log(jsondata)
+    console.log(jsondata)
+    console.log('可恶啊')
+
 });
 //添加点赞
 router.post('/like',async (ctx,next)=>{
