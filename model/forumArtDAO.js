@@ -15,6 +15,14 @@ class ART{
     seeAll(faId){
        return DAO('select * from forumArt where faId=?',[faId])
     };
+    //查看发帖人头像
+    seeArtPic(faId){
+       return DAO('select headPic from user where userId=(select userId from forumart where faId=?)',[faId])
+    };
+    //查看评论人头像
+    seeComPic(userId){
+       return DAO('select headPic from user where userId=?',[userId])
+    };
     //按点赞排行显示文章名字，还有id
     likeSum(){
         return DAO('SELECT faId FROM forumlike GROUP BY faId ORDER BY count(faId) desc',[])

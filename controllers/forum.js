@@ -125,6 +125,7 @@ module.exports = {
         await forumArtDAO.addEssDiary(faId);
         try {
             ctx.body = {"code": 200, "message": "ok", data: '帖子id:' + faId + '添加推荐成功'}
+            return faId
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
@@ -133,7 +134,7 @@ module.exports = {
     delEssDiary: async (ctx, next) => {
         //1.收集数据
 
-        let faId = ctx.request.query.faId;
+        let faId = ctx.query.faId;
         await forumArtDAO.delEssDiary(faId);
         try {
             ctx.body = {"code": 200, "message": "ok", data: '帖子id:' + faId + '删除推荐成功'}
@@ -356,9 +357,9 @@ module.exports = {
     seeLikes: async (ctx, next) => {
         try {
             let data = await forumArtDAO.likeSum();
-            let val=[]
-            for(let i = 0; i < 10; i++) {
-                let aa=await forumArtDAO.seeAll(data[i].faId)
+            let val = []
+            for (let i = 0; i < 10; i++) {
+                let aa = await forumArtDAO.seeAll(data[i].faId)
                 val.push(aa);
             }
             ctx.body = {"code": 200, "message": "ok", data: val}
@@ -401,6 +402,8 @@ module.exports = {
         let art = {};
         let faId = ctx.query.faId;
         art.art = await forumArtDAO.seeAll(faId);
+        art.pic = await forumArtDAO.seeArtPic(faId);//发帖人头像
+
         art.sum = await forumArtDAO.comSum(faId);//评论数
         let com = await forumComDAO.getComment(faId)
         let replys = [];
@@ -408,25 +411,38 @@ module.exports = {
         let l = []
         let a
         let b
+        let headpic = []//评论头像
+        let head//回复人头像
         if (com.length > 0) {
             art.comment = com;
             for (let i = 0; i < com.length; i++) {
                 cc = await fReplaysDAO.getReply(com[i].fcId)
+                headpic.push(await forumArtDAO.seeComPic(com[i].userId));//评论人头像
+
                 replys.push(cc)
 
             }
-            a = replys[0].length
+            art.comhead = headpic
+
             for (let i = 0; i < replys.length; i++) {
-                if (replys[i].length > 0) {
-                    b = replys[i]
-                    for (let j = 0; j < b.length; j++) {
-                        l.push(b[j])
+                if (replys.length > 0) {
+            b= replys[i]   //把b接受回复
+
+                    for (let j = 0; j <  b.length; j++) {
+                        a=b[j].frman
+                        head=await forumArtDAO.seeComPic(a);//回复人头像
+                        b[j].headPic=head[0].headPic  //头像添加进回复
+
+                        l.push(b[j])  //l存放每个评论
+
+
                     }
                 }
             }
+            art.reply = l
         }
-        art.reply = l;
-        art.like = await forumLikeDAO.getLike(faId);
+
+            art.like = await forumLikeDAO.getLike(faId);
         try {
             ctx.body = {"code": 200, "message": "ok", data: art}
             return art
@@ -440,6 +456,34 @@ module.exports = {
         //1.收集数据
         let Keyword = ctx.query.Keyword;
         let data = await forumArtDAO.seeQuery(Keyword)
+
+        try {
+            ctx.body = {"code": 200, "message": "ok", data: data}
+            return data;
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+
+    //查看用户头像
+    seePic: async (ctx, next) => {
+        //1.收集数据
+        let userId = ctx.query.userId;
+        let data = await forumArtDAO.seeComPic(userId)
+
+        try {
+            ctx.body = {"code": 200, "message": "ok", data: data}
+            return data;
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+
+    //查看发帖人头像
+    seeArtPic: async (ctx, next) => {
+        //1.收集数据
+        let faId = ctx.query.faId;
+        let data = await forumArtDAO.seeArtPic(faId)
 
         try {
             ctx.body = {"code": 200, "message": "ok", data: data}

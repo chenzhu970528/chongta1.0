@@ -42,7 +42,7 @@ module.exports = {
                 for (var i = 0; i < files.filename.length; i++) {
                     var filename = files.filename[i].name;
                     var src = path.join(__dirname, files.filename[i].path)//获取源文件全路径
-                    console.log(src)
+                    // console.log(src)
                     //获取更名后的文件名(不包含路径)
                     var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
                     pics += "/uploadfile/adoUpload/" + fileDes + ",";
@@ -136,8 +136,10 @@ module.exports = {
     // 同意领养
     adoAgree:async (ctx,next)=>{
         let addId = ctx.request.body.addId;
+        let adoId = ctx.request.body.adoId;
         try{
             await adoptionsDAO.adoAgree(addId)
+            await adoptionsDAO.adoAgreeRe(adoId)
             ctx.body = {"code":200,"message":"ok",data:'领养已达成'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
