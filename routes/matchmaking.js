@@ -80,8 +80,8 @@ router.post('/addaply', async (ctx,next) => {
      await maplycontroller.addaply(ctx, next);
 })
 // 显示给被申请人的信息,接受的申请
-router.get('/:userId/showaply',async (ctx,next)=>{
-    let sajson = await maplyDAO.showaply(ctx.params.userId);
+router.get('/:matId/showaply',async (ctx,next)=>{
+    let sajson = await maplyDAO.showaply(ctx.params.matId);
     console.log(sajson);
     ctx.body = {"code":200,"message":"ok",data:sajson}
 })
