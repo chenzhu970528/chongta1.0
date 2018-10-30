@@ -72,6 +72,17 @@ router.get('/user/com',async (ctx,next)=>{
     console.log(jsondata)
 });
 
+//用户头像
+router.get('/user/pic',async (ctx,next)=>{
+    let jsondata = await forum.seePic(ctx,next);
+    console.log(jsondata)
+});
+//发帖人头像
+router.get('/user/Artpic',async (ctx,next)=>{
+    let jsondata = await forum.seeArtPic(ctx,next);
+    console.log(jsondata)
+});
+
 //查看点赞了吗
 router.get('/selike',async (ctx,next)=>{
     let jsondata = await forum.selike(ctx,next);

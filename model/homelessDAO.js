@@ -8,9 +8,10 @@ class DB{
     }
     // 信息详情
     gethomelessdetails(homeId){
-        return DAO('select * from homeless,user where homeId=? and homeless.userId=user.\n' +
-            'userId',[homeId])
+        return DAO('select homeless.* ,user.userName,user.userId from homeless,user where homeId=? and homeless.userId=user.userId',[homeId])
     }
+
+
     addhomeless(art){
         return DAO('insert into homeless ' +
             '(getmes,userId,homePic,homeTime,detail,address,type,people,phone,sex,pTime)' +

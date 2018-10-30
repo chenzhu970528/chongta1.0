@@ -137,6 +137,16 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+
+    // founded:async (ctx,next)=>{
+    //     let data=await lostPetsDAO.founded(ctx.params.state);
+    //     try{
+    //         ctx.body = {"code":200,"message":"ok",data:data[0]};
+    //         return data[0];
+    //     }catch(err){
+    //         ctx.body = {"code":500,"message":err.toString(),data:[]}
+    //     }
+    // },
     getlostpetsdetails:async (ctx,next)=>{
         let data=await lostPetsDAO.getlostpetsdetails(ctx.params.lpId);
         try{
@@ -154,6 +164,17 @@ module.exports = {
         try{
             ctx.body = {"code":200,"message":"ok",data:data[0]};
             return data[0];
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+    //更新state
+    loststate:async (ctx,next)=> {
+        let lpId=ctx.request.body.lpId;
+        try{
+            await lostPetsDAO.loststate(lpId)
+            ctx.body = {"code":200,"message":"ok",data:'已经找到噢！'};
+
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }

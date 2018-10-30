@@ -9,8 +9,8 @@ class DB{
     //发布领养信息
     addAdoptions(art){
         return DAO('insert into adoptions ' +
-            '(userId,adoAddress,adoTitle,detail,adoType,adoTime,limitTime,birth,petType,sex,age,adoPic)' +
-            'values(?,?,?,?,?,now(),?,?,?,?,?,?)',
+            '(userId,adoAddress,adoTitle,detail,adoType,adoTime,limitTime,birth,petType,sex,age,adoPic,adostate)' +
+            'values(?,?,?,?,?,now(),?,?,?,?,?,?,0)',
             [art.userId,art.adoAddress,art.adoTitle,art.detail,art.adoType,art.limitTime,art.birth,art.petType,art.sex,art.age,art.adoPic])
     }
     //删除领养信息,对应的有意领养者信息表也删除
@@ -33,6 +33,9 @@ class DB{
     //同意领养，更新agree值位1
     adoAgree(addId){
         return DAO('update adodetails set agree = 1 where adodetails.addId = ?',[addId])
+    }
+    adoAgreeRe(adoId){
+        return DAO('update adoptions set adostate = 1 where adoptions.adoId = ?',[adoId])
     }
 }
 module.exports = new DB();
