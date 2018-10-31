@@ -96,7 +96,7 @@ router.get('/:userId/sendaply',async (ctx,next)=>{
     ctx.body = {"code":200,"message":"ok",data:ssjson1}
 })
 //删除申请请求
-router.post('/delaply',async (ctx,next)=>{
+router.get('/delaply/:aplyId/:matId',async (ctx,next)=>{
     await maplycontroller.delAply(ctx,next);
 })
 //更改申请

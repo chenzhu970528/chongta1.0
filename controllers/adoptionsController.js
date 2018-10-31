@@ -97,6 +97,17 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+    // 查找我申请的
+    getaply:async(ctx,next)=>{
+        let data = await adoDetailsDAO.getaply(ctx.params.userId)
+        try{
+            ctx.body = {"code":200,"message":"ok",data:data};
+            return data[0];
+        }
+        catch (err) {
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
     //删除领养信息,对应的有意领养者信息表也删除
     delAdoptions:async (ctx,next)=>{
         //1.收集数据
@@ -125,7 +136,7 @@ module.exports = {
     //删除领养申请
     delAdoApply:async (ctx,next)=>{
         //1.收集数据
-        let addId = ctx.request.body.addId;
+        let addId = ctx.params.addId;
         try{
             await adoptionsDAO.delAdoApply(addId)
             ctx.body = {"code":200,"message":"ok",data:'成功删除领养申请'}

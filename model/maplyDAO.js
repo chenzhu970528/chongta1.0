@@ -14,9 +14,9 @@ class DB{
     sendaply1(id){
         return DAO ('call sendaply1(?,@p_sendaply1);',[id])
     }
-    sendaply2(id){
-        return DAO ('select maplyTime from maply,user where userId=aplyId and userId=?',[id])
-    }
+    // sendaply2(id){
+    //     return DAO ('select maplyTime from maply,user where userId=aplyId and userId=?',[id])
+    // }
     // 删除申请请求
         delAplDel(mdel){
         return DAO('DELETE from maplydel where aplyId=? and matId=?',[mdel.aplyId,mdel.matId])

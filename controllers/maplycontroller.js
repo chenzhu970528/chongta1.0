@@ -118,11 +118,11 @@ module.exports = {
     },
     delAply:async (ctx,next) => {
         let mdel={ };
-        mdel.aplyId=ctx.request.body.aplyId;
-        mdel.matId=ctx.request.body.matId;
+        mdel.aplyId=ctx.params.aplyId;
+        mdel.matId=ctx.params.matId;
         try{
-            await  maplyDAO.delAplDel(mdel)
-            await maplyDAO.delAply(mdel)
+            await  maplyDAO.delAplDel(mdel);
+            await maplyDAO.delAply(mdel);
             //3.反馈结果
             ctx.body = {"code":200,"message":"ok",data:'删除成功'}
         }catch(err){
