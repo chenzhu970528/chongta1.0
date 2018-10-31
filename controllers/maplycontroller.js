@@ -136,7 +136,7 @@ module.exports = {
         try{
             await  maplyDelDAO.agreeMatch(agree);
             //3.反馈结果
-            ctx.body = {"code":200,"message":"ok",data:agree}
+            ctx.body = {"code":200,"message":"ok",data:'更改成功'}
         }catch(err){
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
