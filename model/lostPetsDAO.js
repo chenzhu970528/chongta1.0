@@ -30,7 +30,7 @@ class DB{
         return DAO('SELECT * FROM lostpets,user where state=1 and lostpets.userId=user.userId',[state])
     }
     getlostpetsdetails(lpId){
-        return DAO('select * from lostPets,user where lpId=? and lostPets.userId=user.\n' +
+        return DAO('select * from lostpets,user where lpId=? and lostpets.userId=user.\n' +
             'userId',[lpId])
     }
     // 查找最新丢失

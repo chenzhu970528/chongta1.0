@@ -8,7 +8,7 @@ class DB{
     }
     // 信息详情
     gethomelessdetails(homeId){
-        return DAO('select homeless.* ,user.userName,user.userId from homeless,user where homeId=? and homeless.userId=user.userId',[homeId])
+        return DAO('select homeless.* ,user.userName,user.userPhone,user.userId from homeless,user where homeId=? and homeless.userId=user.userId',[homeId])
     }
 
 

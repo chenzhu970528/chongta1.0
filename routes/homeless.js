@@ -41,6 +41,10 @@ router.get('/getlostdetails/:userId',async (ctx,next)=>{
 router.get('/homelessdetails/:homeId', async (ctx,next)=>{
     await homelesscontrollers.gethomelessdetails(ctx,next)
 })
+//查看丢失详细信息
+router.get('/lostpetsdetails/:lpId', async (ctx,next)=>{
+    await homelesscontrollers.getlostpetsdetails(ctx,next)
+})
 //查看state为1的丢失信息
 router.get('/founded', async (ctx,next)=>{
     let Foundjson=await lostPetsDAO.founded();
@@ -48,10 +52,7 @@ router.get('/founded', async (ctx,next)=>{
     // await homelesscontrollers.founded(ctx,next)
 })
 
-//查看丢失详细信息
-router.get('/lostpetsdetails/:lpId', async (ctx,next)=>{
-    await homelesscontrollers.getlostpetsdetails(ctx,next)
-})
+
 //寻宠启示表
 router.get('/lostPets/:homeId',async (ctx,next)=>{
     // let jsondata=await lostPetsDAO.getlostPets();
