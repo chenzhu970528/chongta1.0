@@ -418,7 +418,6 @@ module.exports = {
             for (let i = 0; i < com.length; i++) {
                 cc = await fReplaysDAO.getReply(com[i].fcId)
                 headpic.push(await forumArtDAO.seeComPic(com[i].userId));//评论人头像
-
                 replys.push(cc)
 
             }
@@ -488,6 +487,41 @@ module.exports = {
         try {
             ctx.body = {"code": 200, "message": "ok", data: data}
             return data;
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+
+    //查看回复最多的
+    seeCom: async (ctx, next) => {
+        //1.收集数据
+        let art=[]
+        let art1=[]
+        let id
+        let art2=[]
+        let faId = await forumArtDAO.seeTime()
+        for(let i=0;i<faId.length;i++){
+            art.push(await forumArtDAO.comSum(faId[i].faId))
+            art1.push(art[i][0])
+            art1[i].push(faId[i].faId)
+        }
+        var t;
+        for(var i=0;i<art1.length;i++){
+            for(j=i+1;j<art1.length;j++){
+                if(art1[i][0].sum_count<art1[j][0].sum_count){
+                    t=art1[i];
+                    art1[i]=art1[j];
+                    art1[j]=t;
+                }
+            }
+        }
+        for(let i=0;i<9;i++){
+           id = art1[i][1]
+               art2.push(await forumArtDAO.seeAll(id))
+        }
+        try {
+            ctx.body = {"code": 200, "message": "ok", data: art2}
+            // return data;
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }

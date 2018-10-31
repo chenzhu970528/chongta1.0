@@ -103,5 +103,11 @@ router.get('/time',async (ctx,next)=>{
     // console.log(jsondata)
 });
 
+//查看回复最多的
+router.get('/com',async (ctx,next)=>{
+    let jsondata = await forum.seeCom(ctx,next);
+    // console.log(jsondata)
+});
+
 
 module.exports = router;
