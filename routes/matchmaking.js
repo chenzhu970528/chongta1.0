@@ -80,15 +80,19 @@ router.post('/addaply', async (ctx,next) => {
      await maplycontroller.addaply(ctx, next);
 })
 // 显示给被申请人的信息,接受的申请
-router.get('/:userId/showaply',async (ctx,next)=>{
-    let sajson = await maplyDAO.showaply(ctx.params.userId);
+router.get('/:matId/showaply',async (ctx,next)=>{
+    let sajson = await maplyDAO.showaply(ctx.params.matId);
     console.log(sajson);
     ctx.body = {"code":200,"message":"ok",data:sajson}
 })
 // 显示本人的发出的申请
 router.get('/:userId/sendaply',async (ctx,next)=>{
     let ssjson1 = await maplyDAO.sendaply1(ctx.params.userId);
-    console.log(ssjson1)
+    // let ssjson2 = await maplyDAO.sendaply2(ctx.params.userId);
+    // let ssjson={};
+    // ssjson.ssjson1=ssjson1[0];
+    // ssjson.ssjson2=ssjson2;
+    // console.log(ssjson1)
     ctx.body = {"code":200,"message":"ok",data:ssjson1}
 })
 //删除申请请求

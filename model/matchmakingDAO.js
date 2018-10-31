@@ -9,7 +9,7 @@ class DB{
 
     //获取婚介表里信息，根据本人Id
     getmatchdetails(relId){
-        return DAO('select petPic,title,relTime,address,detail from matchmaking,user where relId=userId and relId=?',[relId]);
+        return DAO('select matId,petPic,title,relTime,address,detail from matchmaking,user where relId=userId and relId=?',[relId]);
     }
     // 获取婚介发布列表数据
     getMatchList(){

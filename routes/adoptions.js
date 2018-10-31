@@ -4,6 +4,7 @@ const adoDetailsDAO = require('../model/adoDetailsDAO')
 const adoptionsCtroller = require('../controllers/adoptionsController')
 //adoptions根路由
 router.prefix('/adoptions')
+mode:'history',
 //获取领养信息
 router.get('/',async (ctx,next)=>{
     await adoptionsCtroller.getAdoptions(ctx,next)

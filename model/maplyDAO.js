@@ -2,12 +2,13 @@ const DAO =require('../model/DAO')
 class DB{
     // 插入婚介申请数据
     addaply(apldata){
-        return DAO('insert into maply (aplyId,matId,detail,petPic,age,birth,type,sex,PetName,maplyTime) values(?,?,?,?,?,?,?,?,?,now())',
+        return DAO('insert into maply (aplyId,matId,detail,petPic,age,birth,type,sex,PetName,maplyTime) values(?,?,?,?,?,?,?,?,?,now(),?)',
             [apldata.aplyId,apldata.matId,apldata.detail,apldata.petPic,apldata.age,apldata.birth,apldata.type,apldata.sex,apldata.PetName])
     }
     // 接受的申请
     showaply(id){
-        return DAO ('call showaply(?,@p_showaply);',[id])
+        // return DAO ('call showaply(?,@p_showaply);',[id])
+        return DAO('select maply.*,userName,userId,userPhone,headPic,userEmail from user,maply where aplyId=userId and matId=?',[id])
     }
     //显示本人的发出的申请
     sendaply1(id){
