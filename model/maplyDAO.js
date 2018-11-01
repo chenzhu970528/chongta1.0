@@ -42,6 +42,10 @@ class DB{
             'from matchmaking,maply,maplydel\n' +
             'where maplydel.aplyId=maply.aplyId and maplydel.matId=matchmaking.matId and maplydel.matId GROUP BY maplydel.matId HAVING maplydel.matId in (select matId from maplydel where aplyId=?)',[aplyId])
     }
+    // 查找同意
+    Agree(mdel){
+        return DAO('select matId,aplyId,agree,userName from maplydel,user where aplyId=userId and matId=? group by matId',[mdel])
+    }
 }
 module.exports = new  DB();
 

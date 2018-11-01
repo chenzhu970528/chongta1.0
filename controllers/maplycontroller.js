@@ -164,8 +164,8 @@ module.exports = {
     },
     agreeMatch:async (ctx,next) => {
         let agree={ };
-        agree.matId=ctx.request.body.matId;
-        agree.aplyId=ctx.request.body.aplyId;
+        agree.matId=ctx.params.matId;
+        agree.aplyId=ctx.params.aplyId;
         try{
             await  maplyDelDAO.agreeMatch(agree);
             //3.反馈结果
