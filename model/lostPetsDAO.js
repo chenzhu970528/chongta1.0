@@ -10,7 +10,7 @@ class DB{
         return DAO('DELETE FROM lostPets WHERE lostPets.lpId = ?',[lpId])
     }
     getlost(){
-        return DAO('select * from lostpets,user where lostPets.userId=user.userId order by lpId desc',[]);
+        return DAO('select * from lostpets,user where state!=1 and lostPets.userId=user.userId order by lpId desc',[]);
     }
 
     // //根据个人Id查看发布的丢失信息
