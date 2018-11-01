@@ -167,7 +167,8 @@ module.exports = {
         agree.matId=ctx.params.matId;
         agree.aplyId=ctx.params.aplyId;
         try{
-            await  maplyDelDAO.agreeMatch(agree);
+            await  maplyDelDAO.agreeMatch1(agree);
+            await  maplyDelDAO.agreeMatch(agree.matId);
             //3.反馈结果
             ctx.body = {"code":200,"message":"ok",data:'更改成功'}
         }catch(err){

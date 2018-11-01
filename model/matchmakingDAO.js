@@ -9,7 +9,7 @@ class DB{
 
     //获取婚介表里信息，根据本人Id
     getmatchdetails(relId){
-        return DAO('select matchmaking.matId,petPic,title,relTime,address,detail,agree from matchmaking,user,maplydel where relId=userId and matchmaking.matId=maplydel.matId and relId=? GROUP BY matchmaking.matId',[relId]);
+        return DAO('select matId,petPic,title,relTime,address,detail,agree from matchmaking,user where relId=userId and relId=?',[relId]);
     }
     // 获取婚介发布列表数据
     getMatchList(){
@@ -21,8 +21,8 @@ class DB{
     }
     addMatch(users){
         return DAO('insert into matchmaking ' +
-            '(relId,title,sandword,request,detail,relTime,birth,type,sex,petPic,age,PetName) ' +
-            'values(?,?,?,?,?,now(),?,?,?,?,?,?)',
+            '(relId,title,sandword,request,detail,relTime,birth,type,sex,petPic,age,PetName,agree) ' +
+            'values(?,?,?,?,?,now(),?,?,?,?,?,?,0)',
             [users.relId,users.title,users.sandword,users.request,users.detail,users.birth,users.type,users.sex,users.petPic,users.age,users.PetName])
     }
     //删除婚介发布

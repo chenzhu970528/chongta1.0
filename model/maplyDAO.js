@@ -12,7 +12,7 @@ class DB{
     }
     //显示本人的发出的申请
     sendaply1(id){
-        return DAO ('call sendaply1(?,@p_sendaply1);',[id])
+        return DAO ('select maply.*,title,agree from matchmaking,maply where matchmaking.matId=maply.matId and aplyId=?',[id])
     }
     // sendaply2(id){
     //     return DAO ('select maplyTime from maply,user where userId=aplyId and userId=?',[id])

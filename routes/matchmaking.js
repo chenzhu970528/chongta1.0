@@ -25,12 +25,12 @@ router.get('/matchdetails/:relId',async (ctx,next)=>{
 // 获取宠物相关信息
 router.get('/search',async (ctx,next)=>{
     let msjsondata = await matchmakingDAO.getMatchSearch();
-    console.log(msjsondata)
+    // console.log(msjsondata)
     ctx.body = {"code":200,"message":"ok",data:msjsondata}
 })
 router.get('/matchdetail/:relId',async (ctx,next)=>{
     let mdjsondata = await matchmakingDAO.getMdetail(ctx.params.relId);
-    console.log(mdjsondata)
+    // console.log(mdjsondata)
     ctx.body = {"code":200,"message":"ok",data:mdjsondata[0]}
 })
 router.post('/addMatch',async (ctx,next)=>{
@@ -86,13 +86,8 @@ router.get('/:matId/showaply',async (ctx,next)=>{
     ctx.body = {"code":200,"message":"ok",data:sajson}
 })
 // 显示本人的发出的申请
-router.get('/:userId/sendaply',async (ctx,next)=>{
-    let ssjson1 = await maplyDAO.sendaply1(ctx.params.userId);
-    // let ssjson2 = await maplyDAO.sendaply2(ctx.params.userId);
-    // let ssjson={};
-    // ssjson.ssjson1=ssjson1[0];
-    // ssjson.ssjson2=ssjson2;
-    // console.log(ssjson1)
+router.get('/:aplyId/sendaply',async (ctx,next)=>{
+    let ssjson1 = await maplyDAO.sendaply1(ctx.params.aplyId);
     ctx.body = {"code":200,"message":"ok",data:ssjson1}
 })
 //删除申请请求

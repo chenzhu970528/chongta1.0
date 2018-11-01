@@ -7,6 +7,9 @@ class DB{
     }
     //同意申请
     agreeMatch(agree){
+        return DAO('update matchmaking set agree=1 where matId=?',[agree])
+    }
+    agreeMatch1(agree){
         return DAO('update maplydel set agree=1 where matId=? and aplyId=?',[agree.matId,agree.aplyId])
     }
 }
