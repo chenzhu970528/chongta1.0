@@ -16,58 +16,94 @@ module.exports = {
         var now = moment(new Date()).format('YYYYMMDDHHmmss')
         form.multiples = true;  //设置上传多文件
         form.parse(ctx.req, async function (err, fields, files) {
-            //1.收集数据
-            let art = {};
-            art.userId = fields.userId;
-            art.faText = fields.faText;
-            art.faTitle = fields.faTitle;
-            art.userName = fields.userName;
-            art.faType = fields.faType;
-            var filename = files.filename.name;
-            var src = path.join(__dirname, files.filename.path)//获取源文件全路径
-            var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
-            pics = "/uploadfile/formUpload/" + fileDes
-            // 更名同步方式
-            fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
-            console.log(fileDes)
-            art.faImg = pics
-            try {
-                //2.调用用户数据访问对象的添加方法
-                let jsondata = await forumArtDAO.addPost(art)
-                //3.反馈结果
-                ctx.body = {"code": 200, "message": "ok", data: art}
-                ctx.render('art1', {data: jsondata})
-            } catch (err) {
-                ctx.body = {"code": 500, "message": err.toString(), data: []}
+            console.log(files.filename.length)
+
+            if (!files.filename.length) {
+                //1.收集数据
+                let art = {};
+                art.userId = fields.userId;
+                art.faText = fields.faText;
+                art.faTitle = fields.faTitle;
+                art.userName = fields.userName;
+                art.faType = fields.faType;
+                var filename = files.filename.name;
+                var src = path.join(__dirname, files.filename.path)//获取源文件全路径
+                var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
+                pics = "/uploadfile/formUpload/" + fileDes + ','
+                // 更名同步方式
+                fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
+                console.log(fileDes)
+                art.faImg = pics
+                try {
+                    //2.调用用户数据访问对象的添加方法
+                    let jsondata = await forumArtDAO.addPost(art)
+                    //3.反馈结果
+                    ctx.body = {"code": 200, "message": "ok", data: art}
+                    ctx.render('art1', {data: jsondata})
+                } catch (err) {
+                    ctx.body = {"code": 500, "message": err.toString(), data: []}
+                }
+                if (err) {
+                    ctx.body = '上传失败'
+                }
+            } else {
+                let art = {};
+                art.userId = fields.userId;
+                art.faText = fields.faText;
+                art.faTitle = fields.faTitle;
+                art.userName = fields.userName;
+                art.faType = fields.faType;
+                for (let i = 0; i < files.filename.length; i++) {
+                    let filename = files.filename[i].name;
+                    let src = path.join(__dirname, files.filename[i].path)//获取源文件全路径
+                    // console.log(src)
+                    //获取更名后的文件名(不包含路径)
+                    let fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
+                    pics += "/uploadfile/formUpload/" + fileDes + ",";
+                    // 更名同步方式
+                    fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
+                }
+                art.faImg = pics
+                try {
+                    //2.调用用户数据访问对象的添加方法
+                    let jsondata = await forumArtDAO.addPost(art)
+                    //3.反馈结果
+                    ctx.body = {"code": 200, "message": "ok", data: art}
+                    ctx.render('art1', {data: jsondata})
+                } catch (err) {
+                    ctx.body = {"code": 500, "message": err.toString(), data: []}
+                }
+                if (err) {
+                    ctx.body = '上传失败'
+                }
             }
-            if (err) {
-                ctx.body = '上传失败'
-            }
+
         })
         ctx.body = '上传成功'
     },
+
 //图片
-    addImg: async (ctx, next) => {
-        const form = new formidable.IncomingForm()
-        form.uploadDir = "../public/uploadfile";
-        form.keepExtensions = true;
-        let urlImages = []
-        return new Promise(function (resolve, reject) {
-            form.parse(ctx.req, function (err, fields, files) {
-                if (err) reject(err.message)
-                console.log('获取数据文件了......')
-                // if(err){console.log(err); return;}
-                for (name in files) {
-                    urlImages.push(path.parse(files[name].path).base)
-                }
-                console.log(urlImages)
-                resolve(urlImages)
-            })
-        }).then((data) => {
-            //按wangeditor格式,输出结果,把上传的文件名返回
-            ctx.body = {errno: 0, data: data};
-        });
-    },
+//     addImg: async (ctx, next) => {
+//         const form = new formidable.IncomingForm()
+//         form.uploadDir = "../public/uploadfile";
+//         form.keepExtensions = true;
+//         let urlImages = []
+//         return new Promise(function (resolve, reject) {
+//             form.parse(ctx.req, function (err, fields, files) {
+//                 if (err) reject(err.message)
+//                 console.log('获取数据文件了......')
+//                 // if(err){console.log(err); return;}
+//                 for (name in files) {
+//                     urlImages.push(path.parse(files[name].path).base)
+//                 }
+//                 console.log(urlImages)
+//                 resolve(urlImages)
+//             })
+//         }).then((data) => {
+//             //按wangeditor格式,输出结果,把上传的文件名返回
+//             ctx.body = {errno: 0, data: data};
+//         });
+//     },
 
     //添加评论
     addComment: async (ctx, next) => {
@@ -425,23 +461,20 @@ module.exports = {
 
             for (let i = 0; i < replys.length; i++) {
                 if (replys.length > 0) {
-            b= replys[i]   //把b接受回复
+                    b = replys[i]   //把b接受回复
 
-                    for (let j = 0; j <  b.length; j++) {
-                        a=b[j].frman
-                        head=await forumArtDAO.seeComPic(a);//回复人头像
-                        b[j].headPic=head[0].headPic  //头像添加进回复
+                    for (let j = 0; j < b.length; j++) {
+                        a = b[j].frman
+                        head = await forumArtDAO.seeComPic(a);//回复人头像
+                        b[j].headPic = head[0].headPic  //头像添加进回复
 
                         l.push(b[j])  //l存放每个评论
-
-
                     }
                 }
             }
             art.reply = l
         }
-
-            art.like = await forumLikeDAO.getLike(faId);
+        art.like = await forumLikeDAO.getLike(faId);
         try {
             ctx.body = {"code": 200, "message": "ok", data: art}
             return art
@@ -495,29 +528,29 @@ module.exports = {
     //查看回复最多的
     seeCom: async (ctx, next) => {
         //1.收集数据
-        let art=[]
-        let art1=[]
+        let art = []
+        let art1 = []
         let id
-        let art2=[]
+        let art2 = []
         let faId = await forumArtDAO.seeTime()
-        for(let i=0;i<faId.length;i++){
+        for (let i = 0; i < faId.length; i++) {
             art.push(await forumArtDAO.comSum(faId[i].faId))
             art1.push(art[i][0])
             art1[i].push(faId[i].faId)
         }
         var t;
-        for(var i=0;i<art1.length;i++){
-            for(j=i+1;j<art1.length;j++){
-                if(art1[i][0].sum_count<art1[j][0].sum_count){
-                    t=art1[i];
-                    art1[i]=art1[j];
-                    art1[j]=t;
+        for (var i = 0; i < art1.length; i++) {
+            for (j = i + 1; j < art1.length; j++) {
+                if (art1[i][0].sum_count < art1[j][0].sum_count) {
+                    t = art1[i];
+                    art1[i] = art1[j];
+                    art1[j] = t;
                 }
             }
         }
-        for(let i=0;i<9;i++){
-           id = art1[i][1]
-               art2.push(await forumArtDAO.seeAll(id))
+        for (let i = 0; i < 9; i++) {
+            id = art1[i][1]
+            art2.push(await forumArtDAO.seeAll(id))
         }
         try {
             ctx.body = {"code": 200, "message": "ok", data: art2}
