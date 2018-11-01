@@ -26,6 +26,6 @@ class ADD{
     //查看热门
     getHot(){return DAO('select adoptions.adoId,adoptions.userId,adoAddress,adoTitle,adoTime,count(adodetails.userId) num from adoptions,adodetails where adoptions.adoId=adodetails.adoId group by adodetails.adoId ORDER BY num desc LIMIT 0,9',[])};
     // 查找我申请的
-    getaply(userId){return DAO('select addId,adoptions.adoId,adoTitle,addTime,agree from adoptions,adodetails where adoptions.adoId=adodetails.adoId and adoptions.adoId in(select adoId from adodetails where userId=?) group by adoptions.adoId',[userId])};
+    getaply(userId){return DAO('select addId,adoptions.adoId,adoTitle,addTime,adostate from adoptions,adodetails where adoptions.adoId=adodetails.adoId and adodetails.userId=?',[userId])};
 }
 module.exports = new ADD();
