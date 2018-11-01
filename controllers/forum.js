@@ -23,13 +23,16 @@ module.exports = {
             art.faTitle = fields.faTitle;
             art.userName = fields.userName;
             art.faType = fields.faType;
-            var filename = files.filename.name;
-            var src = path.join(__dirname, files.filename.path)//获取源文件全路径
-            var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
-            pics = "/uploadfile/formUpload/" + fileDes
-            // 更名同步方式
-            fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
-            console.log(fileDes)
+            for (var i = 0; i < files.filename.length; i++) {
+                var filename = files.filename[i].name;
+                var src = path.join(__dirname, files.filename[i].path)//获取源文件全路径
+                // console.log(src)
+                //获取更名后的文件名(不包含路径)
+                var fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
+                pics += "/uploadfile/formUpload/" + fileDes + ",";
+                // 更名同步方式
+                fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
+            }
             art.faImg = pics
             try {
                 //2.调用用户数据访问对象的添加方法
@@ -47,27 +50,27 @@ module.exports = {
         ctx.body = '上传成功'
     },
 //图片
-    addImg: async (ctx, next) => {
-        const form = new formidable.IncomingForm()
-        form.uploadDir = "../public/uploadfile";
-        form.keepExtensions = true;
-        let urlImages = []
-        return new Promise(function (resolve, reject) {
-            form.parse(ctx.req, function (err, fields, files) {
-                if (err) reject(err.message)
-                console.log('获取数据文件了......')
-                // if(err){console.log(err); return;}
-                for (name in files) {
-                    urlImages.push(path.parse(files[name].path).base)
-                }
-                console.log(urlImages)
-                resolve(urlImages)
-            })
-        }).then((data) => {
-            //按wangeditor格式,输出结果,把上传的文件名返回
-            ctx.body = {errno: 0, data: data};
-        });
-    },
+//     addImg: async (ctx, next) => {
+//         const form = new formidable.IncomingForm()
+//         form.uploadDir = "../public/uploadfile";
+//         form.keepExtensions = true;
+//         let urlImages = []
+//         return new Promise(function (resolve, reject) {
+//             form.parse(ctx.req, function (err, fields, files) {
+//                 if (err) reject(err.message)
+//                 console.log('获取数据文件了......')
+//                 // if(err){console.log(err); return;}
+//                 for (name in files) {
+//                     urlImages.push(path.parse(files[name].path).base)
+//                 }
+//                 console.log(urlImages)
+//                 resolve(urlImages)
+//             })
+//         }).then((data) => {
+//             //按wangeditor格式,输出结果,把上传的文件名返回
+//             ctx.body = {errno: 0, data: data};
+//         });
+//     },
 
     //添加评论
     addComment: async (ctx, next) => {
@@ -440,7 +443,6 @@ module.exports = {
             }
             art.reply = l
         }
-
             art.like = await forumLikeDAO.getLike(faId);
         try {
             ctx.body = {"code": 200, "message": "ok", data: art}
