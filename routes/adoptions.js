@@ -40,7 +40,7 @@ router.post('/adoAddApply',async (ctx,next)=>{
     await adoptionsCtroller.addAdoApply(ctx,next)
 })
 //删除领养申请
-router.post('/adoDelApply',async (ctx,next)=>{
+router.get('/adoDelApply/:addId',async (ctx,next)=>{
     await adoptionsCtroller.delAdoApply(ctx,next)
 })
 // 同意领养
@@ -52,5 +52,9 @@ router.get('/getHot',async (ctx,next)=>{
     let hot=await adoDetailsDAO.getHot();
     ctx.body = {"code":200,"message":"ok",data:hot}
 
+})
+// 查找我申请的
+router.get('/getaply/:userId',async (ctx,next)=>{
+    await adoptionsCtroller.getaply(ctx,next)
 })
 module.exports = router

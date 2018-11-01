@@ -96,7 +96,7 @@ router.get('/:userId/sendaply',async (ctx,next)=>{
     ctx.body = {"code":200,"message":"ok",data:ssjson1}
 })
 //删除申请请求
-router.post('/delaply',async (ctx,next)=>{
+router.get('/delaply/:aplyId/:matId',async (ctx,next)=>{
     await maplycontroller.delAply(ctx,next);
 })
 //更改申请
@@ -110,7 +110,7 @@ router.get('/countAply',async (ctx,next)=>{
 });
 
 //同意申请
-router.post('/agree',async (ctx,next) => {
+router.get('/agree/:matId/:aplyId',async (ctx,next) => {
     await  maplycontroller.agreeMatch(ctx,next);
 });
 // 显示是否被同意
@@ -125,5 +125,10 @@ router.get('/num',async (ctx,next)=>{
     let Home = await matchmakingDAO.countH();
     let all=parseInt(match[0].num)+parseInt(Ado[0].num)+parseInt(Home[0].num)+parseInt(Forum[0].num);
     ctx.body = {"code":200,"message":"ok",data:all}
+});
+// 查找同意
+router.get('/agreeName/:matId',async (ctx,next)=>{
+    let SAdata = await maplyDAO.Agree(ctx.params.matId);
+    ctx.body = {"code":200,"message":"ok",data:SAdata}
 });
 module.exports = router

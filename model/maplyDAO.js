@@ -2,7 +2,7 @@ const DAO =require('../model/DAO')
 class DB{
     // 插入婚介申请数据
     addaply(apldata){
-        return DAO('insert into maply (aplyId,matId,detail,petPic,age,birth,type,sex,PetName,maplyTime) values(?,?,?,?,?,?,?,?,?,now(),?)',
+        return DAO('insert into maply (aplyId,matId,detail,petPic,age,birth,type,sex,PetName,maplyTime) values(?,?,?,?,?,?,?,?,?,now())',
             [apldata.aplyId,apldata.matId,apldata.detail,apldata.petPic,apldata.age,apldata.birth,apldata.type,apldata.sex,apldata.PetName])
     }
     // 接受的申请
@@ -14,9 +14,9 @@ class DB{
     sendaply1(id){
         return DAO ('call sendaply1(?,@p_sendaply1);',[id])
     }
-    sendaply2(id){
-        return DAO ('select maplyTime from maply,user where userId=aplyId and userId=?',[id])
-    }
+    // sendaply2(id){
+    //     return DAO ('select maplyTime from maply,user where userId=aplyId and userId=?',[id])
+    // }
     // 删除申请请求
         delAplDel(mdel){
         return DAO('DELETE from maplydel where aplyId=? and matId=?',[mdel.aplyId,mdel.matId])
@@ -41,6 +41,10 @@ class DB{
         return DAO('select agree,maplydel.matId\n' +
             'from matchmaking,maply,maplydel\n' +
             'where maplydel.aplyId=maply.aplyId and maplydel.matId=matchmaking.matId and maplydel.matId GROUP BY maplydel.matId HAVING maplydel.matId in (select matId from maplydel where aplyId=?)',[aplyId])
+    }
+    // 查找同意
+    Agree(mdel){
+        return DAO('select matId,aplyId,agree,userName from maplydel,user where aplyId=userId and matId=? group by matId',[mdel])
     }
 }
 module.exports = new  DB();
