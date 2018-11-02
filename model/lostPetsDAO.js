@@ -10,7 +10,7 @@ class DB{
         return DAO('DELETE FROM lostPets WHERE lostPets.lpId = ?',[lpId])
     }
     getlost(){
-        return DAO('select * from lostpets,user where state!=1 and lostPets.userId=user.userId order by lpId desc',[]);
+        return DAO('select lostpets.*,user.userId,user.userName,user.userPhone,user.sex from lostpets,user where state!=1 and lostPets.userId=user.userId order by lpId desc',[]);
     }
 
     // //根据个人Id查看发布的丢失信息
@@ -30,7 +30,7 @@ class DB{
         return DAO('SELECT * FROM lostpets,user where state=1 and lostpets.userId=user.userId',[state])
     }
     getlostpetsdetails(lpId){
-        return DAO('select lostpets.* from lostpets,user where lpId=? and lostpets.userId=user.\n' +
+        return DAO('select lostpets.*,user.userId,user.userName,user.userPhone from lostpets,user where lpId=? and lostpets.userId=user.\n' +
             'userId',[lpId])
     }
     // 查找最新丢失
