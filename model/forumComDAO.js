@@ -8,7 +8,7 @@ class COM{
     }
      //用户的评论和回复文章标题
     com(userId){
-        return DAO('select faId,time,faText from forumCom where userId=?',[userId]);
+        return DAO('select faId,time,faText from forumCom where userId=?  order by time desc',[userId]);
     }
     //
     comArt(userId){
