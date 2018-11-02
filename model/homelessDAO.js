@@ -20,8 +20,8 @@ class DB{
     }
     addlostPets(art){
         return DAO('insert into lostPets' +
-            '(userId,lpmes,lppic,lpTime,address,detail,reward,sex,type,lostpeople,lostphone,pbTime)' +
-            'values(?,?,?,?,?,?,?,?,?,?,?,now())',
+            '(userId,lpmes,lppic,lpTime,address,detail,reward,sex,type,lostpeople,lostphone,pbTime,state)' +
+            'values(?,?,?,?,?,?,?,?,?,?,?,now(),0)',
             [art.userId,art.lpmes,art.lppic,art.lpTime,art.address,art.detail,art.reward,art.sex,art.type,art.lostpeople,art.lostphone])
     }
 
