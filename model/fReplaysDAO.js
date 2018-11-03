@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class REP{
     //获取所有评论回复方法  传入评论的id
     getReply(fcId){
-        return DAO('select * from fReplays where fcId=? order by time desc',[fcId]);
+        return DAO('select * from fReplays where fcId=?',[fcId]);
     }
     //查询用户的回复以及回复的文章id
     queryRep(userId){
@@ -12,7 +12,7 @@ class REP{
     }
     //用户回复的文章标题和发帖人
     queryArt(userId){
-        return DAO('select faId,faTitle,userName from forumArt where faId in(select faId from forumCom where forumCom.fcId in(select fcId from fReplays where frman=?))',[userId]);
+        return DAO('select faId,faTitle,faText,userName from forumArt where faId in(select faId from forumCom where forumCom.fcId in(select fcId from fReplays where frman=?))',[userId]);
     }
 
     //添加一条回复  外部传参进去

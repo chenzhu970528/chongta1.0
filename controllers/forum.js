@@ -82,44 +82,52 @@ module.exports = {
         ctx.body = '上传成功'
     },
 
-//图片
-//     addImg: async (ctx, next) => {
-//         const form = new formidable.IncomingForm()
-//         form.uploadDir = "../public/uploadfile";
-//         form.keepExtensions = true;
-//         let urlImages = []
-//         return new Promise(function (resolve, reject) {
-//             form.parse(ctx.req, function (err, fields, files) {
-//                 if (err) reject(err.message)
-//                 console.log('获取数据文件了......')
-//                 // if(err){console.log(err); return;}
-//                 for (name in files) {
-//                     urlImages.push(path.parse(files[name].path).base)
-//                 }
-//                 console.log(urlImages)
-//                 resolve(urlImages)
-//             })
-//         }).then((data) => {
-//             //按wangeditor格式,输出结果,把上传的文件名返回
-//             ctx.body = {errno: 0, data: data};
-//         });
-//     },
-
     //添加评论
     addComment: async (ctx, next) => {
-        console.log(ctx.request.body);
-        //1.收集数据
-        let comment = {};
-        comment.faId = ctx.request.body.faId;
-        comment.faText = ctx.request.body.faText;
-        comment.userId = ctx.request.body.userId;
-        comment.userName = ctx.request.body.userName;
-        try {
-            await forumComDAO.addComment(comment);
-            ctx.body = {"code": 200, "message": "ok", data: comment}
-        } catch (err) {
-            ctx.body = {"code": 500, "message": err.toString(), data: []}
-        }
+            let pics = '';//保存所有图片
+            let form = new formidable.IncomingForm();
+            form.uploadDir = '../public/uploadfile/formUpload'    //设置文件存放路径
+            let now = moment(new Date()).format('YYYYMMDDHHmmss')
+            form.multiples = true;  //设置上传多文件
+            form.parse(ctx.req, async function (err, fields, files) {
+                //1.收集数据
+                let comment = {};
+                comment.faId = fields.faId;
+                comment.faText =fields.faText;
+                comment.userId = fields.userId;
+                comment.userName= fields.userName;
+                console.log('开始咯')
+                console.log('00000000000',files.filename)
+                if(!files.filename){
+                    console.log('没图片啊')
+                    comment.comImg = ''
+                }
+               else{
+                    let filename =  files.filename.name;
+
+                    let src = path.join(__dirname, files.filename.path)//获取源文件全路径
+                    let fileDes = path.basename(filename, path.extname(filename)) + now + path.extname(filename)
+                    pics = "/uploadfile/formUpload/" + fileDes
+                    // 更名同步方式
+                    fs.renameSync(src, path.join(path.parse(src).dir, fileDes))
+                    comment.comImg = pics
+                }
+
+
+                try {
+                    //2.调用用户数据访问对象的添加方法
+                   await forumComDAO.addComment(comment)
+                    //3.反馈结果
+                    ctx.body = {"code": 200, "message": "ok", data: comment}
+
+                } catch (err) {
+                    ctx.body = {"code": 500, "message": err.toString(), data: []}
+                }
+                if (err) {
+                    ctx.body = '上传失败'
+                }
+            })
+            ctx.body = '上传成功'
     },
     //添加回复
     addReply: async (ctx, next) => {
@@ -353,6 +361,8 @@ module.exports = {
                     if (data[i].faId === data2[j].faId) {
                         arr.faId = data2[j].faId
                         arr.faTitle = data2[j].faTitle
+                        arr.faText1 = data2[j].faText
+                        console.log(data2[j].faText)
                         arr.userName = data2[j].userName
                         arr.faText = data[i].faText
                         arr.time = data[i].time
@@ -370,6 +380,8 @@ module.exports = {
                     if (data1[i].faId === data21[j].faId) {
                         arr1.faId = data21[j].faId
                         arr1.faTitle = data21[j].faTitle
+                        arr1.faText1= data21[j].faText
+                        console.log(data21[j].faText)
                         arr1.userName = data21[j].userName
                         arr1.frText = data1[i].frText
                         arr1.time = data1[i].time

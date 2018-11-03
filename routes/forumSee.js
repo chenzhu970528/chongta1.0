@@ -69,7 +69,7 @@ router.get('/user/like',async (ctx,next)=>{
 //用户评论
 router.get('/user/com',async (ctx,next)=>{
     let jsondata = await forum.userCom(ctx,next);
-    console.log(jsondata)
+    // console.log(jsondata)
 });
 
 //用户头像

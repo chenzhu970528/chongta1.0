@@ -21,7 +21,7 @@ router.post('/upload',async (ctx, next) => {
 //添加评论
 router.post('/comment',async (ctx,next)=>{
     let jsondata = await forum.addComment(ctx,next);
-    console.log(jsondata)
+    console.log('开始')
 })
 //添加回复
 router.post('/reply',async (ctx,next)=>{
@@ -32,8 +32,7 @@ router.post('/reply',async (ctx,next)=>{
 router.post('/Recommend',async (ctx,next)=>{
     let jsondata = await forum.addEssDiary(ctx,next);
     console.log(jsondata)
-    console.log(jsondata)
-    console.log('可恶啊')
+
 
 });
 //添加点赞

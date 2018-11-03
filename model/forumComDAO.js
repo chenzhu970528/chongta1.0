@@ -12,13 +12,13 @@ class COM{
     }
     //
     comArt(userId){
-        return DAO('select faId,faTitle,userName from forumArt where faId in (select faId from forumCom where userId=?)',[userId]);
+        return DAO('select faId,faTitle,faText,userName from forumArt where faId in (select faId from forumCom where userId=?)',[userId]);
     }
 
     //添加一条评论  外部传参进去
     addComment(comment){
-        return DAO('insert into forumCom (faId,faText,userId,userName) values(?,?,?,?)',
-            [comment.faId,comment.faText,comment.userId,comment.userName])
+        return DAO('insert into forumCom (faId,faText,userId,userName,comImg) values(?,?,?,?,?)',
+            [comment.faId,comment.faText,comment.userId,comment.userName,comment.comImg])
     }
 
     //删除一条评论
