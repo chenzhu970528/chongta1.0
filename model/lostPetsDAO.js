@@ -34,6 +34,7 @@ class DB{
             'userId',[lpId])
     }
     // 查找最新丢失
-    getLatest(){return DAO('select * from lostpets ORDER BY lpTime desc LIMIT 0,10',[])}
+    getLatest(){return DAO('select * from lostpets ORDER BY lpTime desc LIMIT 0,6',[])}
+
 }
 module.exports = new DB();
