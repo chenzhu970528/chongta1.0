@@ -15,7 +15,7 @@ class DB{
 
     // //根据个人Id查看发布的丢失信息
     getlostdetail(userId){
-        return DAO('select * from lostpets where userId=? order by lpTime desc',[userId]);
+        return DAO('select * from lostpets where userId=? order by pbTime desc',[userId]);
     }
     //根据个人Id查看发布的流浪信息Id
     getidlostPets(userId){
