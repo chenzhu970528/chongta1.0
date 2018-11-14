@@ -47,8 +47,8 @@ app.use(session(CONFIG, app));
 
 app.use(cors({
     origin: function (ctx) {
-        // return 'http://localhost:8080';
-        return "http://10.40.4.36:8080"
+        return 'http://127.0.0.1:8080';
+        // return "http://10.40.4.36:8080"
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,

@@ -467,7 +467,6 @@ module.exports = {
                 cc = await fReplaysDAO.getReply(com[i].fcId)
                 headpic.push(await forumArtDAO.seeComPic(com[i].userId));//评论人头像
                 replys.push(cc)
-
             }
             art.comhead = headpic
 
