@@ -514,7 +514,6 @@ module.exports = {
         //1.收集数据
         let userId = ctx.query.userId;
         let data = await forumArtDAO.seeComPic(userId)
-
         try {
             ctx.body = {"code": 200, "message": "ok", data: data}
             return data;

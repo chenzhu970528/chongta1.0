@@ -19,9 +19,9 @@ class ART{
     seeArtPic(faId){
        return DAO('select headPic from user where userId=(select userId from forumart where faId=?)',[faId])
     };
-    //查看评论人头像
+    //查看用户头像
     seeComPic(userId){
-       return DAO('select headPic from user where userId=?',[userId])
+       return DAO('select headPic,userName from user where userId=?',[userId])
     };
     //按点赞排行显示文章名字，还有id
     likeSum(){
